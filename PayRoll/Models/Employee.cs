@@ -9,7 +9,7 @@ namespace PayRoll.Models
 	public class Employee
 	{
 		[Key]
-		[StringLength(70, MinimumLength = 10), Required(ErrorMessage ="Invalid EmployeeID")]
+		[StringLength(70, MinimumLength = 10)]
 		public string EmployeeId { get; set; }
 
 		[Required]
