@@ -16,6 +16,7 @@ namespace PayRoll.Models
 				positionName = "Admin",
 				baseSalary = (decimal) 35.50
 			};
+			context.Positions.Add(adminPosition);
 			Employee adminEmployee = new Employee()
 			{
 				EmployeeID = new Guid().ToString(),
@@ -29,6 +30,8 @@ namespace PayRoll.Models
 				seniority = 4,
 				departmentType = "Executive"
 			};
+			context.Employees.Add(adminEmployee);
+			context.SaveChanges();
 		}
 	}
 }

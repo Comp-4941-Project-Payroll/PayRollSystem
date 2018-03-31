@@ -205,6 +205,7 @@
     <Compile Include="Models\PayrollDbContext.cs" />
     <Compile Include="Models\PayrollDbInitializer.cs" />
     <Compile Include="Models\Position.cs" />
+    <Compile Include="Models\Repository\Repository.cs" />
     <Compile Include="Models\Schedule.cs" />
     <Compile Include="Models\TimeOffRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
