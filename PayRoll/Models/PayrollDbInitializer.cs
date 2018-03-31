@@ -20,9 +20,9 @@ namespace PayRoll.Models
 			Employee adminEmployee = new Employee()
 			{
 				EmployeeId = new Guid().ToString(),
-				Password = "123",
-				FName = "Admin",
-				LName = "Istrator",
+				Password = "1234567890",
+				FName = "Davin",
+				LName = "Deol",
 				Address = "4652 Redex Blvd",
 				Phone = "778-535-8435",
 				FullOrPartTime = "FullTime",

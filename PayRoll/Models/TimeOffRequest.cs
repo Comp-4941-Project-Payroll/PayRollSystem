@@ -8,6 +8,7 @@ namespace PayRoll.Models
 {
 	public class TimeOffRequest
 	{
+		public string TimeOffRequestId { get; set; }
 		[Required]
 		public Employee SenderId { get; set; }
 

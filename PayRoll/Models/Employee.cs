@@ -9,7 +9,7 @@ namespace PayRoll.Models
 	public class Employee
 	{
 		[Key]
-		[StringLength(70, MinimumLength = 10)]
+		[StringLength(70, MinimumLength = 10), Required(ErrorMessage ="Invalid EmployeeID")]
 		public string EmployeeId { get; set; }
 
 		[Required]
@@ -28,8 +28,7 @@ namespace PayRoll.Models
 		[StringLength(15, MinimumLength = 10)]
 		public string Phone { get; set; }
 
-		[Required]
-		[MaxLength(8)]
+		[MaxLength(10)]
 		public string FullOrPartTime { get; set; }
 
 		[Required]
