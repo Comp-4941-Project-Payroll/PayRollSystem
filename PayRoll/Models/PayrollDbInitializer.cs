@@ -13,22 +13,22 @@ namespace PayRoll.Models
 			Position adminPosition = new Position()
 			{
 				PositionId = "AD31N",
-				positionName = "Admin",
-				baseSalary = (decimal) 35.50
+				PositionName = "Admin",
+				BaseSalary = (decimal) 35.50
 			};
 			context.Positions.Add(adminPosition);
 			Employee adminEmployee = new Employee()
 			{
-				EmployeeID = new Guid().ToString(),
-				password = "123",
-				fName = "Admin",
-				lName = "Istrator",
-				address = "4652 Redex Blvd",
-				phone = "778-535-8435",
-				fullOrPartTime = "FullTime",
+				EmployeeId = new Guid().ToString(),
+				Password = "123",
+				FName = "Admin",
+				LName = "Istrator",
+				Address = "4652 Redex Blvd",
+				Phone = "778-535-8435",
+				FullOrPartTime = "FullTime",
 				PositionId = adminPosition,
-				seniority = 4,
-				departmentType = "Executive"
+				Seniority = 4,
+				DepartmentType = "Executive"
 			};
 			context.Employees.Add(adminEmployee);
 			context.SaveChanges();

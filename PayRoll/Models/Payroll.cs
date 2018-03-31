@@ -8,14 +8,15 @@ namespace PayRoll.Models
 	public class Payroll
 	{
 		public Employee EmployeeId { get; set; }
-		public int regularHours { get; set; }
-		public int overTimeHours { get; set; }
-		public decimal hourlyRate { get; set; }
-		public decimal earnings { get; set; }
-		public int beginningVacation { get; set; }
-		public int vacationHrsTaken { get; set; }
+		public int year { get; set; }
+		public int RegularHours { get; set; }
+		public int OverTimeHours { get; set; }
+		public decimal HourlyRate { get; set; }
+		public decimal Earnings { get; set; }
+		public int BeginningVacation { get; set; }
+		public int VacationHrsTaken { get; set; }
 		public decimal CPP { get; set; }
 		public decimal EI { get; set; }
-		public decimal incomeTaxes { get; set; }
+		public decimal IncomeTaxes { get; set; }
 	}
 }

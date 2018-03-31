@@ -8,7 +8,7 @@ namespace PayRoll.Models
 	public class Position
 	{
 		public string PositionId { get; set; }
-		public string positionName { get; set; }
-		public decimal baseSalary { get; set; }
+		public string PositionName { get; set; }
+		public decimal BaseSalary { get; set; }
 	}
 }
