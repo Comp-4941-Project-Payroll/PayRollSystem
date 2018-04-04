@@ -8,12 +8,12 @@ namespace PayRoll.Models
 {
 	public class TimeOffRequest
 	{
-		public string TimeOffRequestId { get; set; }
-		[Required]
-		public Employee SenderId { get; set; }
+        [Key]
+		public int TimeOffRequestId { get; set; }
 
 		[Required]
-		public string Type { get; set; }
+        [RegularExpression("Vacation|Emergency|Appointment")]
+        public string Type { get; set; }
 
 		[Required]
 		public DateTime StartDate { get; set; }
