@@ -11,8 +11,6 @@ namespace PayRoll.Models
 	{
 		[Key]
 		public string PayrollId { get; set; }
-
-		public Employee EmployeeId { get; set; }
 		public int year { get; set; }
 		public int RegularHours { get; set; }
 		public int OverTimeHours { get; set; }

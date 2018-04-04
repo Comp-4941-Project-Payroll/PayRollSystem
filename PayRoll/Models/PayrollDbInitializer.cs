@@ -19,19 +19,20 @@ namespace PayRoll.Models
 			context.Positions.Add(adminPosition);
 			Employee adminEmployee = new Employee()
 			{
-				EmployeeId = new Guid().ToString(),
-				Password = "1234567890",
+				EmployeeId = "0000-0000-0000-0000-0000",
+                Password = "1234567890",
 				FName = "Davin",
 				LName = "Deol",
 				Address = "4652 Redex Blvd",
 				Phone = "778-535-8435",
 				FullOrPartTime = "FullTime",
-				PositionId = adminPosition,
 				Seniority = 4,
 				DepartmentType = "Executive"
 			};
 			context.Employees.Add(adminEmployee);
-			context.SaveChanges();
+            context.SaveChanges();
+            context.Positions.Find("AD31N").Employees.Add(adminEmployee);
+            context.SaveChanges();
 		}
 	}
 }
