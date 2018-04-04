@@ -1,0 +1,214 @@
+﻿@model IEnumerable<PayRoll.Models.Payroll>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<table class="table">
+
+    <tr> 
+        <td>Employee Id: 1234</td>
+        <td class="right">Pay Period: Jan 1-14/2018</td>
+    </tr>
+
+    <tr>
+        <td>Employee Name: Amir Avram</td>
+        <td class="right">Pay Frequency: Bi-Weekly</td>
+    </tr>
+
+    <tr>
+        <td>Address: Coquitlam</td>
+    </tr>
+
+    <tr>
+        <td>Position: Sales Manager</td>
+    </tr>
+
+    </table>
+
+    
+    <table>
+        <tr>
+            <td></td>
+            <td class="right">Current</td>
+            <td class="right">YTD</td>
+        </tr>
+        <tr>
+            <td>Earnings</td>
+            <td class="right">100</td>
+            <td class="right">1000</td>
+        </tr>
+        <tr>
+            <td>Less: Deductions</td>
+        </tr>
+
+        <tr>
+            <td>-CPP</td>
+            <td class="right">5.00</td>
+            <td class="right">50.00</td>
+        </tr>
+
+        <tr>
+            <td>-EI</td>
+            <td class="right">2.00</td>
+            <td class="right">20.00</td>
+        </tr>
+
+        <tr>
+            <td>-Income Tax</td>
+            <td class="right">35.00</td>
+            <td class="right">350.00</td>
+        </tr>
+
+        <tr>
+            <td>Net Pay</td>
+            <td class="right">58.00</td>
+            <td class="right">580.00</td>
+        </tr>
+
+        @*<tr>
+            <td>
+                <hr class="line">
+            </td>
+            <td>
+                <hr class="line">
+            </td>
+            <td>
+                <hr class="line">
+            </td>
+        </tr>*@
+
+
+        </table>
+
+    
+    <hr>
+
+    <table>
+        <tr>
+            <td>Hours</td>
+            <td class="right">Current</td>
+            <td class="right">YTD</td>
+        </tr>
+
+        <tr>
+            <td>Regular</td>
+            <td class="right">20</td>
+            <td class="right">40</td>
+        </tr>
+
+        <tr>
+            <td>Overtime</td>
+            <td class="right">5</td>
+            <td class="right">10</td>
+        </tr>
+
+
+    </table>
+
+    <hr>
+    
+    <table>
+        <tr>
+            <td>Vacation</td>
+        </tr>
+
+        <tr>
+            <td>Beginning Balance(days): 15</td>
+        </tr>
+
+        <tr>
+            <td>Vacation Taken (YTD): 1</td>
+        </tr>
+
+        <tr>
+            <td>Closing Balance: 14</td>
+        </tr>
+
+    </table>
+    
+   
+
+    @*<p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+
+
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.year)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RegularHours)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OverTimeHours)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HourlyRate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Earnings)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BeginningVacation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.VacationHrsTaken)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CPP)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EI)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IncomeTaxes)
+                </th>
+                <th></th>
+            </tr>
+
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.year)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RegularHours)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OverTimeHours)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HourlyRate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Earnings)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BeginningVacation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VacationHrsTaken)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CPP)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EI)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IncomeTaxes)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id=item.PayrollId }) |
+                    @Html.ActionLink("Details", "Details", new { id=item.PayrollId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id=item.PayrollId })
+                </td>
+            </tr>
+        }
+
+        </table>*@
