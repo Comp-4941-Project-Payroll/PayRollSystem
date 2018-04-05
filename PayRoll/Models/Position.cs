@@ -17,6 +17,6 @@ namespace PayRoll.Models
 		public string PositionName { get; set; }
 
 		public decimal BaseSalary { get; set; } = 0;
-        public ICollection<Employee> Employees { get; set; }
+        public ICollection<Employee> Employees { get; set; } = new List<Employee>();
     }
 }
