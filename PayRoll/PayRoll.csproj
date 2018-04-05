@@ -190,6 +190,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Employees1Controller.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\TimeOffRequestsController.cs" />
@@ -280,6 +281,11 @@
     <Content Include="Views\PayrollManage\Details.cshtml" />
     <Content Include="Views\PayrollManage\Edit.cshtml" />
     <Content Include="Views\PayrollManage\Index.cshtml" />
+    <Content Include="Views\Employees1\Create.cshtml" />
+    <Content Include="Views\Employees1\Delete.cshtml" />
+    <Content Include="Views\Employees1\Details.cshtml" />
+    <Content Include="Views\Employees1\Edit.cshtml" />
+    <Content Include="Views\Employees1\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
