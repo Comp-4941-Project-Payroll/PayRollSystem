@@ -42,7 +42,7 @@ namespace PayRoll.Controllers
                 {
                     db.TimeOffRequests.Add(timeOffRequest);
                     db.SaveChanges();
-                    db.Employees.Find("0000-0000-0000-0000-0000").TimeOffRequests.Add(timeOffRequest);
+                    db.Employees.Find("a00828729").TimeOffRequests.Add(timeOffRequest);
                     db.SaveChanges();
                     db.TypesOfTimeOff.Find(Request.Form.Get("Type")).TimeOffRequests.Add(timeOffRequest);
                     db.SaveChanges();
