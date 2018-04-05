@@ -193,6 +193,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\TimeOffRequestsController.cs" />
+    <Compile Include="Controllers\PayrollManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -273,6 +274,11 @@
     <Content Include="Views\TimeOffRequests\Index.cshtml" />
     <Content Include="Views\TimeOffRequests\Success.cshtml" />
     <Content Include="Views\TimeOffRequests\Failure.cshtml" />
+    <Content Include="Views\PayrollManage\Create.cshtml" />
+    <Content Include="Views\PayrollManage\Delete.cshtml" />
+    <Content Include="Views\PayrollManage\Details.cshtml" />
+    <Content Include="Views\PayrollManage\Edit.cshtml" />
+    <Content Include="Views\PayrollManage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
