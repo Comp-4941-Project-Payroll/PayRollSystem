@@ -190,14 +190,28 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\TimeOffRequestsController.cs" />
+    <Compile Include="Controllers\PayrollManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Attendance.cs" />
+    <Compile Include="Models\Branch.cs" />
+    <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Payroll.cs" />
+    <Compile Include="Models\PayrollDbContext.cs" />
+    <Compile Include="Models\PayrollDbInitializer.cs" />
+    <Compile Include="Models\Position.cs" />
+    <Compile Include="Models\Repository\Repository.cs" />
+    <Compile Include="Models\Schedule.cs" />
+    <Compile Include="Models\TimeOffRequest.cs" />
+    <Compile Include="Models\TypeOfTimeOff.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -258,6 +272,20 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Manage\ManageAttendance.cshtml" />
+    <Content Include="Views\TimeOffRequests\Index.cshtml" />
+    <Content Include="Views\TimeOffRequests\Success.cshtml" />
+    <Content Include="Views\TimeOffRequests\Failure.cshtml" />
+    <Content Include="Views\PayrollManage\Create.cshtml" />
+    <Content Include="Views\PayrollManage\Delete.cshtml" />
+    <Content Include="Views\PayrollManage\Details.cshtml" />
+    <Content Include="Views\PayrollManage\Edit.cshtml" />
+    <Content Include="Views\PayrollManage\Index.cshtml" />
+    <Content Include="Views\Employees\Create.cshtml" />
+    <Content Include="Views\Employees\Delete.cshtml" />
+    <Content Include="Views\Employees\Details.cshtml" />
+    <Content Include="Views\Employees\Edit.cshtml" />
+    <Content Include="Views\Employees\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
