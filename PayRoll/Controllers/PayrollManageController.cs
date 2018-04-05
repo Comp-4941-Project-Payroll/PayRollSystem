@@ -24,7 +24,7 @@ namespace PayRoll.Controllers
             decimal rate = 0;
             foreach(Employee emp in emps)
             {
-                if(emp.EmployeeId == "0000-0000-0000-0000-0000")
+                if(emp.EmployeeId == "a00828730")
                 {
                     attendances = emp.Attendances.ToList();
                     rate = emp.HourlyRate;
