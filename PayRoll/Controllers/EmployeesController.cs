@@ -46,7 +46,7 @@ namespace PayRoll.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Password,FName,LName,Address,Phone,FullOrPartTime,Seniority,DepartmentType")] Employee employee)
+        public ActionResult Create([Bind(Include = "Password,FName,LName,Address,Phone,FullOrPartTime,Seniority,DepartmentType,HourlyRate")] Employee employee)
         {
 			employee.EmployeeId = generateEmployeeId();
             if (ModelState.IsValid)
