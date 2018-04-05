@@ -335,10 +335,15 @@ namespace PayRoll.Controllers
         {
             DateTime curTime = DateTime.Now;
             Boolean success = false;
+            /*
+             * CHECK SHIFT TIME
+             * CHECK IF USER ALREADY PUNCH IN BEFORE
+             */
+            
             //string ID = "";
             //string query = "SELECT * FROM ATTENDANCE WHERE EMPLOYEEID = " + ID;
             ApplicationDbContext db = new ApplicationDbContext();
-            db.Attendance.find(id);
+            //db.Attendance.find(id);
             return success ? RedirectToAction("Index") : RedirectToAction("ManageAttendance", new {Message = "Invalid punch - " + curTime.ToShortDateString() });
          
         }

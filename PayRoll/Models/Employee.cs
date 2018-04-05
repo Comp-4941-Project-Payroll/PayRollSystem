@@ -38,5 +38,7 @@ namespace PayRoll.Models
         
         public ICollection<TimeOffRequest> TimeOffRequests { get; set; } = new List<TimeOffRequest>();
         public ICollection<Payroll> Payrolls { get; set; } = new List<Payroll>();
+        public ICollection<Schedule> Shift { get; set; } = new List<Schedule>();
+
     }
 }
