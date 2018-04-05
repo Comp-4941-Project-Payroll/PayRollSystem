@@ -37,6 +37,6 @@ namespace PayRoll.Models
 		public string DepartmentType { get; set; }
         
         public ICollection<TimeOffRequest> TimeOffRequests { get; set; } = new List<TimeOffRequest>();
-        public ICollection<Payroll> Payrolls { get; set; }
+        public ICollection<Payroll> Payrolls { get; set; } = new List<Payroll>();
     }
 }
