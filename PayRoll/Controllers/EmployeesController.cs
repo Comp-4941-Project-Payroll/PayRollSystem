@@ -38,7 +38,8 @@ namespace PayRoll.Controllers
         // GET: Employees/Create
         public ActionResult Create()
         {
-            return View();
+			ViewData["positions"] = db.Positions.ToArray();
+			return View();
         }
 
         // POST: Employees/Create
@@ -53,7 +54,9 @@ namespace PayRoll.Controllers
             {
                 db.Employees.Add(employee);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+				db.Positions.Find(Request.Form.Get("Position")).Employees.Add(employee);
+				db.SaveChanges();
+				return RedirectToAction("Index");
             }
 
             return View(employee);
