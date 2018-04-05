@@ -209,6 +209,7 @@
     <Compile Include="Models\Repository\Repository.cs" />
     <Compile Include="Models\Schedule.cs" />
     <Compile Include="Models\TimeOffRequest.cs" />
+    <Compile Include="Models\TypeOfTimeOff.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

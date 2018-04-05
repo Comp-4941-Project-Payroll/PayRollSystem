@@ -12,10 +12,6 @@ namespace PayRoll.Models
 		public int TimeOffRequestId { get; set; }
 
 		[Required]
-        [RegularExpression("Vacation|Emergency|Appointment")]
-        public string Type { get; set; }
-
-		[Required]
 		public DateTime StartDate { get; set; }
 
 		[Required]

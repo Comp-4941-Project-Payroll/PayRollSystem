@@ -28,6 +28,19 @@ namespace PayRoll.Models
 				Seniority = 4,
 				DepartmentType = "Executive"
 			});
+            context.Positions.Find("AD31N").Employees.Add(context.Employees.Find("0000-0000-0000-0000-0000"));
+            context.TypesOfTimeOff.Add(new TypeOfTimeOff()
+            {
+                Type = "Vacation"
+            });
+            context.TypesOfTimeOff.Add(new TypeOfTimeOff()
+            {
+                Type = "Personal Reasons"
+            });
+            context.TypesOfTimeOff.Add(new TypeOfTimeOff()
+            {
+                Type = "Appointment"
+            });
             context.SaveChanges();
             base.Seed(context);
 		}
