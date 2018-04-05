@@ -5,7 +5,7 @@
     PayRoll.Models.TypeOfTimeOff[] typesOfTimeOffRequests = (PayRoll.Models.TypeOfTimeOff[])ViewData["typesOfTimeOff"];
 }
 
-<h2>Create</h2>
+<h2>Request Time Off</h2>
 
 
 @using (Html.BeginForm())
@@ -13,21 +13,12 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>TimeOffRequest</h4>
+        <h4>Enter the following fields</h4>
         <hr />
-        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.TimeOffRequestId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TimeOffRequestId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TimeOffRequestId, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
         <div class="form-group">
             <label for="Type" class="control-label col-md-2">Type</label>
             <div class="col-md-10">
-                <select name="Type" id="Type" class="form-control select single-line">
+                <select name="Type" id="Type" class="form-control single-line">
                     @for (var i = 0; i < typesOfTimeOffRequests.Length; i++) {
                         <option>@typesOfTimeOffRequests[i].Type</option>
                     }
@@ -58,14 +49,6 @@
                 @Html.ValidationMessageFor(model => model.Reason, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.WhenSent, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.WhenSent, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.WhenSent, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
