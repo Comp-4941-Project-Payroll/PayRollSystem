@@ -17,6 +17,37 @@ namespace PayRoll.Controllers
         // GET: PayrollManage
         public ActionResult Index()
         {
+            List<Attendance> attendances = null;
+            List<Employee> emps = db.Employees.Include(e => e.Attendances).ToList();
+            double hours=0;
+            decimal earnings = 0;
+            decimal rate = 0;
+            foreach(Employee emp in emps)
+            {
+                if(emp.EmployeeId == "0000-0000-0000-0000-0000")
+                {
+                    attendances = emp.Attendances.ToList();
+                    rate = emp.HourlyRate;
+                    break;
+                }
+            }
+
+            if (attendances != null)
+            {
+                foreach (Attendance a in attendances)
+                {
+                    hours += (a.SignOutTime - a.SignInTime).TotalHours;
+                }
+            }
+
+            earnings = (decimal) hours * rate;
+
+
+            //Console.WriteLine(hours);
+
+            ViewBag.Hours = hours;
+            ViewBag.Earnings = earnings;
+
             return View(db.Payrolls.ToList());
         }
 
