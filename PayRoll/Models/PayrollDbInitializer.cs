@@ -10,14 +10,13 @@ namespace PayRoll.Models
 	{
 		protected override void Seed(PayrollDbContext context)
 		{
-			Position adminPosition = new Position()
+            context.Positions.Add(new Position()
 			{
 				PositionId = "AD31N",
 				PositionName = "Admin",
 				BaseSalary = (decimal) 35.50
-			};
-			context.Positions.Add(adminPosition);
-			Employee adminEmployee = new Employee()
+			});
+            context.Employees.Add(new Employee()
 			{
 				EmployeeId = "0000-0000-0000-0000-0000",
                 Password = "1234567890",
@@ -28,11 +27,14 @@ namespace PayRoll.Models
 				FullOrPartTime = "FullTime",
 				Seniority = 4,
 				DepartmentType = "Executive"
-			};
-			context.Employees.Add(adminEmployee);
-            context.SaveChanges();
-            context.Positions.Find("AD31N").Employees.Add(adminEmployee);
+			});
             context.SaveChanges();
 		}
 	}
 }
+/*
+ * TimeOffRequest x = context.TimeOffRequests.Find(10);
+ * Employee y = context.Employees.Find("0000-0000-0000-0000-0000");
+ * y.TimeOffRequests.Add(x);
+ * db.Employees.Find("0000-0000-0000-0000-0000").TimeOffRequests.Add(timeOffRequest);
+ */
