@@ -25,6 +25,8 @@ namespace PayRoll.Models
         {
         }
 
+        public object Attendance { get; internal set; }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

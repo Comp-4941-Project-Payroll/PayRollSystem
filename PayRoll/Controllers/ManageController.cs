@@ -335,13 +335,12 @@ namespace PayRoll.Controllers
         {
             DateTime curTime = DateTime.Now;
             Boolean success = false;
-            if (success)
-                return RedirectToAction("Index");
-            else
-            {
-                //ViewBag.StatusMessage = "Invalid punch - " + curTime.ToString();
-                return RedirectToAction("ManageAttendance", new {Message = "Invalid punch - " + curTime.ToShortDateString() });
-            }
+            //string ID = "";
+            //string query = "SELECT * FROM ATTENDANCE WHERE EMPLOYEEID = " + ID;
+            ApplicationDbContext db = new ApplicationDbContext();
+            db.Attendance.find(id);
+            return success ? RedirectToAction("Index") : RedirectToAction("ManageAttendance", new {Message = "Invalid punch - " + curTime.ToShortDateString() });
+         
         }
 
 
