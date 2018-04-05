@@ -30,6 +30,8 @@ namespace PayRoll.Controllers
             {
                 db.TimeOffRequests.Add(timeOffRequest);
                 db.SaveChanges();
+                db.Employees.Find("0000-0000-0000-0000-0000").TimeOffRequests.Add(timeOffRequest);
+                db.SaveChanges();
                 return RedirectToAction("Success");
             }
 
