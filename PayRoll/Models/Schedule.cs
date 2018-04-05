@@ -9,7 +9,7 @@ namespace PayRoll.Models
 	public class Schedule
 	{
 		[Key]
-		public string ShiftId { get; set; }
+		public int ShiftId { get; set; }
 		public DateTime StartTime { get; set; }
 		public DateTime EndTime { get; set; }
 	}

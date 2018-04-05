@@ -9,6 +9,12 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using PayRoll.Models;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 
 namespace PayRoll.Controllers
 {
@@ -125,6 +131,7 @@ namespace PayRoll.Controllers
             base.Dispose(disposing);
         }
 
+       
         private bool AttendanceExists(string id)
         {
             return db.Attendances.Count(e => e.AttendanceId == id) > 0;

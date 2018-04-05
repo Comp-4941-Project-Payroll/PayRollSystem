@@ -339,15 +339,21 @@ namespace PayRoll.Controllers
              * CHECK SHIFT TIME
              * CHECK IF USER ALREADY PUNCH IN BEFORE
              */
-            
+
             //string ID = "";
             //string query = "SELECT * FROM ATTENDANCE WHERE EMPLOYEEID = " + ID;
-            ApplicationDbContext db = new ApplicationDbContext();
-            //db.Attendance.find(id);
-            return success ? RedirectToAction("Index") : RedirectToAction("ManageAttendance", new {Message = "Invalid punch - " + curTime.ToShortDateString() });
-         
+            PayrollDbContext db = new PayrollDbContext();
+            db.Attendances.Find();
+            return success ? RedirectToAction("Index") : RedirectToAction("ManageAttendance", new {Message = "Invalid punch - " + curTime.ToString() });        
         }
 
+        [HttpPost]
+        public ActionResult PunchOut(Attendance model)
+        {
+            DateTime curTime = DateTime.Now;
+            Boolean success = false;
+            return success ? RedirectToAction("Index") : RedirectToAction("ManageAttendance", new { Message = "Invalid punch - " + curTime.ToString() });
+        }
 
         // POST: /Manage/AddPhoneNumber
         [HttpPost]
