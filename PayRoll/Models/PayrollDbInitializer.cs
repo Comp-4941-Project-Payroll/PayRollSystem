@@ -18,7 +18,7 @@ namespace PayRoll.Models
 			});
             Employee e = new Employee()
             {
-                EmployeeId = "0000-0000-0000-0000-0000",
+                EmployeeId = "a00828729",
                 Password = "1234567890",
                 FName = "Davin",
                 LName = "Deol",
