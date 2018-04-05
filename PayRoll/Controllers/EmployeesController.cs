@@ -38,7 +38,8 @@ namespace PayRoll.Controllers
         // GET: Employees/Create
         public ActionResult Create()
         {
-            return View();
+			ViewData["positions"] = db.Positions.ToArray();
+			return View();
         }
 
         // POST: Employees/Create
@@ -46,14 +47,16 @@ namespace PayRoll.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Password,FName,LName,Address,Phone,FullOrPartTime,Seniority,DepartmentType")] Employee employee)
+        public ActionResult Create([Bind(Include = "Password,FName,LName,Address,Phone,FullOrPartTime,Seniority,DepartmentType,HourlyRate")] Employee employee)
         {
 			employee.EmployeeId = generateEmployeeId();
             if (ModelState.IsValid)
             {
                 db.Employees.Add(employee);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+				db.Positions.Find(Request.Form.Get("Position")).Employees.Add(employee);
+				db.SaveChanges();
+				return RedirectToAction("Index");
             }
 
             return View(employee);

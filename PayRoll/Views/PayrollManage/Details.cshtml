@@ -1,0 +1,98 @@
+﻿@model PayRoll.Models.Payroll
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Payroll</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.year)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.year)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RegularHours)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RegularHours)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OverTimeHours)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OverTimeHours)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HourlyRate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HourlyRate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Earnings)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Earnings)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BeginningVacation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BeginningVacation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VacationHrsTaken)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VacationHrsTaken)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CPP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CPP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IncomeTaxes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IncomeTaxes)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PayrollId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

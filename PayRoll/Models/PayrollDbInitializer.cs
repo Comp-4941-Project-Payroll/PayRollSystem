@@ -12,9 +12,10 @@ namespace PayRoll.Models
 		{
             context.Positions.Add(new Position()
 			{
-				PositionId = "AD31N",
-				PositionName = "Admin",
-				BaseSalary = (decimal) 35.50
+				PositionId = "Admin"
+			}); context.Positions.Add(new Position()
+			{
+				PositionId = "Human Resources"
 			});
 			context.SaveChanges();
 			context.Employees.Add(new Employee()
@@ -30,7 +31,7 @@ namespace PayRoll.Models
 				DepartmentType = "Executive"
 			});
 			context.SaveChanges();
-			context.Positions.Find("AD31N").Employees.Add(context.Employees.Find("a00828729"));
+			context.Positions.Find("Admin").Employees.Add(context.Employees.Find("a00828729"));
 			context.SaveChanges();
 			context.TypesOfTimeOff.Add(new TypeOfTimeOff()
             {
