@@ -29,6 +29,7 @@ namespace PayRoll.Models
 				DepartmentType = "Executive"
 			});
             context.SaveChanges();
+            base.Seed(context);
 		}
 	}
 }
