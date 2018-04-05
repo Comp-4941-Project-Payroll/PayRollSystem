@@ -9,7 +9,7 @@ namespace PayRoll.Models
 	public class Employee
 	{
 		[Key]
-		[StringLength(70, MinimumLength = 10)]
+		[MaxLength(15)]
 		public string EmployeeId { get; set; }
 
 		[Required]
@@ -17,9 +17,11 @@ namespace PayRoll.Models
 		public string Password { get; set; }
 
 		[MaxLength(20)]
+		[Display(Name = "First Name")]
 		public string FName { get; set; }
 
 		[MaxLength(20)]
+		[Display(Name = "Last Name")]
 		public string LName { get; set; }
 
 		[MaxLength(100)]
@@ -29,6 +31,8 @@ namespace PayRoll.Models
 		public string Phone { get; set; }
 
 		[MaxLength(10)]
+		[Display(Name = "Full or Part Time")]
+		[RegularExpression("Full-Time|Part-Time")]
 		public string FullOrPartTime { get; set; }
 
 		public int Seniority { get; set; } = 0;
