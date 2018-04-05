@@ -14,12 +14,11 @@ namespace PayRoll.Controllers
     public class TimeOffRequestsController : Controller
     {
         private PayrollDbContext db = new PayrollDbContext();
-        Repository<TypeOfTimeOff> repo = new Repository<TypeOfTimeOff>();
 
         // GET: TimeOffRequests
         public ActionResult Index()
         {
-            ViewData["typesOfTimeOff"] = repo.GetAll().ToArray();
+			ViewData["typesOfTimeOff"] = db.TypesOfTimeOff.ToArray();
             return View();
         }
 
@@ -30,9 +29,9 @@ namespace PayRoll.Controllers
             if ((timeOffRequest.StartDate < DateTime.Now)
                 || (timeOffRequest.EndDate < DateTime.Now)
                 || (timeOffRequest.StartDate > timeOffRequest.EndDate))
-            {
-                ViewData["typesOfTimeOff"] = repo.GetAll().ToArray();
-                return View(timeOffRequest);
+			{
+				ViewData["typesOfTimeOff"] = db.TypesOfTimeOff.ToArray();
+				return View(timeOffRequest);
             }
             //TimeOffRequestId,WhenSent
             timeOffRequest.WhenSent = DateTime.Now;
@@ -52,8 +51,8 @@ namespace PayRoll.Controllers
                 return RedirectToAction("Success");
             }
 
-            ViewData["typesOfTimeOff"] = repo.GetAll().ToArray();
-            return View(timeOffRequest);
+			ViewData["typesOfTimeOff"] = db.TypesOfTimeOff.ToArray();
+			return View(timeOffRequest);
         }
 
         public ActionResult Success()
