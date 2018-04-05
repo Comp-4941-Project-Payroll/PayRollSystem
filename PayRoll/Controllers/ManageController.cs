@@ -61,6 +61,7 @@ namespace PayRoll.Controllers
                 : message == ManageMessageId.Error ? "An error has occurred."
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+                : message == ManageMessageId.PunchSuccess ? "You have successfully punch in/out"
                 : "";
 
             var userId = User.Identity.GetUserId();
@@ -322,6 +323,43 @@ namespace PayRoll.Controllers
             return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
         }
 
+        // GET: /Manage/ManageAttendances
+        public ActionResult ManageAttendance(string message)
+        {
+            ViewBag.StatusMessage = message;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult PunchIn(Attendance model)
+        {
+            DateTime curTime = DateTime.Now;
+            Boolean success = false;
+            if (success)
+                return RedirectToAction("Index");
+            else
+            {
+                //ViewBag.StatusMessage = "Invalid punch - " + curTime.ToString();
+                return RedirectToAction("ManageAttendance", new {Message = "Invalid punch - " + curTime.ToShortDateString() });
+            }
+        }
+
+
+        // POST: /Manage/AddPhoneNumber
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        /*
+        public async Task<ActionResult> ManageAttendance(Attendance model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            
+            return RedirectToAction("Index", new { PhoneNumber = model.SignInTime});
+        }
+        */
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && _userManager != null)
@@ -381,6 +419,7 @@ namespace PayRoll.Controllers
             SetPasswordSuccess,
             RemoveLoginSuccess,
             RemovePhoneSuccess,
+            PunchSuccess,
             Error
         }
 
