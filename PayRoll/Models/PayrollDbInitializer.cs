@@ -16,18 +16,34 @@ namespace PayRoll.Models
 				PositionName = "Admin",
 				BaseSalary = (decimal) 35.50
 			});
-            context.Employees.Add(new Employee()
+			context.SaveChanges();
+			context.Employees.Add(new Employee()
 			{
-				EmployeeId = "0000-0000-0000-0000-0000",
+				EmployeeId = "a00828729",
                 Password = "1234567890",
 				FName = "Davin",
 				LName = "Deol",
 				Address = "4652 Redex Blvd",
 				Phone = "778-535-8435",
-				FullOrPartTime = "FullTime",
+				FullOrPartTime = "Part-Time",
 				Seniority = 4,
 				DepartmentType = "Executive"
 			});
+			context.SaveChanges();
+			context.Positions.Find("AD31N").Employees.Add(context.Employees.Find("a00828729"));
+			context.SaveChanges();
+			context.TypesOfTimeOff.Add(new TypeOfTimeOff()
+            {
+                Type = "Vacation"
+            });
+            context.TypesOfTimeOff.Add(new TypeOfTimeOff()
+            {
+                Type = "Personal Reasons"
+            });
+            context.TypesOfTimeOff.Add(new TypeOfTimeOff()
+            {
+                Type = "Appointment"
+            });
             context.SaveChanges();
             base.Seed(context);
 		}
