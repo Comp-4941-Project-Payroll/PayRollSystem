@@ -82,7 +82,7 @@ namespace PayRoll.Controllers
                     }
                 }
             }
-            return RedirectToAction("Decline");
+            return RedirectToAction("AdminApproval");
         }
         [HttpPost, ActionName("Accept")]
         [ValidateAntiForgeryToken]
@@ -93,9 +93,32 @@ namespace PayRoll.Controllers
             db.SaveChanges();
             return RedirectToAction("AdminApproval");
         }
-        public ActionResult Decline()
+        public ActionResult Decline(int id)
         {
-            return View();
+            Employee emp = null;
+            TimeOffRequest req = db.TimeOffRequests.Find(id);
+
+            foreach (Employee e in db.Employees)
+            {
+                foreach (TimeOffRequest tmp in e.TimeOffRequests)
+                {
+                    if (tmp == req)
+                    {
+                        emp = e;
+                        return View(emp);
+                    }
+                }
+            }
+            return RedirectToAction("AdminApproval");
+        }
+        [HttpPost, ActionName("Decline")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeclineDelete(int id)
+        {
+            TimeOffRequest req = db.TimeOffRequests.Find(id);
+            db.TimeOffRequests.Remove(req);
+            db.SaveChanges();
+            return RedirectToAction("AdminApproval");
         }
     }
 }
