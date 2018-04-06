@@ -54,12 +54,46 @@ namespace PayRoll.Controllers
 			ViewData["typesOfTimeOff"] = db.TypesOfTimeOff.ToArray();
 			return View(timeOffRequest);
         }
-
         public ActionResult Success()
         {
             return View();
         }
         public ActionResult Failure()
+        {
+            return View();
+        }
+        public ActionResult AdminApproval()
+        {
+            return View(db.TimeOffRequests.ToList());
+        }
+        public ActionResult Accept(int id)
+        {
+            Employee emp = null;
+            TimeOffRequest req = db.TimeOffRequests.Find(id);
+
+            foreach (Employee e in db.Employees)
+            {
+                foreach (TimeOffRequest tmp in e.TimeOffRequests)
+                {
+                    if (tmp == req)
+                    {
+                        emp = e;
+                        return View(emp);
+                    }
+                }
+            }
+            return RedirectToAction("Decline");
+        }
+        [HttpPost, ActionName("Accept")]
+        [ValidateAntiForgeryToken]
+        public ActionResult AcceptDelete(int id)
+        {
+            TimeOffRequest req = db.TimeOffRequests.Find(id);
+            db.TimeOffRequests.Remove(req);
+            db.SaveChanges();
+            return RedirectToAction("AdminApproval");
+        }
+        public ActionResult Decline()
         {
             return View();
         }

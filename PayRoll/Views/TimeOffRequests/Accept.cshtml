@@ -1,0 +1,21 @@
+﻿@model PayRoll.Models.Employee
+
+@{
+    ViewBag.Title = "Accepted";
+}
+
+<h2>Accepted</h2>
+
+<div>
+    <h4>
+        Sent notification to @Html.DisplayFor(modelItem => Model.FName)!
+    </h4>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Continue" class="btn btn-default" />
+        </div>
+    }
+</div>
