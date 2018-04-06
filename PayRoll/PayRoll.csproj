@@ -299,6 +299,9 @@
     <Content Include="Views\Managers\Index.cshtml" />
     <Content Include="Views\ChangePassword\Index.cshtml" />
     <Content Include="Views\ChangePassword\Success.cshtml" />
+    <Content Include="Views\TimeOffRequests\Accept.cshtml" />
+    <Content Include="Views\TimeOffRequests\AdminApproval.cshtml" />
+    <Content Include="Views\TimeOffRequests\Decline.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

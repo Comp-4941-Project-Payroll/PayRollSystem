@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using PayRoll.Models;
@@ -78,6 +79,13 @@ namespace PayRoll.Controllers
                     if (tmp == req)
                     {
                         emp = e;
+                        string email = emp.Email;
+                        SmtpClient client = new SmtpClient("smtp.live.com", 25);
+                        client.Credentials = new System.Net.NetworkCredential("vpnprez@hotmail.com", "dudethatko1");
+                        client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                        client.EnableSsl = true;
+                        MailMessage msg = new MailMessage("vpnprez@hotmail.com", email, "Accepted", "Congrats bud");
+                        client.Send(msg);
                         return View(emp);
                     }
                 }
@@ -105,6 +113,13 @@ namespace PayRoll.Controllers
                     if (tmp == req)
                     {
                         emp = e;
+                        string email = emp.Email;
+                        SmtpClient client = new SmtpClient("smtp.live.com", 25);
+                        client.Credentials = new System.Net.NetworkCredential("vpnprez@hotmail.com", "dudethatko1");
+                        client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                        client.EnableSsl = true;
+                        MailMessage msg = new MailMessage("vpnprez@hotmail.com", email, "Declined", "Sorry bud");
+                        client.Send(msg);
                         return View(emp);
                     }
                 }
