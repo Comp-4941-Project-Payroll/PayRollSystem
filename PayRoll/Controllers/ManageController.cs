@@ -366,6 +366,7 @@ namespace PayRoll.Controllers
                 db.Attendances.Add(new Attendance { EmployeeId = user, SignInTime = curTime});
             }
             return success ? RedirectToAction("Index") : RedirectToAction("ManageAttendance", new { Message = error});
+
         }
 
         [HttpPost]

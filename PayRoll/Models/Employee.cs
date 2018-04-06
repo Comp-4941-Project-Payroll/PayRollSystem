@@ -39,11 +39,13 @@ namespace PayRoll.Models
 
 		[MaxLength(20)]
 		public string DepartmentType { get; set; }
-		public decimal HourlyRate { get; set; }
+        public decimal HourlyRate { get; set; }
 
         public Schedule shiftID { get; set; }
 
 		public ICollection<TimeOffRequest> TimeOffRequests { get; set; } = new List<TimeOffRequest>();
+
         public ICollection<Payroll> Payrolls { get; set; } = new List<Payroll>();
+        public ICollection<Attendance> Attendances { get; set; } = new List<Attendance>();
     }
 }
