@@ -10,138 +10,107 @@ using PayRoll.Models;
 
 namespace PayRoll.Controllers
 {
-    public class PayrollManageController : Controller
+    public class ManagersController : Controller
     {
         private PayrollDbContext db = new PayrollDbContext();
 
-        // GET: PayrollManage
+        // GET: Managers
         public ActionResult Index()
         {
-            List<Attendance> attendances = null;
-            List<Employee> emps = db.Employees.Include(e => e.Attendances).ToList();
-            double hours=0;
-            decimal earnings = 0;
-            decimal rate = 0;
-            foreach(Employee emp in emps)
-            {
-                if(emp.EmployeeId == "a00828730")
-                {
-                    attendances = emp.Attendances.ToList();
-                    rate = emp.HourlyRate;
-                    break;
-                }
-            }
-
-            if (attendances != null)
-            {
-                foreach (Attendance a in attendances)
-                {
-                    hours += (a.SignOutTime - a.SignInTime).TotalHours;
-                }
-            }
-
-            earnings = (decimal) hours * rate;
-
-
-            //Console.WriteLine(hours);
-
-            ViewBag.Hours = hours;
-            ViewBag.Earnings = earnings;
-
-            return View(db.Payrolls.ToList());
+            return View(db.Employees.ToList());
         }
 
-        // GET: PayrollManage/Details/5
+        // GET: Managers/Details/5
         public ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Payroll payroll = db.Payrolls.Find(id);
-            if (payroll == null)
+            Employee employee = db.Employees.Find(id);
+            if (employee == null)
             {
                 return HttpNotFound();
             }
-            return View(payroll);
+            return View(employee);
         }
 
-        // GET: PayrollManage/Create
+        // GET: Managers/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: PayrollManage/Create
+        // POST: Managers/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PayrollId,year,RegularHours,OverTimeHours,HourlyRate,Earnings,BeginningVacation,VacationHrsTaken,CPP,EI,IncomeTaxes")] Payroll payroll)
+        public ActionResult Create([Bind(Include = "EmployeeId,Password,FName,LName,Address,Phone,FullOrPartTime,Seniority,DepartmentType,HourlyRate")] Employee employee)
         {
             if (ModelState.IsValid)
             {
-                db.Payrolls.Add(payroll);
+                db.Employees.Add(employee);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(payroll);
+            return View(employee);
         }
 
-        // GET: PayrollManage/Edit/5
+        // GET: Managers/Edit/5
         public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Payroll payroll = db.Payrolls.Find(id);
-            if (payroll == null)
+            Employee employee = db.Employees.Find(id);
+            if (employee == null)
             {
                 return HttpNotFound();
             }
-            return View(payroll);
+            return View(employee);
         }
 
-        // POST: PayrollManage/Edit/5
+        // POST: Managers/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PayrollId,year,RegularHours,OverTimeHours,HourlyRate,Earnings,BeginningVacation,VacationHrsTaken,CPP,EI,IncomeTaxes")] Payroll payroll)
+        public ActionResult Edit([Bind(Include = "EmployeeId,Password,FName,LName,Address,Phone,FullOrPartTime,Seniority,DepartmentType,HourlyRate")] Employee employee)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(payroll).State = EntityState.Modified;
+                db.Entry(employee).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(payroll);
+            return View(employee);
         }
 
-        // GET: PayrollManage/Delete/5
+        // GET: Managers/Delete/5
         public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Payroll payroll = db.Payrolls.Find(id);
-            if (payroll == null)
+            Employee employee = db.Employees.Find(id);
+            if (employee == null)
             {
                 return HttpNotFound();
             }
-            return View(payroll);
+            return View(employee);
         }
 
-        // POST: PayrollManage/Delete/5
+        // POST: Managers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Payroll payroll = db.Payrolls.Find(id);
-            db.Payrolls.Remove(payroll);
+            Employee employee = db.Employees.Find(id);
+            db.Employees.Remove(employee);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

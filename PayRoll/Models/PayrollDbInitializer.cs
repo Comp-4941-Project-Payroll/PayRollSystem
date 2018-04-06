@@ -13,11 +13,15 @@ namespace PayRoll.Models
             context.Positions.Add(new Position()
 			{
 				PositionId = "Admin"
-			}); context.Positions.Add(new Position()
+			});
+
+            context.Positions.Add(new Position()
 			{
 				PositionId = "Human Resources"
 			});
+
 			context.SaveChanges();
+
 			context.Employees.Add(new Employee()
 			{
 				EmployeeId = "a00828729",
@@ -28,7 +32,8 @@ namespace PayRoll.Models
 				Phone = "778-535-8435",
 				FullOrPartTime = "Part-Time",
 				Seniority = 4,
-				DepartmentType = "Executive"
+				DepartmentType = "Executive",
+                HourlyRate = 35.00m
 			});
 			context.SaveChanges();
 			context.Positions.Find("Admin").Employees.Add(context.Employees.Find("a00828729"));
@@ -45,6 +50,33 @@ namespace PayRoll.Models
             {
                 Type = "Appointment"
             });
+
+    Employee e = new Employee()
+            {
+                EmployeeId = "a00828730",
+                Password = "1020304050",
+                FName = "Andra",
+                LName = "Avram",
+                Address = "Pinetree Way",
+                Phone = "778-535-4619",
+                FullOrPartTime = "Full-Time",
+                Seniority = 4,
+                DepartmentType = "Executive",
+                HourlyRate = 35.00m
+			};
+
+
+            Attendance a = new Attendance()
+            {
+                AttendanceId = "1",
+                SignInTime = DateTime.Parse("2018-1-1 8:00:00 AM"),
+                SignOutTime = DateTime.Parse("2018-1-1 9:00:00 AM"),
+                
+            };
+
+            e.Attendances.Add(a);
+
+            context.Employees.Add(e);
             context.SaveChanges();
             base.Seed(context);
 		}
