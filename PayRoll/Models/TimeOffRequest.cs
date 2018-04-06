@@ -12,10 +12,12 @@ namespace PayRoll.Models
 		public int TimeOffRequestId { get; set; }
 
 		[Required]
-		public DateTime StartDate { get; set; }
+		[DataType(DataType.Date)]
+		public DateTime StartDate { get; set; } = DateTime.Now;
 
 		[Required]
-		public DateTime EndDate { get; set; }
+		[DataType(DataType.Date)]
+		public DateTime EndDate { get; set; } = DateTime.Now;
 
 		[MaxLength(512)]
 		public string Reason { get; set; }
