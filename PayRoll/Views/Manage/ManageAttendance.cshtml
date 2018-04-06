@@ -9,13 +9,11 @@
 @using (Html.BeginForm("PunchIn", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.ValidationSummary("", new { @class = "text-danger" })
-        <input type="submit" value="Punch In" class="btn btn-default" />
+    <input type="submit" value="Punch In" class="btn btn-default" />
 }
 @using (Html.BeginForm("PunchOut", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.ValidationSummary("", new { @class = "text-danger" })
-        <input type="submit" value="Punch Out" class="btn btn-default" />
+    <input type="submit" value="Punch Out" class="btn btn-default" />
 }
 <br />
-
-

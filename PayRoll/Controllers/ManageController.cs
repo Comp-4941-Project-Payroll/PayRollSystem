@@ -32,9 +32,9 @@ namespace PayRoll.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -330,45 +330,69 @@ namespace PayRoll.Controllers
             return View();
         }
 
+        /*
+         * Punch In:
+         * User cannot punch in more than 1 hour before shift (to avoid time cheating)
+         * If user clicks punch IN at the end of their shift, it should show error and prompt user to unch OUT
+         */
         [HttpPost]
         public ActionResult PunchIn(Attendance model)
         {
+            string error = "";
             DateTime curTime = DateTime.Now;
-            Boolean success = false;
-            /*
-             * CHECK SHIFT TIME
-             * CHECK IF USER ALREADY PUNCH IN BEFORE
-             */
-
-            //string ID = "";
-            //string query = "SELECT * FROM ATTENDANCE WHERE EMPLOYEEID = " + ID;
+            Boolean success = true;
             PayrollDbContext db = new PayrollDbContext();
-            db.Attendances.Find();
-            return success ? RedirectToAction("Index") : RedirectToAction("ManageAttendance", new {Message = "Invalid punch - " + curTime.ToString() });        
+
+            //NEEDED MODIFICATION HERE
+            Employee user = db.Employees.Find(User.Identity);
+
+            DateTime startTime = user.shiftID.StartTime;
+
+            // Check if user signs in too early
+            if ((curTime-startTime).TotalHours < 1)
+            {
+                success = false;
+                error = "Your shift has not started yet. Please try again later.";
+            }
+            // Check if user has already signed in earlier in the day, just in case they mispunch
+            else if (db.Attendances.Where(m => model.EmployeeId == user && model.SignInTime.Date == curTime.Date && model.SignOutTime==null) != null)
+            {
+                success = false;
+                error = "You have already punched in today. Please try again.";
+            }
+            //create new attendance log of the new work day (even if they forgot to punch out on the previous day)
+            if (success)
+            {
+                db.Attendances.Add(new Attendance { EmployeeId = user, SignInTime = curTime});
+            }
+            return success ? RedirectToAction("Index") : RedirectToAction("ManageAttendance", new { Message = error});
         }
 
         [HttpPost]
         public ActionResult PunchOut(Attendance model)
         {
             DateTime curTime = DateTime.Now;
-            Boolean success = false;
-            return success ? RedirectToAction("Index") : RedirectToAction("ManageAttendance", new { Message = "Invalid punch - " + curTime.ToString() });
+            string error = "";
+            Boolean success = true;
+            PayrollDbContext db = new PayrollDbContext();
+
+            //NEEDED MODIFICATION HERE
+            Employee user = db.Employees.Find(User.Identity);
+
+            if (db.Attendances.Where(m => model.EmployeeId == user && model.SignInTime.Date == curTime.Date) == null)
+            {
+                success = false;
+                error = "You cannot punch out now. Please try again.";
+            }
+            //create new attendance log of the new work day (even if they forgot to punch out on the previous day)
+            if (success)
+            {
+                db.Attendances.Add(new Attendance { EmployeeId = user, SignInTime = curTime });
+            }
+
+            return success ? RedirectToAction("Index") : RedirectToAction("ManageAttendance", new { Message = error });
         }
 
-        // POST: /Manage/AddPhoneNumber
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        /*
-        public async Task<ActionResult> ManageAttendance(Attendance model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-            
-            return RedirectToAction("Index", new { PhoneNumber = model.SignInTime});
-        }
-        */
 
         protected override void Dispose(bool disposing)
         {
@@ -381,7 +405,7 @@ namespace PayRoll.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -433,6 +457,6 @@ namespace PayRoll.Controllers
             Error
         }
 
-#endregion
+        #endregion
     }
 }
