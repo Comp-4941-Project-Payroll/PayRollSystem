@@ -32,9 +32,9 @@ namespace PayRoll.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -61,6 +61,7 @@ namespace PayRoll.Controllers
                 : message == ManageMessageId.Error ? "An error has occurred."
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+                : message == ManageMessageId.PunchSuccess ? "You have successfully punch in/out"
                 : "";
 
             var userId = User.Identity.GetUserId();
@@ -322,6 +323,39 @@ namespace PayRoll.Controllers
             return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
         }
 
+        // GET: /Manage/ManageAttendances
+        public ActionResult ManageAttendance(string message)
+        {
+            ViewBag.StatusMessage = message;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult PunchIn(Attendance model)
+        {
+            DateTime curTime = DateTime.Now;
+            Boolean success = false;
+            /*
+             * CHECK SHIFT TIME
+             * CHECK IF USER ALREADY PUNCH IN BEFORE
+             */
+
+            //string ID = "";
+            //string query = "SELECT * FROM ATTENDANCE WHERE EMPLOYEEID = " + ID;
+            //PayrollDbContext db = new PayrollDbContext();
+            //db.Attendances.Find();
+            return success ? RedirectToAction("Index") : RedirectToAction("ManageAttendance", new { Message = "Invalid punch - " + curTime.ToString() });
+        }
+
+        [HttpPost]
+        public ActionResult PunchOut(Attendance model)
+        {
+            DateTime curTime = DateTime.Now;
+            Boolean success = true;
+            return success ? RedirectToAction("Index") : RedirectToAction("ManageAttendance", new { Message = "Invalid punch - " + curTime.ToString() });
+        }
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && _userManager != null)
@@ -333,7 +367,7 @@ namespace PayRoll.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -381,9 +415,10 @@ namespace PayRoll.Controllers
             SetPasswordSuccess,
             RemoveLoginSuccess,
             RemovePhoneSuccess,
+            PunchSuccess,
             Error
         }
 
-#endregion
+        #endregion
     }
 }
