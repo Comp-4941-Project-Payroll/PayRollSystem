@@ -298,6 +298,7 @@
     <Content Include="Views\Managers\Edit.cshtml" />
     <Content Include="Views\Managers\Index.cshtml" />
     <Content Include="Views\ChangePassword\Index.cshtml" />
+    <Content Include="Views\ChangePassword\Success.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

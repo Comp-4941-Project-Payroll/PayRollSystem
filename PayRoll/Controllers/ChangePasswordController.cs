@@ -36,6 +36,7 @@ namespace PayRoll.Controllers
 			string newPassword = forms["newPassword"];
 			string confirmPassword = forms["confirmPassword"];
 			Employee employee = db.Employees.Find("a00828729");
+			string originalPassword = employee.Password;
 			if (newPassword != confirmPassword)
 			{
 				ModelState.AddModelError("NewPassword", "Passwords do not match");
@@ -50,9 +51,14 @@ namespace PayRoll.Controllers
 			catch (System.Data.Entity.Validation.DbEntityValidationException e)
 			{
 				ModelState.AddModelError("NewPassword", e.EntityValidationErrors.ElementAt(0).ValidationErrors.ElementAt(0).ErrorMessage);
-				employee = db.Employees.Find("a00828729");
+				employee.Password = originalPassword;
+				return View(employee);
 			}
-			return View(employee);
+			return RedirectToAction("Success");
 		}
-    }
+		public ActionResult Success()
+		{
+			return View();
+		}
+	}
 }
