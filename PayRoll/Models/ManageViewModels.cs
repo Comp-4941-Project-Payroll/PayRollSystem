@@ -9,7 +9,7 @@ namespace PayRoll.Models
     {
         public bool HasPassword { get; set; }
         public IList<UserLoginInfo> Logins { get; set; }
-        public string PhoneNumber { get; set; }
+        public string EmailNumber { get; set; }
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
     }
@@ -58,24 +58,24 @@ namespace PayRoll.Models
         public string ConfirmPassword { get; set; }
     }
 
-    public class AddPhoneNumberViewModel
+    public class AddEmailNumberViewModel
     {
         [Required]
-        [Phone]
-        [Display(Name = "Phone Number")]
+        [EmailAddress]
+        [Display(Name = "Email Number")]
         public string Number { get; set; }
     }
 
-    public class VerifyPhoneNumberViewModel
+    public class VerifyEmailNumberViewModel
     {
         [Required]
         [Display(Name = "Code")]
         public string Code { get; set; }
 
         [Required]
-        [Phone]
-        [Display(Name = "Phone Number")]
-        public string PhoneNumber { get; set; }
+        [EmailAddress]
+        [Display(Name = "Email Number")]
+        public string EmailNumber { get; set; }
     }
 
     public class ConfigureTwoFactorViewModel

@@ -27,8 +27,8 @@ namespace PayRoll.Models
 		[MaxLength(100)]
 		public string Address { get; set; }
 
-		[StringLength(15, MinimumLength = 10)]
-		public string Phone { get; set; }
+		[EmailAddress]
+		public string Email { get; set; }
 
 		[MaxLength(10)]
 		[Display(Name = "Full or Part Time")]
