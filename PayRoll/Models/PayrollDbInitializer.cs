@@ -13,11 +13,15 @@ namespace PayRoll.Models
             context.Positions.Add(new Position()
 			{
 				PositionId = "Admin"
-			}); context.Positions.Add(new Position()
+			});
+
+            context.Positions.Add(new Position()
 			{
 				PositionId = "Human Resources"
 			});
+
 			context.SaveChanges();
+
 			context.Employees.Add(new Employee()
 			{
 				EmployeeId = "a00828729",
@@ -25,10 +29,11 @@ namespace PayRoll.Models
 				FName = "Davin",
 				LName = "Deol",
 				Address = "4652 Redex Blvd",
-				Phone = "778-535-8435",
+				Email = "vpnprez@hotmail.com",
 				FullOrPartTime = "Part-Time",
 				Seniority = 4,
-				DepartmentType = "Executive"
+				DepartmentType = "Executive",
+                HourlyRate = 35.00m
 			});
 			context.SaveChanges();
 			context.Positions.Find("Admin").Employees.Add(context.Employees.Find("a00828729"));
@@ -46,15 +51,15 @@ namespace PayRoll.Models
                 Type = "Appointment"
             });
 
-Employee e = new Employee()
+    Employee e = new Employee()
             {
-                EmployeeId = "a00828729",
-                Password = "1234567890",
-                FName = "Davin",
-                LName = "Deol",
-                Address = "4652 Redex Blvd",
-                Phone = "778-535-8435",
-                FullOrPartTime = "FullTime",
+                EmployeeId = "a00828730",
+                Password = "1020304050",
+                FName = "Andra",
+                LName = "Avram",
+                Address = "Pinetree Way",
+                Email = "vpnprez1@hotmail.com",
+                FullOrPartTime = "Full-Time",
                 Seniority = 4,
                 DepartmentType = "Executive",
                 HourlyRate = 35.00m
@@ -72,7 +77,6 @@ Employee e = new Employee()
             e.Attendances.Add(a);
 
             context.Employees.Add(e);
-            context.Attendances.Add(a);
             context.SaveChanges();
             base.Seed(context);
 		}

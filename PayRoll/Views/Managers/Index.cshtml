@@ -35,6 +35,9 @@
         <th>
             @Html.DisplayNameFor(model => model.DepartmentType)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HourlyRate)
+        </th>
         <th></th>
     </tr>
 
@@ -63,6 +66,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.DepartmentType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HourlyRate)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.EmployeeId }) |

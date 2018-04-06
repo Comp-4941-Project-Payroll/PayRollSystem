@@ -59,15 +59,15 @@ namespace PayRoll.Controllers
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
                 : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
                 : message == ManageMessageId.Error ? "An error has occurred."
-                : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
-                : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+                : message == ManageMessageId.AddEmailSuccess ? "Your Email number was added."
+                : message == ManageMessageId.RemoveEmailSuccess ? "Your Email number was removed."
                 : "";
 
             var userId = User.Identity.GetUserId();
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
-                PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
+                EmailNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
@@ -100,17 +100,17 @@ namespace PayRoll.Controllers
         }
 
         //
-        // GET: /Manage/AddPhoneNumber
-        public ActionResult AddPhoneNumber()
+        // GET: /Manage/AddEmailNumber
+        public ActionResult AddEmailNumber()
         {
             return View();
         }
 
         //
-        // POST: /Manage/AddPhoneNumber
+        // POST: /Manage/AddEmailNumber
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> AddPhoneNumber(AddPhoneNumberViewModel model)
+        public async Task<ActionResult> AddEmailNumber(AddEmailNumberViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -127,7 +127,7 @@ namespace PayRoll.Controllers
                 };
                 await UserManager.SmsService.SendAsync(message);
             }
-            return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.Number });
+            return RedirectToAction("VerifyEmailNumber", new { EmailNumber = model.Number });
         }
 
         //
@@ -161,25 +161,25 @@ namespace PayRoll.Controllers
         }
 
         //
-        // GET: /Manage/VerifyPhoneNumber
-        public async Task<ActionResult> VerifyPhoneNumber(string phoneNumber)
+        // GET: /Manage/VerifyEmailNumber
+        public async Task<ActionResult> VerifyEmailNumber(string EmailNumber)
         {
-            var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), phoneNumber);
-            // Send an SMS through the SMS provider to verify the phone number
-            return phoneNumber == null ? View("Error") : View(new VerifyPhoneNumberViewModel { PhoneNumber = phoneNumber });
+            var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), EmailNumber);
+            // Send an SMS through the SMS provider to verify the Email number
+            return EmailNumber == null ? View("Error") : View(new VerifyEmailNumberViewModel { EmailNumber = EmailNumber });
         }
 
         //
-        // POST: /Manage/VerifyPhoneNumber
+        // POST: /Manage/VerifyEmailNumber
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> VerifyPhoneNumber(VerifyPhoneNumberViewModel model)
+        public async Task<ActionResult> VerifyEmailNumber(VerifyEmailNumberViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-            var result = await UserManager.ChangePhoneNumberAsync(User.Identity.GetUserId(), model.PhoneNumber, model.Code);
+            var result = await UserManager.ChangePhoneNumberAsync(User.Identity.GetUserId(), model.EmailNumber, model.Code);
             if (result.Succeeded)
             {
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
@@ -187,18 +187,18 @@ namespace PayRoll.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                return RedirectToAction("Index", new { Message = ManageMessageId.AddPhoneSuccess });
+                return RedirectToAction("Index", new { Message = ManageMessageId.AddEmailSuccess });
             }
             // If we got this far, something failed, redisplay form
-            ModelState.AddModelError("", "Failed to verify phone");
+            ModelState.AddModelError("", "Failed to verify Email");
             return View(model);
         }
 
         //
-        // POST: /Manage/RemovePhoneNumber
+        // POST: /Manage/RemoveEmailNumber
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> RemovePhoneNumber()
+        public async Task<ActionResult> RemoveEmailNumber()
         {
             var result = await UserManager.SetPhoneNumberAsync(User.Identity.GetUserId(), null);
             if (!result.Succeeded)
@@ -210,7 +210,7 @@ namespace PayRoll.Controllers
             {
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
             }
-            return RedirectToAction("Index", new { Message = ManageMessageId.RemovePhoneSuccess });
+            return RedirectToAction("Index", new { Message = ManageMessageId.RemoveEmailSuccess });
         }
 
         //
@@ -363,24 +363,24 @@ namespace PayRoll.Controllers
             return false;
         }
 
-        private bool HasPhoneNumber()
+        private bool HasEmailNumber()
         {
             var user = UserManager.FindById(User.Identity.GetUserId());
             if (user != null)
             {
-                return user.PhoneNumber != null;
+                return user.Email != null;
             }
             return false;
         }
 
         public enum ManageMessageId
         {
-            AddPhoneSuccess,
+            AddEmailSuccess,
             ChangePasswordSuccess,
             SetTwoFactorSuccess,
             SetPasswordSuccess,
             RemoveLoginSuccess,
-            RemovePhoneSuccess,
+            RemoveEmailSuccess,
             Error
         }
 

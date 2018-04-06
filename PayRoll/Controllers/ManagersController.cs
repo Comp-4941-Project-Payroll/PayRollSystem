@@ -10,17 +10,17 @@ using PayRoll.Models;
 
 namespace PayRoll.Controllers
 {
-    public class EmployeesController : Controller
+    public class ManagersController : Controller
     {
         private PayrollDbContext db = new PayrollDbContext();
 
-        // GET: Employees
+        // GET: Managers
         public ActionResult Index()
         {
             return View(db.Employees.ToList());
         }
 
-        // GET: Employees/Details/5
+        // GET: Managers/Details/5
         public ActionResult Details(string id)
         {
             if (id == null)
@@ -35,34 +35,30 @@ namespace PayRoll.Controllers
             return View(employee);
         }
 
-        // GET: Employees/Create
+        // GET: Managers/Create
         public ActionResult Create()
         {
-			ViewData["positions"] = db.Positions.ToArray();
-			return View();
+            return View();
         }
 
-        // POST: Employees/Create
+        // POST: Managers/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Password,FName,LName,Address,Email,FullOrPartTime,Seniority,DepartmentType,HourlyRate")] Employee employee)
+        public ActionResult Create([Bind(Include = "EmployeeId,Password,FName,LName,Address,Phone,FullOrPartTime,Seniority,DepartmentType,HourlyRate")] Employee employee)
         {
-			employee.EmployeeId = generateEmployeeId();
             if (ModelState.IsValid)
             {
                 db.Employees.Add(employee);
                 db.SaveChanges();
-				db.Positions.Find(Request.Form.Get("Position")).Employees.Add(employee);
-				db.SaveChanges();
-				return RedirectToAction("Index");
+                return RedirectToAction("Index");
             }
 
             return View(employee);
         }
 
-        // GET: Employees/Edit/5
+        // GET: Managers/Edit/5
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -77,12 +73,12 @@ namespace PayRoll.Controllers
             return View(employee);
         }
 
-        // POST: Employees/Edit/5
+        // POST: Managers/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EmployeeId,Password,FName,LName,Address,Email,FullOrPartTime,Seniority,DepartmentType")] Employee employee)
+        public ActionResult Edit([Bind(Include = "EmployeeId,Password,FName,LName,Address,Phone,FullOrPartTime,Seniority,DepartmentType,HourlyRate")] Employee employee)
         {
             if (ModelState.IsValid)
             {
@@ -93,7 +89,7 @@ namespace PayRoll.Controllers
             return View(employee);
         }
 
-        // GET: Employees/Delete/5
+        // GET: Managers/Delete/5
         public ActionResult Delete(string id)
         {
             if (id == null)
@@ -108,7 +104,7 @@ namespace PayRoll.Controllers
             return View(employee);
         }
 
-        // POST: Employees/Delete/5
+        // POST: Managers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
@@ -127,16 +123,5 @@ namespace PayRoll.Controllers
             }
             base.Dispose(disposing);
         }
-
-		private string generateEmployeeId()
-		{
-			Random rnd = new Random();
-			string result = "a00";
-			for (int i = 0; i < 6; i++)
-			{
-				result += rnd.Next(0, 10);
-			}
-			return result;
-		}
     }
 }
