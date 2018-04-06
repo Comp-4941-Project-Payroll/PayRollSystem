@@ -32,6 +32,7 @@ namespace PayRoll.Models
 				Phone = "778-535-8435",
 				FullOrPartTime = "Part-Time",
 				Seniority = 4,
+                ShiftIdd = "03",
 				DepartmentType = "Executive",
                 HourlyRate = 35.00m
 			});

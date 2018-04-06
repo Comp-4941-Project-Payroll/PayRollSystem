@@ -41,7 +41,7 @@ namespace PayRoll.Models
 		public string DepartmentType { get; set; }
         public decimal HourlyRate { get; set; }
 
-        public Schedule shiftID { get; set; }
+        public string ShiftIdd { get; set; }
 
 		public ICollection<TimeOffRequest> TimeOffRequests { get; set; } = new List<TimeOffRequest>();
 
