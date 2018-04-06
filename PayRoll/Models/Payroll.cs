@@ -14,7 +14,6 @@ namespace PayRoll.Models
 		public int year { get; set; }
 		public int RegularHours { get; set; }
 		public int OverTimeHours { get; set; }
-		public decimal HourlyRate { get; set; }
 		public decimal Earnings { get; set; }
 		public int BeginningVacation { get; set; }
 		public int VacationHrsTaken { get; set; }
