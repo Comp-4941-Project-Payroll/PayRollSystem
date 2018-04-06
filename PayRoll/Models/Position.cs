@@ -9,14 +9,9 @@ namespace PayRoll.Models
 	public class Position
 	{
 		[Key]
-		[MaxLength(100)]
-		public string PositionId { get; set; }
-
-		[Required]
 		[StringLength(20, MinimumLength = 3)]
-		public string PositionName { get; set; }
-
-		public decimal BaseSalary { get; set; } = 0;
+		public string PositionId { get; set; }
+		
         public ICollection<Employee> Employees { get; set; } = new List<Employee>();
     }
 }

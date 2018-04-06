@@ -200,7 +200,11 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+<<<<<<< HEAD
     <Compile Include="Controllers\AttendanceController.cs" />
+=======
+    <Compile Include="Controllers\EmployeesController.cs" />
+>>>>>>> develop
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\TimeOffRequestsController.cs" />
@@ -221,6 +225,7 @@
     <Compile Include="Models\Repository\Repository.cs" />
     <Compile Include="Models\Schedule.cs" />
     <Compile Include="Models\TimeOffRequest.cs" />
+    <Compile Include="Models\TypeOfTimeOff.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -290,6 +295,11 @@
     <Content Include="Views\PayrollManage\Details.cshtml" />
     <Content Include="Views\PayrollManage\Edit.cshtml" />
     <Content Include="Views\PayrollManage\Index.cshtml" />
+    <Content Include="Views\Employees\Create.cshtml" />
+    <Content Include="Views\Employees\Delete.cshtml" />
+    <Content Include="Views\Employees\Details.cshtml" />
+    <Content Include="Views\Employees\Edit.cshtml" />
+    <Content Include="Views\Employees\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
