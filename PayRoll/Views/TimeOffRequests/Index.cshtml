@@ -19,7 +19,7 @@
                 <td>
                     <div class="form-group">
                         <label for="Type" class="control-label col-md-2" style="width:auto;">Type</label>
-                        <div class="col-md-10">
+                        <div class="col-md-10" style="float:none;">
                             <select name="Type" id="Type" class="form-control single-line">
                                 @for (var i = 0; i < typesOfTimeOffRequests.Length; i++)
                                 {
@@ -32,7 +32,7 @@
                 <td>
                     <div class="form-group">
                         @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2", @style = "width:auto;" })
-                        <div class="col-md-10">
+                        <div class="col-md-10" style="float:none;">
                             @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
                         </div>
@@ -41,7 +41,7 @@
                 <td>
                     <div class="form-group">
                         @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2", @style = "width:auto;" })
-                        <div class="col-md-10">
+                        <div class="col-md-10" style="float:none;">
                             @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
                         </div>
