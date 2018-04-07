@@ -23,5 +23,7 @@ namespace PayRoll.Models
 		public string Reason { get; set; }
 
 		public DateTime WhenSent { get; set; } = DateTime.Now;
-	}
+
+        public Employee EmployeeId { get; set; }
+    }
 }
