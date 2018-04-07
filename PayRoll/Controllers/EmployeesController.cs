@@ -138,5 +138,31 @@ namespace PayRoll.Controllers
 			}
 			return result;
 		}
+        
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(String Email, String password)
+        {
+            //Email Refers to EmployeeId textbox in Login page.
+                var myEmployee = db.Employees
+                      .FirstOrDefault(u => u.EmployeeId == Email
+                                   && u.Password == password);
+
+            if (myEmployee != null)
+            {
+                Session["EmployeeId"] = db.Employees.FirstOrDefault().EmployeeId;
+                return RedirectToAction("Index", "PayrollManage");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Invalid login credentials.");
+                return RedirectToAction("Login","Account");
+            }
+       
+        }
+        }
+
     }
-}
+
+
