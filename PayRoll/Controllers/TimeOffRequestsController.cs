@@ -97,7 +97,7 @@ namespace PayRoll.Controllers
         public ActionResult AcceptDelete(int id)
         {
             TimeOffRequest req = db.TimeOffRequests.Find(id);
-            db.TimeOffRequests.Remove(req);
+            //db.TimeOffRequests.Remove(req);
             db.SaveChanges();
             return RedirectToAction("AdminApproval");
         }
