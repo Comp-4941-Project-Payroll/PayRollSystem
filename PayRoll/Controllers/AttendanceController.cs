@@ -108,6 +108,7 @@ namespace PayRoll.Controllers
             Boolean success = true;
             PayrollDbContext db = new PayrollDbContext();
             db.Schedules.Add(new Schedule { ShiftId = "03", StartTime = new DateTime(2018, 04, 6, 16, 00, 00), EndTime = new DateTime(2018, 04, 7, 00, 00, 00) });
+            db.SaveChanges();
             //NEEDED MODIFICATION HERE
             Employee user = db.Employees.Find("a00828729");
             DateTime startTime = db.Schedules.Find(user.ShiftIdd).StartTime;
@@ -119,15 +120,19 @@ namespace PayRoll.Controllers
                 error = "Your shift has not started yet. Please try again later.";
             }
             // Check if user has already signed in earlier in the day, just in case they mispunch
-            else if (db.Attendances.Where(m => m.EmployeeId == user && m.SignInTime.Date == curTime.Date && m.SignOutTime == null) != null)
+            /*
+            else if (db.Attendances.Where(m => m.EmployeeId.EmployeeId == user.EmployeeId && m.SignInTime.Date == curTime.Date && m.SignOutTime.Date != curTime.Date) != null)
+            //else if (db.Attendances.Where(m => m.EmployeeId.EmployeeId == user.EmployeeId && m.SignInTime.Date == curTime.Date && m.SignOutTime.Date != curTime.Date) != null)             
             {
                 success = false;
                 error = "You have already punched in today. Please try again.";
             }
+            */
             //create new attendance log of the new work day (even if they forgot to punch out on the previous day)
             if (success)
             {
                 db.Attendances.Add(new Attendance { EmployeeId = user, SignInTime = curTime });
+                db.SaveChanges();
             }
             return success ? RedirectToAction("Index") : RedirectToAction("ManageAttendance", new { Message = error });
 
@@ -143,8 +148,8 @@ namespace PayRoll.Controllers
 
             //NEEDED MODIFICATION HERE
             Employee user = db.Employees.Find("a00828729");
-            //db.Schedules.Add(new Schedule { ShiftId = "03", StartTime = new DateTime(2018, 04, 6, 16, 00, 00), EndTime = new DateTime(2018, 04, 7, 00, 00, 00) });
-            Attendance todayLog = db.Attendances.Where(m => m.EmployeeId == user && m.SignInTime.Date == curTime.Date).FirstOrDefault();
+            
+            var todayLog = db.Attendances.Where(m => m.EmployeeId.EmployeeId == user.EmployeeId).FirstOrDefault();
             if (todayLog == null)
             {
                 success = false;
@@ -160,7 +165,7 @@ namespace PayRoll.Controllers
                 return RedirectToAction("ManageAttendance", new { Message = error });
             }
             else
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Employees");
         }
 
     }
