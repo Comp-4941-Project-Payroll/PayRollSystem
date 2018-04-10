@@ -108,9 +108,9 @@ namespace PayRoll.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
-        {
-            Employee employee = db.Employees.Find(id);
-            db.Employees.Remove(employee);
+		{
+			Employee employee = db.Employees.Find(id);
+			db.Employees.Remove(employee);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
