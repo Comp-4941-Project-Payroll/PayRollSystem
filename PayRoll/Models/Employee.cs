@@ -37,9 +37,10 @@ namespace PayRoll.Models
 
 		public int Seniority { get; set; } = 0;
 
-		[MaxLength(20)]
+        [MaxLength(20)]
 		public string DepartmentType { get; set; }
         public decimal HourlyRate { get; set; }
+        public int AwardedVacation { get; set; }
 
         public ICollection<TimeOffRequest> TimeOffRequests { get; set; } = new List<TimeOffRequest>();
         public ICollection<Payroll> Payrolls { get; set; } = new List<Payroll>();
