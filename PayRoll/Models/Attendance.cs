@@ -15,7 +15,6 @@ namespace PayRoll.Models
 		//public Employee EmployeeId { get; set; }
 		public DateTime SignInTime { get; set; }
 		public DateTime SignOutTime { get; set; }
-
-       
+		public Employee Employee { get; set; }
     }
 }

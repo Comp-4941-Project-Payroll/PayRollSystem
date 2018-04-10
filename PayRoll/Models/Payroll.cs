@@ -19,5 +19,6 @@ namespace PayRoll.Models
 		public decimal CPP { get; set; }
 		public decimal EI { get; set; }
 		public decimal IncomeTaxes { get; set; }
+		public Employee Employee { get; set; }
 	}
 }

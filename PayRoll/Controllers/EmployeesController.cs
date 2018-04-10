@@ -116,9 +116,9 @@ namespace PayRoll.Controllers
 			try
 			{
 				Employee employee = db.Employees.Find(id);
-				employee.Attendances.Clear();
-				employee.TimeOffRequests.Clear();
-				employee.Payrolls.Clear();
+				db.Attendances.RemoveRange(db.Attendances.Where(e => e.Employee.EmployeeId == id));
+				db.TimeOffRequests.RemoveRange(db.TimeOffRequests.Where(e => e.Employee.EmployeeId == id));
+				db.Payrolls.RemoveRange(db.Payrolls.Where(e => e.Employee.EmployeeId == id));
 				db.Entry(employee).State = EntityState.Modified;
 				db.SaveChanges();
 				db.Employees.Remove(employee);
