@@ -20,7 +20,12 @@ namespace PayRoll.Models
 				PositionId = "Human Resources"
 			});
 
-			context.SaveChanges();
+            context.Positions.Add(new Position()
+            {
+                PositionId = "Master"
+            });
+
+            context.SaveChanges();
 
 			context.Employees.Add(new Employee()
 			{
@@ -35,9 +40,24 @@ namespace PayRoll.Models
 				DepartmentType = "Executive",
                 HourlyRate = 35.00m
 			});
-			context.SaveChanges();
+
+            context.Employees.Add(new Employee()
+            {
+                EmployeeId = "a00000000",
+                Password = "password",
+                FName = "Mas",
+                LName = "Ter",
+                Address = "34573 Ma Str.",
+                Email = "master@master.com",
+                FullOrPartTime = "Full-Time",
+                Seniority = 10,
+                DepartmentType = "Executive",
+                HourlyRate = 75.00m
+            });
+            context.SaveChanges();
 			context.Positions.Find("Admin").Employees.Add(context.Employees.Find("a00828729"));
-			context.SaveChanges();
+            context.Positions.Find("Master").Employees.Add(context.Employees.Find("a00000000"));
+            context.SaveChanges();
 			context.TypesOfTimeOff.Add(new TypeOfTimeOff()
             {
                 Type = "Vacation"
