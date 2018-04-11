@@ -105,5 +105,10 @@ namespace PayRoll
         {
             return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);
         }
+
+        internal Task PasswordSignInAsync(string employeeId, string password, bool shouldLockout)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

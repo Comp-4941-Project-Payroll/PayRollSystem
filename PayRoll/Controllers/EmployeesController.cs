@@ -113,9 +113,19 @@ namespace PayRoll.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Employee employee = db.Employees.Find(id);
-            db.Employees.Remove(employee);
-            db.SaveChanges();
+			try
+			{
+				Employee employee = db.Employees.Find(id);
+				db.Attendances.RemoveRange(db.Attendances.Where(e => e.Employee.EmployeeId == id));
+				db.TimeOffRequests.RemoveRange(db.TimeOffRequests.Where(e => e.Employee.EmployeeId == id));
+				db.Payrolls.RemoveRange(db.Payrolls.Where(e => e.Employee.EmployeeId == id));
+				db.Entry(employee).State = EntityState.Modified;
+				db.SaveChanges();
+				db.Employees.Remove(employee);
+				db.SaveChanges();
+			} catch (Exception ex)
+			{
+			}
             return RedirectToAction("Index");
         }
 
@@ -138,5 +148,31 @@ namespace PayRoll.Controllers
 			}
 			return result;
 		}
+        
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(String Email, String password)
+        {
+            //Email Refers to EmployeeId textbox in Login page.
+                var myEmployee = db.Employees
+                      .FirstOrDefault(u => u.EmployeeId == Email
+                                   && u.Password == password);
+
+            if (myEmployee != null)
+            {
+                Session["EmployeeId"] = db.Employees.FirstOrDefault().EmployeeId;
+                return RedirectToAction("Index", "PayrollManage");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Invalid login credentials.");
+                return RedirectToAction("Login","Account");
+            }
+       
+        }
+        }
+
     }
-}
+
+

@@ -9,7 +9,115 @@
 <div>
     <h4>Payroll</h4>
 
-    
+    <table class="table">
+
+        <tr>
+            <td>Employee Id: 1234</td>
+            <td class="right">Pay Period: @ViewBag.dateRange</td>
+        </tr>
+
+        <tr>
+            <td>Employee Name: Amir Avram</td>
+            <td class="right">Pay Frequency: Bi-Monthly</td>
+        </tr>
+
+        <tr>
+            <td>Address: Coquitlam</td>
+        </tr>
+
+        <tr>
+            <td>Position: Sales Manager</td>
+        </tr>
+
+    </table>
+
+
+    <table>
+        <tr>
+            <td></td>
+            <td class="right">Current</td>
+            <td class="right">YTD</td>
+        </tr>
+        <tr>
+            <td>Earnings</td>
+            <td class="right">@ViewBag.Earnings</td>
+            <td class="right">@ViewBag.EarningsYTD</td>
+        </tr>
+        <tr>
+            <td>Less: Deductions</td>
+        </tr>
+
+        <tr>
+            <td>-CPP</td>
+            <td class="right">@ViewBag.CPP</td>
+            <td class="right">@ViewBag.CPPYTD</td>
+        </tr>
+
+        <tr>
+            <td>-EI</td>
+            <td class="right">@ViewBag.EI</td>
+            <td class="right">@ViewBag.EIYTD</td>
+        </tr>
+
+        <tr>
+            <td>-Income Tax</td>
+            <td class="right">@ViewBag.Tax</td>
+            <td class="right">@ViewBag.TaxYTD</td>
+        </tr>
+
+        <tr>
+            <td>Net Pay</td>
+            <td class="right">@ViewBag.NetPay</td>
+            <td class="right">@ViewBag.NetPayYTD</td>
+        </tr>
+
+    </table>
+
+
+    <hr>
+
+    <table>
+        <tr>
+            <td>Hours</td>
+            <td class="right">Current</td>
+            <td class="right">YTD</td>
+        </tr>
+
+        <tr>
+            <td>Regular</td>
+            <td class="right">@ViewBag.Hours</td>
+            <td class="right">@ViewBag.HoursYTD</td>
+        </tr>
+
+        <tr>
+            <td>Overtime</td>
+            <td class="right">@ViewBag.OvertimeHrs</td>
+            <td class="right">@ViewBag.OvertimeHrsYTD</td>
+        </tr>
+
+
+    </table>
+
+    <hr>
+
+    <table>
+        <tr>
+            <td>Vacation</td>
+        </tr>
+
+        <tr>
+            <td>Beginning Balance(days): @ViewBag.AwardedVacation</td>
+        </tr>
+
+        <tr>
+            <td>Vacation Taken (YTD): @ViewBag.VacationHrs</td>
+        </tr>
+
+        <tr>
+            <td>Closing Balance: @ViewBag.RemainingVacation</td>
+        </tr>
+
+    </table>
 
 
 
@@ -18,90 +126,92 @@
 
 
     @*<hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.year)
-        </dt>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.year)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.year)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.year)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.RegularHours)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.RegularHours)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.RegularHours)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.RegularHours)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.OverTimeHours)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.OverTimeHours)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.OverTimeHours)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.OverTimeHours)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.HourlyRate)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.HourlyRate)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.HourlyRate)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.HourlyRate)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Earnings)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Earnings)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Earnings)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Earnings)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.BeginningVacation)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.BeginningVacation)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.BeginningVacation)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.BeginningVacation)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.VacationHrsTaken)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.VacationHrsTaken)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.VacationHrsTaken)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.VacationHrsTaken)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CPP)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.CPP)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.CPP)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.CPP)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.EI)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.EI)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.EI)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.EI)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.IncomeTaxes)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.IncomeTaxes)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.IncomeTaxes)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.IncomeTaxes)
+            </dd>
 
-    </dl>*@
+        </dl>*@
 </div>
+@*
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.PayrollId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+*@

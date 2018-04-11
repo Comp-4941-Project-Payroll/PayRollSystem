@@ -15,6 +15,7 @@ namespace PayRoll.Controllers
     public class TimeOffRequestsController : Controller
     {
         private PayrollDbContext db = new PayrollDbContext();
+        private string sessionEmployee = System.Web.HttpContext.Current.Session["EmployeeId"] as String;
 
         // GET: TimeOffRequests
         public ActionResult Index()
@@ -42,7 +43,7 @@ namespace PayRoll.Controllers
                 {
                     db.TimeOffRequests.Add(timeOffRequest);
                     db.SaveChanges();
-                    db.Employees.Find("a00828729").TimeOffRequests.Add(timeOffRequest);
+                    db.Employees.Find(sessionEmployee).TimeOffRequests.Add(timeOffRequest);
                     db.SaveChanges();
                     db.TypesOfTimeOff.Find(Request.Form.Get("Type")).TimeOffRequests.Add(timeOffRequest);
                     db.SaveChanges();
@@ -65,39 +66,35 @@ namespace PayRoll.Controllers
         }
         public ActionResult AdminApproval()
         {
-            return View(db.TimeOffRequests.ToList());
+            return View(db.TimeOffRequests.Where(t => t.Status == "No").ToList());
         }
         public ActionResult Accept(int id)
         {
-            Employee emp = null;
-            TimeOffRequest req = db.TimeOffRequests.Find(id);
-
-            foreach (Employee e in db.Employees)
+            TimeOffRequest req = db.TimeOffRequests.Include(e => e.Employee).Where(e => e.TimeOffRequestId == id).FirstOrDefault();
+            try
             {
-                foreach (TimeOffRequest tmp in e.TimeOffRequests)
-                {
-                    if (tmp == req)
-                    {
-                        emp = e;
-                        string email = emp.Email;
-                        SmtpClient client = new SmtpClient("smtp.live.com", 25);
-                        client.Credentials = new System.Net.NetworkCredential("vpnprez@hotmail.com", "dudethatko1");
-                        client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                        client.EnableSsl = true;
-                        MailMessage msg = new MailMessage("vpnprez@hotmail.com", email, "Accepted", "Congrats bud");
-                        client.Send(msg);
-                        return View(emp);
-                    }
-                }
+                SmtpClient client = new SmtpClient("smtp.live.com", 25);
+                client.Credentials = new System.Net.NetworkCredential("vpnprez@hotmail.com", "dudethatko1");
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.EnableSsl = true;
+                MailMessage msg = new MailMessage("vpnprez@hotmail.com", req.Employee.Email, "Accepted", "Congrats bud");
+                client.Send(msg);
+                req.Status = "Yes";
+                db.Entry(req).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Success");
             }
-            return RedirectToAction("AdminApproval");
+            catch (Exception e)
+            {
+                return RedirectToAction("AdminApproval");
+            }
         }
         [HttpPost, ActionName("Accept")]
         [ValidateAntiForgeryToken]
         public ActionResult AcceptDelete(int id)
         {
             TimeOffRequest req = db.TimeOffRequests.Find(id);
-            db.TimeOffRequests.Remove(req);
+            //db.TimeOffRequests.Remove(req);
             db.SaveChanges();
             return RedirectToAction("AdminApproval");
         }
