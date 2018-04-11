@@ -1,5 +1,4 @@
-.vs/
-.mdf
+﻿.mdf
 .mdl
 .vs/PayRoll/v15/sqlite3/storage.ide
 ###################
@@ -29,6 +28,7 @@ _UpgradeReport_Files/
 bin/
 obj/
 TestResults/
+.vs/
 ###################
 # Web publish log #
 ###################
