@@ -298,6 +298,8 @@
     <Content Include="Views\TimeOffRequests\Accept.cshtml" />
     <Content Include="Views\TimeOffRequests\AdminApproval.cshtml" />
     <Content Include="Views\TimeOffRequests\Decline.cshtml" />
+    <Content Include="Views\Shared\Credentials\Anonymous.cshtml" />
+    <Content Include="Views\Shared\Credentials\LoggedIn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

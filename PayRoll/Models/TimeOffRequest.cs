@@ -28,5 +28,6 @@ namespace PayRoll.Models
 		public DateTime WhenSent { get; set; } = DateTime.Now;
 
         public Employee Employee { get; set; }
+        public TypeOfTimeOff TypeOfTimeOff { get; set; }
     }
 }
