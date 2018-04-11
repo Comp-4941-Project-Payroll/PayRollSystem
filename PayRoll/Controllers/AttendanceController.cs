@@ -108,7 +108,7 @@ namespace PayRoll.Controllers
             Boolean success = true;
             PayrollDbContext db = new PayrollDbContext();
             db.Schedules.Add(new Schedule { ShiftId = "03", StartTime = new DateTime(2018, 04, 6, 16, 00, 00), EndTime = new DateTime(2018, 04, 7, 00, 00, 00) });
-            db.SaveChanges();
+            //db.SaveChanges();
             //NEEDED MODIFICATION HERE
             Employee user = db.Employees.Find("a00828729");
             DateTime startTime = db.Schedules.Find(user.ShiftIdd).StartTime;
@@ -132,9 +132,9 @@ namespace PayRoll.Controllers
             if (success)
             {
                 db.Attendances.Add(new Attendance { EmployeeId = user, SignInTime = curTime });
-                db.SaveChanges();
+                //db.SaveChanges();
             }
-            return success ? RedirectToAction("Index") : RedirectToAction("ManageAttendance", new { Message = error });
+            return success ? RedirectToAction("Index", "Employees") : RedirectToAction("ManageAttendance", new { Message = error });
 
         }
 
