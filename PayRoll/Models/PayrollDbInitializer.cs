@@ -53,7 +53,7 @@ namespace PayRoll.Models
 
             //TypeOfTimeOff toto = context.TypesOfTimeOff.Where(s => s.Type == "Personal Reasons").FirstOrDefault();
 
-    Employee e = new Employee()
+            Employee e = new Employee()
             {
                 EmployeeId = "a00828730",
                 Password = "1020304050",
