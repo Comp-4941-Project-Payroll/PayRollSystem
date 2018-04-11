@@ -87,6 +87,7 @@ namespace PayRoll.Models
             
             context.Employees.Add(e);
             context.SaveChanges();
+            context.Positions.Find("Human Resources").Employees.Add(context.Employees.Find("a00828730"));
             base.Seed(context);
 		}
 	}
