@@ -16,8 +16,6 @@ namespace PayRoll.Controllers
         // GET: PayrollManage
         public ActionResult Index()
         {
-            
-
             return View(db.Payrolls.ToList());
         }
 

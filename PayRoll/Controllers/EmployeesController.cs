@@ -161,7 +161,8 @@ namespace PayRoll.Controllers
 
             if (myEmployee != null)
             {
-                Session["EmployeeId"] = db.Employees.Where(x=>x.EmployeeId == myEmployee.EmployeeId).FirstOrDefault().EmployeeId;
+                Session["EmployeeId"] = db.Employees.Where(x => x.EmployeeId == myEmployee.EmployeeId).FirstOrDefault().EmployeeId;
+                Session["Position"] = db.Employees.Include(e => e.Position).Where(y => y.EmployeeId == myEmployee.EmployeeId).FirstOrDefault().Position.PositionId;
                 return RedirectToAction("Index", "PayrollManage");
             }
             else
@@ -169,10 +170,15 @@ namespace PayRoll.Controllers
                 ModelState.AddModelError("", "Invalid login credentials.");
                 return RedirectToAction("Login","Account");
             }
-       
-        }
+
         }
 
+        public ActionResult Logout()
+        {
+            Session.Abandon();
+            return RedirectToAction("Login", "Account");
+        }
     }
+}
 
 

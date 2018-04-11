@@ -41,6 +41,7 @@ namespace PayRoll.Models
 		public string DepartmentType { get; set; }
         public decimal HourlyRate { get; set; }
         public int AwardedVacation { get; set; }
+        public Position Position { get; set; }
 
         public ICollection<TimeOffRequest> TimeOffRequests { get; set; } = new List<TimeOffRequest>();
         public ICollection<Payroll> Payrolls { get; set; } = new List<Payroll>();

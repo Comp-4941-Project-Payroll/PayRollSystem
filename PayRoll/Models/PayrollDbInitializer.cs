@@ -53,16 +53,7 @@ namespace PayRoll.Models
 
             //TypeOfTimeOff toto = context.TypesOfTimeOff.Where(s => s.Type == "Personal Reasons").FirstOrDefault();
 
-            TimeOffRequest tor = new TimeOffRequest()
-            {
-                StartDate = DateTime.Parse("2018-3-1"),
-                EndDate = DateTime.Parse("2018-3-7"),
-                Reason = "Vacation"
-            };
-
-            //toto.TimeOffRequests.Add(tor);
-
-    Employee e = new Employee()
+            Employee e = new Employee()
             {
                 EmployeeId = "a00828730",
                 Password = "1020304050",
@@ -93,18 +84,11 @@ namespace PayRoll.Models
                 SignOutTime = DateTime.Parse("2018-2-1 6:00:00 PM"),
 
             });
-
-
-            e.TimeOffRequests.Add(tor);
+            
             context.Employees.Add(e);
             context.SaveChanges();
+            context.Positions.Find("Human Resources").Employees.Add(context.Employees.Find("a00828730"));
             base.Seed(context);
 		}
 	}
 }
-/*
- * TimeOffRequest x = context.TimeOffRequests.Find(10);
- * Employee y = context.Employees.Find("0000-0000-0000-0000-0000");
- * y.TimeOffRequests.Add(x);
- * db.Employees.Find("0000-0000-0000-0000-0000").TimeOffRequests.Add(timeOffRequest);
- */

@@ -37,6 +37,7 @@ namespace PayRoll.Controllers
             }
             //TimeOffRequestId,WhenSent
             timeOffRequest.WhenSent = DateTime.Now;
+            timeOffRequest.TypeOfTimeOff = db.TypesOfTimeOff.Find(Request.Form.Get("Type"));
             if (ModelState.IsValid)
             {
                 try
@@ -66,28 +67,22 @@ namespace PayRoll.Controllers
         }
         public ActionResult AdminApproval()
         {
-            return View(db.TimeOffRequests.Where(t => t.Status == "No").ToList());
+            var x = db.TimeOffRequests.Include(e => e.Employee).Include(e => e.TypeOfTimeOff).Where(t => t.Status == "No").ToList();
+            return View(db.TimeOffRequests.Include(e => e.Employee).Include(e => e.TypeOfTimeOff).Where(t => t.Status == "No").ToList());
         }
         public ActionResult Accept(int id)
         {
             TimeOffRequest req = db.TimeOffRequests.Include(e => e.Employee).Where(e => e.TimeOffRequestId == id).FirstOrDefault();
-            try
-            {
-                SmtpClient client = new SmtpClient("smtp.live.com", 25);
-                client.Credentials = new System.Net.NetworkCredential("vpnprez@hotmail.com", "dudethatko1");
-                client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                client.EnableSsl = true;
-                MailMessage msg = new MailMessage("vpnprez@hotmail.com", req.Employee.Email, "Accepted", "Congrats bud");
-                client.Send(msg);
-                req.Status = "Yes";
-                db.Entry(req).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Success");
-            }
-            catch (Exception e)
-            {
-                return RedirectToAction("AdminApproval");
-            }
+            SmtpClient client = new SmtpClient("smtp.live.com", 25);
+            client.Credentials = new System.Net.NetworkCredential("vpnprez@hotmail.com", "dudethatko1");
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.EnableSsl = true;
+            MailMessage msg = new MailMessage("vpnprez@hotmail.com", req.Employee.Email, "Accepted", "Congrats bud");
+            client.Send(msg);
+            req.Status = "Yes";
+            db.Entry(req).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("AdminApproval");
         }
         [HttpPost, ActionName("Accept")]
         [ValidateAntiForgeryToken]
