@@ -39,8 +39,8 @@
         @*  
             <dt>Phone Number:</dt>
             <dd>
-                @(Model.PhoneNumber ?? "None")
-                @if (Model.PhoneNumber != null)
+                @(model.Email ?? "None")
+                @if (model.Email != null)
                 {
                     <br />
                     <text>[&nbsp;&nbsp;@Html.ActionLink("Change", "AddPhoneNumber")&nbsp;&nbsp;]</text>

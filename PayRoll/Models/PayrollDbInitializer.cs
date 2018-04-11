@@ -29,7 +29,7 @@ namespace PayRoll.Models
 				FName = "Davin",
 				LName = "Deol",
 				Address = "4652 Redex Blvd",
-				Phone = "778-535-8435",
+				Email = "vpnprez@hotmail.com",
 				FullOrPartTime = "Part-Time",
 				Seniority = 4,
 				DepartmentType = "Executive",
@@ -51,6 +51,17 @@ namespace PayRoll.Models
                 Type = "Appointment"
             });
 
+            //TypeOfTimeOff toto = context.TypesOfTimeOff.Where(s => s.Type == "Personal Reasons").FirstOrDefault();
+
+            TimeOffRequest tor = new TimeOffRequest()
+            {
+                StartDate = DateTime.Parse("2018-3-1"),
+                EndDate = DateTime.Parse("2018-3-7"),
+                Reason = "Vacation"
+            };
+
+            //toto.TimeOffRequests.Add(tor);
+
     Employee e = new Employee()
             {
                 EmployeeId = "a00828730",
@@ -58,24 +69,33 @@ namespace PayRoll.Models
                 FName = "Andra",
                 LName = "Avram",
                 Address = "Pinetree Way",
-                Phone = "778-535-4619",
+                Email = "vpnprez1@hotmail.com",
                 FullOrPartTime = "Full-Time",
                 Seniority = 4,
                 DepartmentType = "Executive",
-                HourlyRate = 35.00m
+                HourlyRate = 35.00m,
+                AwardedVacation = 15
 			};
 
 
-            Attendance a = new Attendance()
+            e.Attendances.Add(new Attendance()
             {
                 AttendanceId = "1",
                 SignInTime = DateTime.Parse("2018-1-1 8:00:00 AM"),
-                SignOutTime = DateTime.Parse("2018-1-1 9:00:00 AM"),
+                SignOutTime = DateTime.Parse("2018-1-1 8:00:00 PM"),
                 
-            };
+            });
 
-            e.Attendances.Add(a);
+            e.Attendances.Add(new Attendance()
+            {
+                AttendanceId = "2",
+                SignInTime = DateTime.Parse("2018-2-1 8:00:00 AM"),
+                SignOutTime = DateTime.Parse("2018-2-1 6:00:00 PM"),
 
+            });
+
+
+            e.TimeOffRequests.Add(tor);
             context.Employees.Add(e);
             context.SaveChanges();
             base.Seed(context);
