@@ -161,7 +161,7 @@ namespace PayRoll.Controllers
 
             if (myEmployee != null)
             {
-                Session["EmployeeId"] = db.Employees.FirstOrDefault().EmployeeId;
+                Session["EmployeeId"] = db.Employees.Where(x=>x.EmployeeId == myEmployee.EmployeeId).FirstOrDefault().EmployeeId;
                 return RedirectToAction("Index", "PayrollManage");
             }
             else
