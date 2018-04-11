@@ -104,6 +104,7 @@ namespace PayRoll.Controllers
         public ActionResult PunchIn(Attendance model)
         {
             string error = "";
+            Boolean admin = false;
             DateTime curTime = DateTime.Now;
             Boolean success = true;
             PayrollDbContext db = new PayrollDbContext();
@@ -114,7 +115,8 @@ namespace PayRoll.Controllers
             DateTime startTime = db.Schedules.Find(user.ShiftIdd).StartTime;
 
             // Check if user signs in too early
-            if ((curTime - startTime).TotalHours < -1)
+            double timeGap = (startTime.Hour - curTime.Hour);
+            if (timeGap > 0.25)
             {
                 success = false;
                 error = "Your shift has not started yet. Please try again later.";
@@ -131,10 +133,23 @@ namespace PayRoll.Controllers
             //create new attendance log of the new work day (even if they forgot to punch out on the previous day)
             if (success)
             {
-                db.Attendances.Add(new Attendance { EmployeeId = user, SignInTime = curTime });
+                db.Attendances.Add(new Attendance { EmployeeId = user, SignInTime = curTime, SignOutTime = curTime });
                 //db.SaveChanges();
+                List<Position> positions = db.Positions.Include(e => e.Employees).ToList();
+                foreach (Position pos in positions)
+                {
+                    if (pos.PositionId == "Admin")
+                    {
+                        admin = true;
+                    }
+                }
+                if (!admin)
+                    return RedirectToAction("Index", "Home");
+                else
+                    return RedirectToAction("Index", "Employees");
             }
-            return success ? RedirectToAction("Index", "Employees") : RedirectToAction("ManageAttendance", new { Message = error });
+            else
+                return RedirectToAction("ManageAttendance", new { Message = error });
 
         }
 
