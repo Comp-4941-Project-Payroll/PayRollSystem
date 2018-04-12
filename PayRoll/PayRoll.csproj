@@ -184,7 +184,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+<<<<<<< HEAD
     <Compile Include="Controllers\ChangePasswordController.cs" />
+=======
+    <Compile Include="Controllers\AttendanceController.cs" />
+>>>>>>> f684d650ecd11dad8771b338ac3b6c54929d30d1
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManagersController.cs" />
@@ -274,7 +278,6 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Manage\ManageAttendance.cshtml" />
     <Content Include="Views\TimeOffRequests\Index.cshtml" />
     <Content Include="Views\TimeOffRequests\Success.cshtml" />
     <Content Include="Views\TimeOffRequests\Failure.cshtml" />
@@ -293,11 +296,16 @@
     <Content Include="Views\Managers\Details.cshtml" />
     <Content Include="Views\Managers\Edit.cshtml" />
     <Content Include="Views\Managers\Index.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\ChangePassword\Index.cshtml" />
     <Content Include="Views\ChangePassword\Success.cshtml" />
     <Content Include="Views\TimeOffRequests\Accept.cshtml" />
     <Content Include="Views\TimeOffRequests\AdminApproval.cshtml" />
     <Content Include="Views\TimeOffRequests\Decline.cshtml" />
+=======
+    <Content Include="Views\Attendance\ManageAttendance.cshtml" />
+    <Content Include="Views\Attendance\AttendanceList.cshtml" />
+>>>>>>> f684d650ecd11dad8771b338ac3b6c54929d30d1
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

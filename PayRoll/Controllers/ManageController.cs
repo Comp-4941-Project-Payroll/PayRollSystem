@@ -328,39 +328,6 @@ namespace PayRoll.Controllers
             return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
         }
 
-        // GET: /Manage/ManageAttendances
-        public ActionResult ManageAttendance(string message)
-        {
-            ViewBag.StatusMessage = message;
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult PunchIn(Attendance model)
-        {
-            DateTime curTime = DateTime.Now;
-            Boolean success = false;
-            /*
-             * CHECK SHIFT TIME
-             * CHECK IF USER ALREADY PUNCH IN BEFORE
-             */
-
-            //string ID = "";
-            //string query = "SELECT * FROM ATTENDANCE WHERE EMPLOYEEID = " + ID;
-            //PayrollDbContext db = new PayrollDbContext();
-            //db.Attendances.Find();
-            return success ? RedirectToAction("Index") : RedirectToAction("ManageAttendance", new { Message = "Invalid punch - " + curTime.ToString() });
-        }
-
-        [HttpPost]
-        public ActionResult PunchOut(Attendance model)
-        {
-            DateTime curTime = DateTime.Now;
-            Boolean success = true;
-            return success ? RedirectToAction("Index") : RedirectToAction("ManageAttendance", new { Message = "Invalid punch - " + curTime.ToString() });
-        }
-
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && _userManager != null)
