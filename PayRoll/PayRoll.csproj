@@ -294,6 +294,7 @@
     <Content Include="Views\Shared\Credentials\Anonymous.cshtml" />
     <Content Include="Views\Shared\Credentials\LoggedIn.cshtml" />
     <Content Include="Views\Employees\Login.cshtml" />
+    <Content Include="Views\Employees\Email.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -4,8 +4,10 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using PayRoll.Models;
 
 namespace PayRoll.Controllers
@@ -51,16 +53,23 @@ namespace PayRoll.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Password,FName,LName,Address,Email,FullOrPartTime,Seniority,DepartmentType,HourlyRate")] Employee employee)
+        public ActionResult Create([Bind(Include = "FName,LName,Address,Email,FullOrPartTime,Seniority,DepartmentType,HourlyRate")] Employee employee)
         {
-			employee.EmployeeId = generateEmployeeId();
+			employee.EmployeeId = GenerateEmployeeId();
+            employee.Password = GeneratePassword();
             if (ModelState.IsValid)
             {
                 db.Employees.Add(employee);
                 db.SaveChanges();
 				db.Positions.Find(Request.Form.Get("Position")).Employees.Add(employee);
 				db.SaveChanges();
-				return RedirectToAction("Index");
+                SmtpClient client = new SmtpClient("smtp.live.com", 25);
+                client.Credentials = new System.Net.NetworkCredential("vpnprez@hotmail.com", "dudethatko1");
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.EnableSsl = true;
+                MailMessage msg = new MailMessage("vpnprez@hotmail.com", employee.Email, "You've Been Hired", "Your Employee ID: " + employee.EmployeeId + "\nYour password: " + employee.Password);
+                client.Send(msg);
+                return RedirectToAction("Index");
             }
 
             ViewData["departmentTypes"] = new string[] { "Production", "Research and Development", "Purchasing", "Marketing", "Human Resources", "Accounting and Finance", "Executive" };
@@ -90,7 +99,7 @@ namespace PayRoll.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EmployeeId,Password,FName,LName,Address,Email,FullOrPartTime,Seniority,DepartmentType")] Employee employee)
+        public ActionResult Edit([Bind(Include = "EmployeeId,FName,LName,Address,Email,FullOrPartTime,Seniority,DepartmentType")] Employee employee)
         {
             if (ModelState.IsValid)
             {
@@ -133,6 +142,38 @@ namespace PayRoll.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Email(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Employee employee = db.Employees.Find(id);
+            if (employee == null)
+            {
+                return HttpNotFound();
+            }
+            return View(employee);
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SendEmail()
+        {
+            Employee currentEmployee = db.Employees.Find(sessionEmployee);
+            string EmployeeId = Request["EmployeeId"];
+            string subject = Request["Subject"];
+            string body = Request["Body"];
+            Employee employee = db.Employees.Find(EmployeeId);
+            SmtpClient client = new SmtpClient("smtp.live.com", 25);
+            client.Credentials = new System.Net.NetworkCredential("vpnprez@hotmail.com", "dudethatko1");
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.EnableSsl = true;
+            MailMessage msg = new MailMessage("vpnprez@hotmail.com", employee.Email, subject, body + "\nFrom: " + currentEmployee.FName + " " + currentEmployee.LName);
+            client.Send(msg);
+            return RedirectToAction("Index");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -142,7 +183,7 @@ namespace PayRoll.Controllers
             base.Dispose(disposing);
         }
 
-		private string generateEmployeeId()
+		private string GenerateEmployeeId()
 		{
 			Random rnd = new Random();
 			string result = "a00";
@@ -152,6 +193,17 @@ namespace PayRoll.Controllers
 			}
 			return result;
 		}
+
+        private string GeneratePassword()
+        {
+            Random rnd = new Random();
+            string result = "";
+            for (int i = 0; i < 8; i++)
+            {
+                result += rnd.Next(0, 10);
+            }
+            return result;
+        }
 
         public ActionResult Login()
         {

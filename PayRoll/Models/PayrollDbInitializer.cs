@@ -43,7 +43,7 @@ namespace PayRoll.Models
 				FName = "Davin",
 				LName = "Deol",
 				Address = "4652 Redex Blvd",
-				Email = "vpnprez@hotmail.com",
+				Email = "davindeol@gmail.com",
 				FullOrPartTime = "Part-Time",
 				Seniority = 4,
 				DepartmentType = "Executive",
