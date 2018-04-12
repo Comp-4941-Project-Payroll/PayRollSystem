@@ -96,7 +96,7 @@ namespace PayRoll.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(Employee employee)
+        public ActionResult Login(LoginViewModel employee)
         {
             if (ModelState.IsValid)
             {
@@ -107,7 +107,8 @@ namespace PayRoll.Controllers
                 if (myEmployee != null)
                 {
                     Session["UserName"] = db.Employees.FirstOrDefault().EmployeeId;
-                    return Redirect("/home/welcomepage");
+                    Session["UserRole"] = db.Employees.FirstOrDefault().Position.PositionId;
+                    return RedirectToAction("Index", "PayrollManage");
                 }
                 else
                 {
@@ -179,7 +180,7 @@ namespace PayRoll.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.EmployeeId, Email = model.EmployeeId };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -230,7 +231,7 @@ namespace PayRoll.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindByNameAsync(model.Email);
+                var user = await UserManager.FindByNameAsync(model.EmployeeId);
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
@@ -276,7 +277,7 @@ namespace PayRoll.Controllers
             {
                 return View(model);
             }
-            var user = await UserManager.FindByNameAsync(model.Email);
+            var user = await UserManager.FindByNameAsync(model.EmployeeId);
             if (user == null)
             {
                 // Don't reveal that the user does not exist
@@ -420,7 +421,8 @@ namespace PayRoll.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            Session.Abandon();
+            return RedirectToAction("Login", "Account");
         }
 
         //

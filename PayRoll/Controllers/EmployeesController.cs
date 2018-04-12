@@ -4,8 +4,10 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using PayRoll.Models;
 
 namespace PayRoll.Controllers
@@ -13,11 +15,13 @@ namespace PayRoll.Controllers
     public class EmployeesController : Controller
     {
         private PayrollDbContext db = new PayrollDbContext();
+        private string sessionEmployee = System.Web.HttpContext.Current.Session["EmployeeId"] as String;
 
         // GET: Employees
         public ActionResult Index()
         {
-            return View(db.Employees.ToList());
+            Employee currentEmployee = db.Employees.Include(e => e.Position).Where(e => e.EmployeeId == sessionEmployee).FirstOrDefault();
+            return View(db.Employees.Include(e => e.Position).Where(e => e.Position.Rank < currentEmployee.Position.Rank));
         }
 
         // GET: Employees/Details/5
@@ -27,7 +31,7 @@ namespace PayRoll.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = db.Employees.Find(id);
+            Employee employee = db.Employees.Include(e => e.Position).Where(e=>e.EmployeeId == id).FirstOrDefault();
             if (employee == null)
             {
                 return HttpNotFound();
@@ -38,9 +42,11 @@ namespace PayRoll.Controllers
         // GET: Employees/Create
         public ActionResult Create()
         {
-			ViewData["positions"] = db.Positions.ToArray();
-            ViewData["schedule"] = db.Schedules.ToArray();
-            return View();
+            Employee currentEmployee = db.Employees.Include(e => e.Position).Where(e => e.EmployeeId == sessionEmployee).FirstOrDefault();
+            ViewData["positions"] = db.Positions.Where(p => p.Rank < currentEmployee.Position.Rank).ToArray();
+            ViewData["departmentTypes"] = new string[] { "Production", "Research and Development", "Purchasing", "Marketing", "Human Resources", "Accounting and Finance", "Executive" };
+			ViewData["schedule"] = db.Schedules.ToArray();
+			return View();
         }
 
         // POST: Employees/Create
@@ -48,19 +54,27 @@ namespace PayRoll.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Password,FName,LName,Address,Email,FullOrPartTime,Seniority,DepartmentType,HourlyRate")] Employee employee)
+        public ActionResult Create([Bind(Include = "FName,LName,Address,Email,FullOrPartTime,Seniority,DepartmentType,HourlyRate")] Employee employee)
         {
-			employee.EmployeeId = generateEmployeeId();
+			employee.EmployeeId = GenerateEmployeeId();
+            employee.Password = GeneratePassword();
             if (ModelState.IsValid)
             {
                 db.Employees.Add(employee);
                 db.SaveChanges();
 				db.Positions.Find(Request.Form.Get("Position")).Employees.Add(employee);
-                db.Schedules.Find(Request.Form.Get("Schedule")).Employees.Add(employee);
-                db.SaveChanges();
-				return RedirectToAction("Index");
+				db.Schedules.Find(Request.Form.Get("Schedule")).Employees.Add(employee);
+				db.SaveChanges();
+                SmtpClient client = new SmtpClient("smtp.live.com", 25);
+                client.Credentials = new System.Net.NetworkCredential("vpnprez@hotmail.com", "dudethatko1");
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.EnableSsl = true;
+                MailMessage msg = new MailMessage("vpnprez@hotmail.com", employee.Email, "You've Been Hired", "Your Employee ID: " + employee.EmployeeId + "\nYour password: " + employee.Password);
+                client.Send(msg);
+                return RedirectToAction("Index");
             }
 
+            ViewData["departmentTypes"] = new string[] { "Production", "Research and Development", "Purchasing", "Marketing", "Human Resources", "Accounting and Finance", "Executive" };
             return View(employee);
         }
 
@@ -76,6 +90,9 @@ namespace PayRoll.Controllers
             {
                 return HttpNotFound();
             }
+            Employee currentEmployee = db.Employees.Include(e => e.Position).Where(e => e.EmployeeId == sessionEmployee).FirstOrDefault();
+            ViewData["positions"] = db.Positions.Where(p => p.Rank < currentEmployee.Position.Rank).ToArray();
+            ViewData["departmentTypes"] = new string[] { "Production", "Research and Development", "Purchasing", "Marketing", "Human Resources", "Accounting and Finance", "Executive" };
             return View(employee);
         }
 
@@ -84,7 +101,7 @@ namespace PayRoll.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EmployeeId,Password,FName,LName,Address,Email,FullOrPartTime,Seniority,DepartmentType")] Employee employee)
+        public ActionResult Edit([Bind(Include = "EmployeeId,FName,LName,Address,Email,FullOrPartTime,Seniority,DepartmentType")] Employee employee)
         {
             if (ModelState.IsValid)
             {
@@ -92,6 +109,7 @@ namespace PayRoll.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewData["departmentTypes"] = new string[] { "Production", "Research and Development", "Purchasing", "Marketing", "Human Resources", "Accounting and Finance", "Executive" };
             return View(employee);
         }
 
@@ -115,19 +133,46 @@ namespace PayRoll.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-			try
-			{
-				Employee employee = db.Employees.Find(id);
-				db.Attendances.RemoveRange(db.Attendances.Where(e => e.Employee.EmployeeId == id));
-				db.TimeOffRequests.RemoveRange(db.TimeOffRequests.Where(e => e.Employee.EmployeeId == id));
-				db.Payrolls.RemoveRange(db.Payrolls.Where(e => e.Employee.EmployeeId == id));
-				db.Entry(employee).State = EntityState.Modified;
-				db.SaveChanges();
-				db.Employees.Remove(employee);
-				db.SaveChanges();
-			} catch (Exception ex)
-			{
-			}
+			Employee employee = db.Employees.Find(id);
+			db.Attendances.RemoveRange(db.Attendances.Where(e => e.Employee.EmployeeId == id));
+			db.TimeOffRequests.RemoveRange(db.TimeOffRequests.Where(e => e.Employee.EmployeeId == id));
+			db.Payrolls.RemoveRange(db.Payrolls.Where(e => e.Employee.EmployeeId == id));
+			db.Entry(employee).State = EntityState.Modified;
+			db.SaveChanges();
+			db.Employees.Remove(employee);
+			db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Email(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Employee employee = db.Employees.Find(id);
+            if (employee == null)
+            {
+                return HttpNotFound();
+            }
+            return View(employee);
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SendEmail()
+        {
+            Employee currentEmployee = db.Employees.Find(sessionEmployee);
+            string EmployeeId = Request["EmployeeId"];
+            string subject = Request["Subject"];
+            string body = Request["Body"];
+            Employee employee = db.Employees.Find(EmployeeId);
+            SmtpClient client = new SmtpClient("smtp.live.com", 25);
+            client.Credentials = new System.Net.NetworkCredential("vpnprez@hotmail.com", "dudethatko1");
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.EnableSsl = true;
+            MailMessage msg = new MailMessage("vpnprez@hotmail.com", employee.Email, subject, body + "\nFrom: " + currentEmployee.FName + " " + currentEmployee.LName);
+            client.Send(msg);
             return RedirectToAction("Index");
         }
 
@@ -140,7 +185,7 @@ namespace PayRoll.Controllers
             base.Dispose(disposing);
         }
 
-		private string generateEmployeeId()
+		private string GenerateEmployeeId()
 		{
 			Random rnd = new Random();
 			string result = "a00";
@@ -150,31 +195,53 @@ namespace PayRoll.Controllers
 			}
 			return result;
 		}
-        
+
+        private string GeneratePassword()
+        {
+            Random rnd = new Random();
+            string result = "";
+            for (int i = 0; i < 8; i++)
+            {
+                result += rnd.Next(0, 10);
+            }
+            return result;
+        }
+
+        public ActionResult Login()
+        {
+            return View();
+        }
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(String Email, String password)
+        public ActionResult Login(String EmployeeId, String password)
         {
             //Email Refers to EmployeeId textbox in Login page.
                 var myEmployee = db.Employees
-                      .FirstOrDefault(u => u.EmployeeId == Email
+                      .FirstOrDefault(u => u.EmployeeId == EmployeeId
                                    && u.Password == password);
 
             if (myEmployee != null)
             {
-                Session["EmployeeId"] = db.Employees.FirstOrDefault().EmployeeId;
+                Session["EmployeeId"] = db.Employees.Where(x => x.EmployeeId == myEmployee.EmployeeId).FirstOrDefault().EmployeeId;
+                Session["Position"] = db.Employees.Include(e => e.Position).Where(y => y.EmployeeId == myEmployee.EmployeeId).FirstOrDefault().Position.PositionId;
                 return RedirectToAction("Index", "PayrollManage");
             }
             else
             {
                 ModelState.AddModelError("", "Invalid login credentials.");
-                return RedirectToAction("Login","Account");
+                return RedirectToAction("Login","Employees");
             }
-       
-        }
+
         }
 
+        public ActionResult Logout()
+        {
+            Session.Abandon();
+            return RedirectToAction("Login");
+        }
     }
+}
 
 

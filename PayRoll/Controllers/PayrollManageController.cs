@@ -16,8 +16,6 @@ namespace PayRoll.Controllers
         // GET: PayrollManage
         public ActionResult Index()
         {
-            
-
             return View(db.Payrolls.ToList());
         }
 
@@ -33,6 +31,7 @@ namespace PayRoll.Controllers
             DateTime month = new DateTime(DateTime.Today.Year, Int32.Parse(strings[0]), 1);
             DateTime firstDayOfPeriod;
             DateTime lastDayOfPeriod;
+            string sessionEmployee = System.Web.HttpContext.Current.Session["EmployeeId"] as String;
 
             if (Int32.Parse(strings[1]) == 1)
             {
@@ -74,7 +73,7 @@ namespace PayRoll.Controllers
             decimal netPayYTD = 0;
             foreach (Employee emp in emps)
             {
-                if (emp.EmployeeId == "a00828730")
+                if (emp.EmployeeId == sessionEmployee)
                 {
                     attendances = emp.Attendances
                         .Where(e => e.SignInTime.Year == firstDayOfPeriod.Year && e.SignInTime.Month == firstDayOfPeriod.Month
@@ -127,7 +126,7 @@ namespace PayRoll.Controllers
 
             foreach (Employee emp in emps2)
             {
-                if (emp.EmployeeId == "a00828730")
+                if (emp.EmployeeId == sessionEmployee)
                 {
                     timeOff = emp.TimeOffRequests.Where(t => t.StartDate.Year == firstDayOfPeriod.Year
                         && t.EndDate <= lastDayOfPeriod).ToList();

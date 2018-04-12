@@ -12,7 +12,6 @@ namespace PayRoll.Models
 		[MaxLength(15)]
 		public string EmployeeId { get; set; }
 
-		[Required]
 		[StringLength(100, MinimumLength = 8)]
 		public string Password { get; set; }
 
@@ -31,21 +30,22 @@ namespace PayRoll.Models
 		public string Email { get; set; }
 
 		[MaxLength(10)]
-		[Display(Name = "Full or Part Time")]
+		[Display(Name = "Full/Part-Time")]
 		[RegularExpression("Full-Time|Part-Time")]
 		public string FullOrPartTime { get; set; }
 
 		public int Seniority { get; set; } = 0;
 
         [MaxLength(20)]
-		public string DepartmentType { get; set; }
+        [Display(Name = "Department")]
+        [RegularExpression("Production|Research and Development|Purchasing|Marketing|Human Resources|Accounting and Finance|Executive")]
+        public string DepartmentType { get; set; }
+        [Display(Name = "Wage")]
         public decimal HourlyRate { get; set; }
         public int AwardedVacation { get; set; }
-
-        public string ShiftIdd { get; set; }
-
+        public Position Position { get; set; }
+		public Schedule ShiftId { get; set; }
 		public ICollection<TimeOffRequest> TimeOffRequests { get; set; } = new List<TimeOffRequest>();
-
         public ICollection<Payroll> Payrolls { get; set; } = new List<Payroll>();
         public ICollection<Attendance> Attendances { get; set; } = new List<Attendance>();
     }

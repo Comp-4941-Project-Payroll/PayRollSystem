@@ -32,9 +32,9 @@ namespace PayRoll.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set
-            {
-                _signInManager = value;
+            private set 
+            { 
+                _signInManager = value; 
             }
         }
 
@@ -59,15 +59,10 @@ namespace PayRoll.Controllers
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
                 : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
                 : message == ManageMessageId.Error ? "An error has occurred."
-<<<<<<< HEAD
-                : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
-                : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
-                : message == ManageMessageId.PunchSuccess ? "You have successfully punch in/out"
-=======
                 : message == ManageMessageId.AddEmailSuccess ? "Your Email number was added."
                 : message == ManageMessageId.RemoveEmailSuccess ? "Your Email number was removed."
->>>>>>> master
-                : "";
+				: message == ManageMessageId.PunchSuccess ? "You have successfully punch in/out"
+				: "";
 
             var userId = User.Identity.GetUserId();
             var model = new IndexViewModel
@@ -339,7 +334,7 @@ namespace PayRoll.Controllers
             base.Dispose(disposing);
         }
 
-        #region Helpers
+		#region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -386,15 +381,11 @@ namespace PayRoll.Controllers
             SetTwoFactorSuccess,
             SetPasswordSuccess,
             RemoveLoginSuccess,
-<<<<<<< HEAD
-            RemovePhoneSuccess,
-            PunchSuccess,
-=======
             RemoveEmailSuccess,
->>>>>>> master
-            Error
+			PunchSuccess,
+			Error
         }
 
-        #endregion
+		#endregion
     }
 }

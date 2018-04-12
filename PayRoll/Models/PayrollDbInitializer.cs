@@ -9,18 +9,32 @@ namespace PayRoll.Models
 	public class PayrollDbInitializer : DropCreateDatabaseAlways<PayrollDbContext>
 	{
 		protected override void Seed(PayrollDbContext context)
-		{
+        {
             context.Positions.Add(new Position()
-			{
-				PositionId = "Admin"
+            {
+                PositionId = "Web Developer",
+                Rank = 1
+            });
+
+            context.Positions.Add(new Position()
+            {
+                PositionId = "Manager",
+                Rank = 4
 			});
 
             context.Positions.Add(new Position()
 			{
-				PositionId = "Human Resources"
+				PositionId = "Human Resources",
+                Rank = 7
 			});
 
-			context.SaveChanges();
+            context.Positions.Add(new Position()
+            {
+                PositionId = "Master",
+                Rank = 100
+            });
+
+            context.SaveChanges();
 
 			context.Employees.Add(new Employee()
 			{
@@ -29,41 +43,34 @@ namespace PayRoll.Models
 				FName = "Davin",
 				LName = "Deol",
 				Address = "4652 Redex Blvd",
-				Email = "vpnprez@hotmail.com",
+				Email = "davindeol@gmail.com",
 				FullOrPartTime = "Part-Time",
 				Seniority = 4,
-                ShiftIdd = "03",
 				DepartmentType = "Executive",
                 HourlyRate = 35.00m
 			});
-			context.SaveChanges();
-			context.Positions.Find("Admin").Employees.Add(context.Employees.Find("a00828729"));
-			context.SaveChanges();
-			context.TypesOfTimeOff.Add(new TypeOfTimeOff()
+
+            context.Employees.Add(new Employee()
             {
-                Type = "Vacation"
+                EmployeeId = "a00000000",
+                Password = "password",
+                FName = "Mas",
+                LName = "Ter",
+                Address = "34573 Ma Str.",
+                Email = "master@master.com",
+                FullOrPartTime = "Full-Time",
+                Seniority = 10,
+                DepartmentType = "Executive",
+                HourlyRate = 75.00m
             });
-            context.TypesOfTimeOff.Add(new TypeOfTimeOff()
-            {
-                Type = "Personal Reasons"
-            });
-            context.TypesOfTimeOff.Add(new TypeOfTimeOff()
-            {
-                Type = "Appointment"
-            });
+            context.SaveChanges();
+			context.Positions.Find("Manager").Employees.Add(context.Employees.Find("a00828729"));
+            context.Positions.Find("Master").Employees.Add(context.Employees.Find("a00000000"));
+            context.SaveChanges();
 
             //TypeOfTimeOff toto = context.TypesOfTimeOff.Where(s => s.Type == "Personal Reasons").FirstOrDefault();
 
-            TimeOffRequest tor = new TimeOffRequest()
-            {
-                StartDate = DateTime.Parse("2018-3-1"),
-                EndDate = DateTime.Parse("2018-3-7"),
-                Reason = "Vacation"
-            };
-
-            //toto.TimeOffRequests.Add(tor);
-
-    Employee e = new Employee()
+            Employee e = new Employee()
             {
                 EmployeeId = "a00828730",
                 Password = "1020304050",
@@ -94,18 +101,11 @@ namespace PayRoll.Models
                 SignOutTime = DateTime.Parse("2018-2-1 6:00:00 PM"),
 
             });
-
-
-            e.TimeOffRequests.Add(tor);
+            
             context.Employees.Add(e);
             context.SaveChanges();
+            context.Positions.Find("Human Resources").Employees.Add(context.Employees.Find("a00828730"));
             base.Seed(context);
 		}
 	}
 }
-/*
- * TimeOffRequest x = context.TimeOffRequests.Find(10);
- * Employee y = context.Employees.Find("0000-0000-0000-0000-0000");
- * y.TimeOffRequests.Add(x);
- * db.Employees.Find("0000-0000-0000-0000-0000").TimeOffRequests.Add(timeOffRequest);
- */

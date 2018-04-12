@@ -11,36 +11,21 @@
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Best App Ever", "Login", "Account", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-<<<<<<< HEAD
-=======
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
->>>>>>> f684d650ecd11dad8771b338ac3b6c54929d30d1
-                    <li>@Html.ActionLink("Request Time Off", "Index", "TimeOffRequests")</li>
-                    <li>@Html.ActionLink("Employees", "Index", "Employees")</li>
-					<li>@Html.ActionLink("Change Password", "Index", "ChangePassword")</li>
-                    <li>@Html.ActionLink("Employee Requests", "AdminApproval", "TimeOffRequests")</li>
-                    <li>@Html.ActionLink("Punch", "ManageAttendance", "Attendance")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
+            @if (Session["Position"] == null)
+            {
+                @Html.Partial("Credentials/Anonymous")
+            }
+            else
+            {
+                @Html.Partial("Credentials/LoggedIn")
+            }
         </div>
     </div>
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Group 1's ASP.NET Application</p>
         </footer>
     </div>
 
