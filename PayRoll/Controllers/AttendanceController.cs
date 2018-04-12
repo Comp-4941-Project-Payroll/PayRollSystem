@@ -103,73 +103,77 @@
          [HttpPost]
          public ActionResult PunchIn(Attendance model)
          {
-            string error = "";
-            Boolean admin = false;
-            DateTime curTime = DateTime.Now;
-            Boolean success = true;
-            PayrollDbContext db = new PayrollDbContext();
-            
-            //db.SaveChanges();
-            //NEEDED MODIFICATION HERE
-            Employee user = db.Employees.Find(Session["EmployeeId"]);
-            DateTime startTime = db.Schedules.Find(user.ShiftId).StartTime;
-
-            // Check if user signs in too early
-            double timeGap = (startTime.Hour - curTime.Hour);
-            if (timeGap > 0.25)
-            {
-                success = false;
-                error = "Your shift has not started yet. Please try again later.";
-            }
-            if (success)
-            {
-                db.Attendances.Add(new Attendance { Employee = user, SignInTime = curTime, SignOutTime = curTime });
-                
-                if ((Session["Position"].ToString() == "Manager") || (Session["Position"].ToString() == "Master"))
-                {
-                    admin = true;
-                }
-                if (!admin)
-                    return RedirectToAction("Index", "Home");
-                else
-                    return RedirectToAction("Index", "Employees");
-            }
-            else
-                return RedirectToAction("ManageAttendance", new { Message = error });
-            //return RedirectToAction("Index", "PayrollManage");
+             //string error = "";
+             //Boolean admin = false;
+             //DateTime curTime = DateTime.Now;
+             //Boolean success = true;
+             //PayrollDbContext db = new PayrollDbContext();
+             //db.Schedules.Add(new Schedule { ShiftId = "03", StartTime = new DateTime(2018, 04, 6, 16, 00, 00), EndTime = new DateTime(2018, 04, 7, 00, 00, 00) });
+             ////db.SaveChanges();
+             ////NEEDED MODIFICATION HERE
+             //Employee user = db.Employees.Find("a00828729");
+             //DateTime startTime = db.Schedules.Find(user.ShiftId).StartTime;
+ 
+             //// Check if user signs in too early
+             //double timeGap = (startTime.Hour - curTime.Hour);
+             //if (timeGap > 0.25)
+             //{
+             //    success = false;
+             //    error = "Your shift has not started yet. Please try again later.";
+             //}
+             //if (success)
+             //{
+             //    db.Attendances.Add(new Attendance { Employee = user, SignInTime = curTime, SignOutTime = curTime });
+             //    //db.SaveChanges();
+             //    List<Position> positions = db.Positions.Include(e => e.Employees).ToList();
+             //    foreach (Position pos in positions)
+             //    {
+             //        if (pos.PositionId == "Admin")
+             //        {
+             //            admin = true;
+             //        }
+             //    }
+             //    if (!admin)
+             //        return RedirectToAction("Index", "Home");
+             //    else
+             //        return RedirectToAction("Index", "Employees");
+             //}
+             //else
+             //    return RedirectToAction("ManageAttendance", new { Message = error });
+			return RedirectToAction("Index", "PayrollManage");
  
          }
  
          [HttpPost]
          public ActionResult PunchOut(Attendance model)
          {
-            DateTime curTime = DateTime.Now;
-            string error = "";
-            Boolean success = true;
-            PayrollDbContext db = new PayrollDbContext();
-
-            //NEEDED MODIFICATION HERE
-            Employee user = db.Employees.Find(Session["EmployeeId"]);
-
-            var todayLog = db.Attendances.Where(m => m.Employee.EmployeeId == user.EmployeeId).FirstOrDefault();
-            if (todayLog == null)
-            {
-                success = false;
-                error = "You cannot punch out now. Please try again.";
-            }
-
-            //create new attendance log of the new work day (even if they forgot to punch out on the previous day)
-            if (success)
-            {
-                todayLog.SignOutTime = curTime;
-                db.Entry(todayLog).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("ManageAttendance", new { Message = error });
-            }
-            else
-                return RedirectToAction("Index", "Employees");
-            //return RedirectToAction("Index", "PayrollManage");
-		 }
+             //DateTime curTime = DateTime.Now;
+             //string error = "";
+             //Boolean success = true;
+             //PayrollDbContext db = new PayrollDbContext();
+ 
+             ////NEEDED MODIFICATION HERE
+             //Employee user = db.Employees.Find("a00828729");
+             
+             //var todayLog = db.Attendances.Where(m => m.Employee.EmployeeId == user.EmployeeId).FirstOrDefault();
+             //if (todayLog == null)
+             //{
+             //    success = false;
+             //    error = "You cannot punch out now. Please try again.";
+             //}
+ 
+             ////create new attendance log of the new work day (even if they forgot to punch out on the previous day)
+             //if (success)
+             //{
+             //    todayLog.SignOutTime = curTime;
+             //    db.Entry(todayLog).State = EntityState.Modified;
+             //    db.SaveChanges();
+             //    return RedirectToAction("ManageAttendance", new { Message = error });
+             //}
+             //else
+             //    return RedirectToAction("Index", "Employees");
+			return RedirectToAction("Index", "PayrollManage");
+		}
  
      }
  }
