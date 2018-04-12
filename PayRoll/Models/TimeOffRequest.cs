@@ -22,6 +22,13 @@ namespace PayRoll.Models
 		[MaxLength(512)]
 		public string Reason { get; set; }
 
+        [RegularExpression("Yes|No")]
+        public string Status { get; set; } = "No";
+
 		public DateTime WhenSent { get; set; } = DateTime.Now;
-	}
+
+        public Employee Employee { get; set; }
+        [RegularExpression("Vacation|Personal Emergency|Appointment")]
+        public string Type { get; set; }
+    }
 }

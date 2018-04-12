@@ -1,40 +1,40 @@
 ﻿@model IEnumerable<PayRoll.Models.TimeOffRequest>
 
 @{
-    ViewBag.Title = "AdminApproval";
+    ViewBag.Title = "Time Off Requests";
 }
 
-<h2>AdminApproval</h2>
+<h2>Time Off Requests Pending Review</h2>
 
 <table class="table">
     <tr>
-        <th>Time Off Request ID</th>
-        <th>Start Date</th>
-        <th>End Date</th>
+        <th>Sender</th>
+        <th>Type</th>
         <th>Reason</th>
+        <th>Start - End Date</th>
         <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TimeOffRequestId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Reason)
-            </td>
-            <td>
-                @Html.ActionLink("Accept", "Accept", new { id = item.TimeOffRequestId }) |
-                @Html.ActionLink("Decline", "Decline", new { id = item.TimeOffRequestId })
-            </td>
-        </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Employee.FName) @Html.DisplayFor(modelItem => item.Employee.LName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Reason)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDate) - @Html.DisplayFor(modelItem => item.EndDate)
+        </td>
+        <td>
+            @Html.ActionLink("Accept", "Accept", new { id = item.TimeOffRequestId }) |
+            @Html.ActionLink("Decline", "Decline", new { id = item.TimeOffRequestId })
+        </td>
+    </tr>
     }
 </table>
 

@@ -11,27 +11,11 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Password)
+            Name
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Password)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LName)
+            @Html.DisplayFor(model => model.FName) @Html.DisplayFor(model => model.LName)
         </dd>
 
         <dt>
@@ -43,11 +27,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Phone)
+            @Html.DisplayNameFor(model => model.Email)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Phone)
+            @Html.DisplayFor(model => model.Email)
         </dd>
 
         <dt>
@@ -59,11 +43,27 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.Position.PositionId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Position.PositionId)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.Seniority)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Seniority)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HourlyRate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HourlyRate)
         </dd>
 
         <dt>

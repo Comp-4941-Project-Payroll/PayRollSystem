@@ -12,10 +12,9 @@ namespace PayRoll.Models
 		[Key]
 		public string AttendanceId { get; set; }
 
-		public Employee EmployeeId { get; set; }
+		//public Employee EmployeeId { get; set; }
 		public DateTime SignInTime { get; set; }
 		public DateTime SignOutTime { get; set; }
-
-        
+		public Employee Employee { get; set; }
     }
 }

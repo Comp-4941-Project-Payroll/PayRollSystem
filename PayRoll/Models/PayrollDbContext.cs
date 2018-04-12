@@ -19,6 +19,13 @@ namespace PayRoll.Models
 		public DbSet<Schedule> Schedules { get; set; }
 		public DbSet<Attendance> Attendances { get; set; }
 		public DbSet<Payroll> Payrolls { get; set; }
-        public DbSet<TypeOfTimeOff> TypesOfTimeOff { get; set; }
-    }
+		//protected override void OnModelCreating(DbModelBuilder modelBuilder)
+		//{
+		//	modelBuilder.Entity<Employee>()
+		//		   .HasOptional(e => e.TimeOffRequests)
+		//		   .WithMany()
+		//		   .WillCascadeOnDelete(true);
+		//	base.OnModelCreating(modelBuilder);
+		//}
+	}
 }
