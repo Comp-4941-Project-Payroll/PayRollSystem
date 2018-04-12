@@ -78,6 +78,8 @@ namespace PayRoll.Controllers
             return View(employee);
         }
 
+
+
         // GET: Employees/Edit/5
         public ActionResult Edit(string id)
         {
@@ -231,7 +233,8 @@ namespace PayRoll.Controllers
             else
             {
                 ModelState.AddModelError("", "Invalid login credentials.");
-                return RedirectToAction("Login","Employees");
+                //return RedirectToAction("Login","Employees");
+                return View("Login");
             }
 
         }
