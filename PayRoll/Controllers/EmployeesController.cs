@@ -77,6 +77,8 @@ namespace PayRoll.Controllers
             {
                 return HttpNotFound();
             }
+            Employee currentEmployee = db.Employees.Include(e => e.Position).Where(e => e.EmployeeId == sessionEmployee).FirstOrDefault();
+            ViewData["positions"] = db.Positions.Where(p => p.Rank < currentEmployee.Position.Rank).ToArray();
             return View(employee);
         }
 
@@ -179,7 +181,7 @@ namespace PayRoll.Controllers
         public ActionResult Logout()
         {
             Session.Abandon();
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("Login");
         }
     }
 }
