@@ -67,18 +67,6 @@ namespace PayRoll.Models
 			context.Positions.Find("Manager").Employees.Add(context.Employees.Find("a00828729"));
             context.Positions.Find("Master").Employees.Add(context.Employees.Find("a00000000"));
             context.SaveChanges();
-			context.TypesOfTimeOff.Add(new TypeOfTimeOff()
-            {
-                Type = "Vacation"
-            });
-            context.TypesOfTimeOff.Add(new TypeOfTimeOff()
-            {
-                Type = "Personal Reasons"
-            });
-            context.TypesOfTimeOff.Add(new TypeOfTimeOff()
-            {
-                Type = "Appointment"
-            });
 
             //TypeOfTimeOff toto = context.TypesOfTimeOff.Where(s => s.Type == "Personal Reasons").FirstOrDefault();
 
