@@ -17,16 +17,7 @@ namespace PayRoll.Controllers
         // GET: ChangePassword
         public ActionResult Index()
 		{
-			//if (id == null)
-			//{
-			//	return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-			//}
-			Employee employee = db.Employees.Find("a00828729");
-			if (employee == null)
-			{
-				return HttpNotFound();
-			}
-			return View(employee);
+			return View();
 		}
 
 		[HttpPost]
@@ -40,7 +31,7 @@ namespace PayRoll.Controllers
 			if (newPassword != confirmPassword)
 			{
 				ModelState.AddModelError("NewPassword", "Passwords do not match");
-				return View(employee);
+				return View();
 			}
 			try
 			{
@@ -52,7 +43,7 @@ namespace PayRoll.Controllers
 			{
 				ModelState.AddModelError("NewPassword", e.EntityValidationErrors.ElementAt(0).ValidationErrors.ElementAt(0).ErrorMessage);
 				employee.Password = originalPassword;
-				return View(employee);
+				return View();
 			}
 			return RedirectToAction("Success");
 		}

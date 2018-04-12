@@ -20,24 +20,23 @@ namespace PayRoll.Controllers
         // GET: TimeOffRequests
         public ActionResult Index()
         {
-			ViewData["typesOfTimeOff"] = db.TypesOfTimeOff.ToArray();
+			ViewData["typesOfTimeOff"] = new string[] { "Vacation", "Personal Emergency", "Appointment" };
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index([Bind(Include = "StartDate,EndDate,Reason")] TimeOffRequest timeOffRequest)
+        public ActionResult Index([Bind(Include = "StartDate,EndDate,Reason,Type")] TimeOffRequest timeOffRequest)
         {
             if ((timeOffRequest.StartDate < DateTime.Now)
                 || (timeOffRequest.EndDate < DateTime.Now)
                 || (timeOffRequest.StartDate > timeOffRequest.EndDate))
 			{
-				ViewData["typesOfTimeOff"] = db.TypesOfTimeOff.ToArray();
+				ViewData["typesOfTimeOff"] = new string[] { "Vacation", "Personal Emergency", "Appointment" };
 				return View(timeOffRequest);
             }
             //TimeOffRequestId,WhenSent
             timeOffRequest.WhenSent = DateTime.Now;
-            timeOffRequest.TypeOfTimeOff = db.TypesOfTimeOff.Find(Request.Form.Get("Type"));
             if (ModelState.IsValid)
             {
                 try
@@ -46,15 +45,13 @@ namespace PayRoll.Controllers
                     db.SaveChanges();
                     db.Employees.Find(sessionEmployee).TimeOffRequests.Add(timeOffRequest);
                     db.SaveChanges();
-                    db.TypesOfTimeOff.Find(Request.Form.Get("Type")).TimeOffRequests.Add(timeOffRequest);
-                    db.SaveChanges();
                 } catch (Exception e) {
                     return RedirectToAction("Failure");
                 }
                 return RedirectToAction("Success");
             }
 
-			ViewData["typesOfTimeOff"] = db.TypesOfTimeOff.ToArray();
+			ViewData["typesOfTimeOff"] = new string[] { "Vacation", "Personal Emergency", "Appointment" };
 			return View(timeOffRequest);
         }
         public ActionResult Success()
@@ -67,8 +64,13 @@ namespace PayRoll.Controllers
         }
         public ActionResult AdminApproval()
         {
-            var x = db.TimeOffRequests.Include(e => e.Employee).Include(e => e.TypeOfTimeOff).Where(t => t.Status == "No").ToList();
-            return View(db.TimeOffRequests.Include(e => e.Employee).Include(e => e.TypeOfTimeOff).Where(t => t.Status == "No").ToList());
+            Employee currentEmployee = db.Employees.Include(e => e.Position).Where(e => e.EmployeeId == sessionEmployee).FirstOrDefault();
+            return View(db.TimeOffRequests
+                .Include(e => e.Employee)
+                .Include(t => t.Employee.Position)
+                .Where(t => t.Status == "No")
+                .Where(t => t.Employee.Position.Rank < currentEmployee.Position.Rank)
+                .ToList());
         }
         public ActionResult Accept(int id)
         {
