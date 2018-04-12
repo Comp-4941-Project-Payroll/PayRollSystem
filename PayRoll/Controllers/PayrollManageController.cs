@@ -14,8 +14,9 @@ namespace PayRoll.Controllers
         private PayrollDbContext db = new PayrollDbContext();
 
         // GET: PayrollManage
-        public ActionResult Index()
+        public ActionResult Index(string id)
         {
+            ViewBag.Id = id;
             return View(db.Payrolls.ToList());
         }
 
@@ -27,13 +28,23 @@ namespace PayRoll.Controllers
                 return RedirectToAction("index");
             }
 
-            string[] strings = id.Split(' ');
-            DateTime month = new DateTime(DateTime.Today.Year, Int32.Parse(strings[0]), 1);
+            string[] args = id.Split(' ');
+            DateTime month = new DateTime(DateTime.Today.Year, Int32.Parse(args[0]), 1);
             DateTime firstDayOfPeriod;
             DateTime lastDayOfPeriod;
-            string sessionEmployee = System.Web.HttpContext.Current.Session["EmployeeId"] as String;
 
-            if (Int32.Parse(strings[1]) == 1)
+            string sessionEmployee;
+
+            if (args.Length > 2)
+            {
+                sessionEmployee = args[2];
+            }
+            else
+            {
+                sessionEmployee = System.Web.HttpContext.Current.Session["EmployeeId"] as String;
+            }
+
+            if (Int32.Parse(args[1]) == 1)
             {
                 firstDayOfPeriod = month;
                 lastDayOfPeriod = month.AddDays(14);
@@ -50,7 +61,7 @@ namespace PayRoll.Controllers
             List<Attendance> attendances = null;
             List<Attendance> attendancesYTD = null;
             List<TimeOffRequest> timeOff = null;
-            List<Employee> emps = db.Employees.Include(e => e.Attendances).ToList();
+            List<Employee> emps = db.Employees.Include(e => e.Attendances).Include(e => e.Position).ToList();
             List<Employee> emps2 = db.Employees.Include(e => e.TimeOffRequests).ToList();
 
             double hours = 0;
@@ -71,10 +82,21 @@ namespace PayRoll.Controllers
             decimal taxAmountYTD = 0;
             decimal netPay = 0;
             decimal netPayYTD = 0;
+            string fname = "";
+            string lname = "";
+            string address="";
+            string position = "";
+
+            bool found = false;
+
             foreach (Employee emp in emps)
             {
                 if (emp.EmployeeId == sessionEmployee)
                 {
+                    fname = emp.FName;
+                    lname = emp.LName;
+                    address = emp.Address;
+                    position = emp.Position.PositionId;
                     attendances = emp.Attendances
                         .Where(e => e.SignInTime.Year == firstDayOfPeriod.Year && e.SignInTime.Month == firstDayOfPeriod.Month
                             && e.SignInTime.Day >= firstDayOfPeriod.Day && e.SignInTime.Day <= lastDayOfPeriod.Day).ToList();
@@ -82,8 +104,14 @@ namespace PayRoll.Controllers
                         .Where(e => e.SignInTime.Year == firstDayOfPeriod.Year && e.SignInTime.DayOfYear <= lastDayOfPeriod.DayOfYear).ToList();
                     rate = emp.HourlyRate;
                     awardedVacation = emp.AwardedVacation;
+                    found = true;
                     break;
                 }
+            }
+
+            if (!found)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Invalid employee id");
             }
 
             if (attendances != null)
@@ -170,6 +198,11 @@ namespace PayRoll.Controllers
             ViewBag.CPPYTD = cppAmountYTD;
             ViewBag.TaxYTD = taxAmountYTD;
             ViewBag.NetPayYTD = netPayYTD;
+            ViewBag.Fname = fname;
+            ViewBag.Lname = lname;
+            ViewBag.Address = address;
+            ViewBag.EmpId = sessionEmployee;
+            ViewBag.Position = position;
 
             return View();
         }
