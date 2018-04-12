@@ -42,7 +42,8 @@ namespace PayRoll.Controllers
         {
             Employee currentEmployee = db.Employees.Include(e => e.Position).Where(e => e.EmployeeId == sessionEmployee).FirstOrDefault();
             ViewData["positions"] = db.Positions.Where(p => p.Rank < currentEmployee.Position.Rank).ToArray();
-			return View();
+            ViewData["departmentTypes"] = new string[] { "Production", "Research and Development", "Purchasing", "Marketing", "Human Resources", "Accounting and Finance", "Executive" };
+            return View();
         }
 
         // POST: Employees/Create
@@ -62,6 +63,7 @@ namespace PayRoll.Controllers
 				return RedirectToAction("Index");
             }
 
+            ViewData["departmentTypes"] = new string[] { "Production", "Research and Development", "Purchasing", "Marketing", "Human Resources", "Accounting and Finance", "Executive" };
             return View(employee);
         }
 
@@ -79,6 +81,7 @@ namespace PayRoll.Controllers
             }
             Employee currentEmployee = db.Employees.Include(e => e.Position).Where(e => e.EmployeeId == sessionEmployee).FirstOrDefault();
             ViewData["positions"] = db.Positions.Where(p => p.Rank < currentEmployee.Position.Rank).ToArray();
+            ViewData["departmentTypes"] = new string[] { "Production", "Research and Development", "Purchasing", "Marketing", "Human Resources", "Accounting and Finance", "Executive" };
             return View(employee);
         }
 
@@ -95,6 +98,7 @@ namespace PayRoll.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewData["departmentTypes"] = new string[] { "Production", "Research and Development", "Purchasing", "Marketing", "Human Resources", "Accounting and Finance", "Executive" };
             return View(employee);
         }
 

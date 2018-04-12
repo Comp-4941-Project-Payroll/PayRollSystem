@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Edit";
     PayRoll.Models.Position[] positions = (PayRoll.Models.Position[])ViewData["positions"];
+    string[] departmentTypes = (string[])ViewData["departmentTypes"];
 }
 
 <h2>Edit</h2>
@@ -92,8 +93,15 @@
     <div class="form-group">
         @Html.LabelFor(model => model.DepartmentType, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.DepartmentType, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.DepartmentType, "", new { @class = "text-danger" })
+            <select name="DepartmentType" id="DepartmentType" class="form-control">
+                @for (var i = 0; i < departmentTypes.Length; i++)
+                {
+                    <option @if (Model.DepartmentType == departmentTypes[i]) { @("selected") ; }>
+                        @departmentTypes[i]
+                    </option>
+                }
+            </select>
+            @Html.ValidationMessageFor(model => model.FullOrPartTime, "", new { @class = "text-danger" })
         </div>
     </div>
 
