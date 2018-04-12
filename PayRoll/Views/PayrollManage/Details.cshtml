@@ -12,21 +12,21 @@
     <table class="table">
 
         <tr>
-            <td>Employee Id: 1234</td>
+            <td>Employee Id: @ViewBag.EmpId</td>
             <td class="right">Pay Period: @ViewBag.dateRange</td>
         </tr>
 
         <tr>
-            <td>Employee Name: Amir Avram</td>
+            <td>Employee Name: @ViewBag.Fname, @ViewBag.Lname</td>
             <td class="right">Pay Frequency: Bi-Monthly</td>
         </tr>
 
         <tr>
-            <td>Address: Coquitlam</td>
+            <td>Address: @ViewBag.Address</td>
         </tr>
 
         <tr>
-            <td>Position: Sales Manager</td>
+            <td>Position: @ViewBag.Position</td>
         </tr>
 
     </table>
