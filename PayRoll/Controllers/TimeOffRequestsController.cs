@@ -67,8 +67,14 @@ namespace PayRoll.Controllers
         }
         public ActionResult AdminApproval()
         {
-            var x = db.TimeOffRequests.Include(e => e.Employee).Include(e => e.TypeOfTimeOff).Where(t => t.Status == "No").ToList();
-            return View(db.TimeOffRequests.Include(e => e.Employee).Include(e => e.TypeOfTimeOff).Where(t => t.Status == "No").ToList());
+            Employee currentEmployee = db.Employees.Include(e => e.Position).Where(e => e.EmployeeId == sessionEmployee).FirstOrDefault();
+            return View(db.TimeOffRequests
+                .Include(e => e.Employee)
+                .Include(e => e.TypeOfTimeOff)
+                .Include(t => t.Employee.Position)
+                .Where(t => t.Status == "No")
+                .Where(t => t.Employee.Position.Rank < currentEmployee.Position.Rank)
+                .ToList());
         }
         public ActionResult Accept(int id)
         {
