@@ -31,7 +31,7 @@ namespace PayRoll.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = db.Employees.Find(id);
+            Employee employee = db.Employees.Include(e => e.Position).Where(e=>e.EmployeeId == id).FirstOrDefault();
             if (employee == null)
             {
                 return HttpNotFound();
