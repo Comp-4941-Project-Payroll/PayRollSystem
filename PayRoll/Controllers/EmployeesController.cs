@@ -113,19 +113,14 @@ namespace PayRoll.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-			try
-			{
-				Employee employee = db.Employees.Find(id);
-				db.Attendances.RemoveRange(db.Attendances.Where(e => e.Employee.EmployeeId == id));
-				db.TimeOffRequests.RemoveRange(db.TimeOffRequests.Where(e => e.Employee.EmployeeId == id));
-				db.Payrolls.RemoveRange(db.Payrolls.Where(e => e.Employee.EmployeeId == id));
-				db.Entry(employee).State = EntityState.Modified;
-				db.SaveChanges();
-				db.Employees.Remove(employee);
-				db.SaveChanges();
-			} catch (Exception ex)
-			{
-			}
+			Employee employee = db.Employees.Find(id);
+			db.Attendances.RemoveRange(db.Attendances.Where(e => e.Employee.EmployeeId == id));
+			db.TimeOffRequests.RemoveRange(db.TimeOffRequests.Where(e => e.Employee.EmployeeId == id));
+			db.Payrolls.RemoveRange(db.Payrolls.Where(e => e.Employee.EmployeeId == id));
+			db.Entry(employee).State = EntityState.Modified;
+			db.SaveChanges();
+			db.Employees.Remove(employee);
+			db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -148,15 +143,20 @@ namespace PayRoll.Controllers
 			}
 			return result;
 		}
-        
+
+        public ActionResult Login()
+        {
+            return View();
+        }
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(String Email, String password)
+        public ActionResult Login(String EmployeeId, String password)
         {
             //Email Refers to EmployeeId textbox in Login page.
                 var myEmployee = db.Employees
-                      .FirstOrDefault(u => u.EmployeeId == Email
+                      .FirstOrDefault(u => u.EmployeeId == EmployeeId
                                    && u.Password == password);
 
             if (myEmployee != null)
@@ -168,7 +168,7 @@ namespace PayRoll.Controllers
             else
             {
                 ModelState.AddModelError("", "Invalid login credentials.");
-                return RedirectToAction("Login","Account");
+                return RedirectToAction("Login","Employees");
             }
 
         }

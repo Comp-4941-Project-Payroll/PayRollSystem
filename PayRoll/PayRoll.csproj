@@ -187,7 +187,6 @@
     <Compile Include="Controllers\ChangePasswordController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\ManagersController.cs" />
     <Compile Include="Controllers\TimeOffRequestsController.cs" />
     <Compile Include="Controllers\PayrollManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -288,11 +287,6 @@
     <Content Include="Views\Employees\Details.cshtml" />
     <Content Include="Views\Employees\Edit.cshtml" />
     <Content Include="Views\Employees\Index.cshtml" />
-    <Content Include="Views\Managers\Create.cshtml" />
-    <Content Include="Views\Managers\Delete.cshtml" />
-    <Content Include="Views\Managers\Details.cshtml" />
-    <Content Include="Views\Managers\Edit.cshtml" />
-    <Content Include="Views\Managers\Index.cshtml" />
     <Content Include="Views\ChangePassword\Index.cshtml" />
     <Content Include="Views\ChangePassword\Success.cshtml" />
     <Content Include="Views\TimeOffRequests\Accept.cshtml" />
@@ -300,6 +294,7 @@
     <Content Include="Views\TimeOffRequests\Decline.cshtml" />
     <Content Include="Views\Shared\Credentials\Anonymous.cshtml" />
     <Content Include="Views\Shared\Credentials\LoggedIn.cshtml" />
+    <Content Include="Views\Employees\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
