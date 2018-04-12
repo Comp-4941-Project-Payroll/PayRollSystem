@@ -184,6 +184,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AttendanceController.cs" />
     <Compile Include="Controllers\ChangePasswordController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -295,6 +296,8 @@
     <Content Include="Views\Shared\Credentials\LoggedIn.cshtml" />
     <Content Include="Views\Employees\Login.cshtml" />
     <Content Include="Views\Employees\Email.cshtml" />
+    <Content Include="Views\Attendance\AttendanceList.cshtml" />
+    <Content Include="Views\Attendance\ManageAttendance.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
