@@ -11,6 +11,7 @@ namespace PayRoll.Models
 		[Key]
 		[StringLength(20, MinimumLength = 3)]
 		public string PositionId { get; set; }
+        public int Rank { get; set; } = 1;
 		
         public ICollection<Employee> Employees { get; set; } = new List<Employee>();
     }

@@ -15,11 +15,7 @@
             @Html.DisplayNameFor(model => model.Password)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LName)
-        </th>
+            Name
         <th>
             @Html.DisplayNameFor(model => model.Address)
         </th>
@@ -44,10 +40,7 @@
             @Html.DisplayFor(modelItem => item.Password)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.FName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LName)
+            @Html.DisplayFor(modelItem => item.FName) @Html.DisplayFor(modelItem => item.LName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Address)

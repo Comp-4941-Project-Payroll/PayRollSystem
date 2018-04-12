@@ -9,20 +9,29 @@ namespace PayRoll.Models
 	public class PayrollDbInitializer : DropCreateDatabaseAlways<PayrollDbContext>
 	{
 		protected override void Seed(PayrollDbContext context)
-		{
+        {
             context.Positions.Add(new Position()
-			{
-				PositionId = "Admin"
+            {
+                PositionId = "Web Developer",
+                Rank = 1
+            });
+
+            context.Positions.Add(new Position()
+            {
+                PositionId = "Manager",
+                Rank = 4
 			});
 
             context.Positions.Add(new Position()
 			{
-				PositionId = "Human Resources"
+				PositionId = "Human Resources",
+                Rank = 7
 			});
 
             context.Positions.Add(new Position()
             {
-                PositionId = "Master"
+                PositionId = "Master",
+                Rank = 100
             });
 
             context.SaveChanges();
@@ -55,7 +64,7 @@ namespace PayRoll.Models
                 HourlyRate = 75.00m
             });
             context.SaveChanges();
-			context.Positions.Find("Admin").Employees.Add(context.Employees.Find("a00828729"));
+			context.Positions.Find("Manager").Employees.Add(context.Employees.Find("a00828729"));
             context.Positions.Find("Master").Employees.Add(context.Employees.Find("a00000000"));
             context.SaveChanges();
 			context.TypesOfTimeOff.Add(new TypeOfTimeOff()

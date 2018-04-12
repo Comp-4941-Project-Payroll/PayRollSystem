@@ -13,11 +13,13 @@ namespace PayRoll.Controllers
     public class EmployeesController : Controller
     {
         private PayrollDbContext db = new PayrollDbContext();
+        private string sessionEmployee = System.Web.HttpContext.Current.Session["EmployeeId"] as String;
 
         // GET: Employees
         public ActionResult Index()
         {
-            return View(db.Employees.ToList());
+            Employee currentEmployee = db.Employees.Include(e => e.Position).Where(e => e.EmployeeId == sessionEmployee).FirstOrDefault();
+            return View(db.Employees.Include(e => e.Position).Where(e => e.Position.Rank < currentEmployee.Position.Rank));
         }
 
         // GET: Employees/Details/5
@@ -38,7 +40,8 @@ namespace PayRoll.Controllers
         // GET: Employees/Create
         public ActionResult Create()
         {
-			ViewData["positions"] = db.Positions.ToArray();
+            Employee currentEmployee = db.Employees.Include(e => e.Position).Where(e => e.EmployeeId == sessionEmployee).FirstOrDefault();
+            ViewData["positions"] = db.Positions.Where(p => p.Rank < currentEmployee.Position.Rank).ToArray();
 			return View();
         }
 
