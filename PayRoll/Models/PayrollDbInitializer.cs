@@ -32,6 +32,7 @@ namespace PayRoll.Models
 				Email = "vpnprez@hotmail.com",
 				FullOrPartTime = "Part-Time",
 				Seniority = 4,
+                ShiftIdd = "03",
 				DepartmentType = "Executive",
                 HourlyRate = 35.00m
 			});
