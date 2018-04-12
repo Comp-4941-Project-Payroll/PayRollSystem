@@ -136,12 +136,13 @@
             else
                 return RedirectToAction("ManageAttendance", new { Message = error });
             //return RedirectToAction("Index", "PayrollManage");
- 
+
          }
  
          [HttpPost]
          public ActionResult PunchOut(Attendance model)
          {
+
             DateTime curTime = DateTime.Now;
             string error = "";
             Boolean success = true;
