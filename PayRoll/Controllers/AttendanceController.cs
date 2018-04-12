@@ -110,7 +110,6 @@
             PayrollDbContext db = new PayrollDbContext();
             
             //db.SaveChanges();
-            //NEEDED MODIFICATION HERE
             Employee user = db.Employees.Find(Session["EmployeeId"]);
             DateTime startTime = db.Schedules.Find(user.ShiftId).StartTime;
 
