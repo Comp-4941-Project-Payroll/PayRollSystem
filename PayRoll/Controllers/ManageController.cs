@@ -61,7 +61,8 @@ namespace PayRoll.Controllers
                 : message == ManageMessageId.Error ? "An error has occurred."
                 : message == ManageMessageId.AddEmailSuccess ? "Your Email number was added."
                 : message == ManageMessageId.RemoveEmailSuccess ? "Your Email number was removed."
-                : "";
+				: message == ManageMessageId.PunchSuccess ? "You have successfully punch in/out"
+				: "";
 
             var userId = User.Identity.GetUserId();
             var model = new IndexViewModel
@@ -333,7 +334,7 @@ namespace PayRoll.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+		#region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -381,9 +382,10 @@ namespace PayRoll.Controllers
             SetPasswordSuccess,
             RemoveLoginSuccess,
             RemoveEmailSuccess,
-            Error
+			PunchSuccess,
+			Error
         }
 
-#endregion
+		#endregion
     }
 }

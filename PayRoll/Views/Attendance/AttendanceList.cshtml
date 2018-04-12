@@ -1,0 +1,45 @@
+﻿@model PayRoll.Models.Attendance
+ 
+ @{
+	 ViewBag.Title = "AttendanceList";
+	 }
+ 
+ <h2>AttendanceList</h2>
+ 
+ <div>
+	    <h4>Attendance</h4>
+	    <hr />
+	    <dl class="dl-horizontal">
+		
+		<dt>
+			            @Html.DisplayNameFor(model => model.SignInTime)
+			
+		</dt>
+		
+		
+		<dd>
+			            @Html.DisplayFor(model => model.SignInTime)
+			
+		</dd>
+		
+		
+		<dt>
+			            @Html.DisplayNameFor(model => model.SignOutTime)
+			
+		</dt>
+		
+		
+		<dd>
+			            @Html.DisplayFor(model => model.SignOutTime)
+			
+		</dd>
+		
+		
+	</dl>
+	
+</div>
+ <p>
+	    @Html.ActionLink("Edit", "Edit", new { id = Model.AttendanceId }) |
+	    @Html.ActionLink("Back to List", "Index")
+	
+</p>

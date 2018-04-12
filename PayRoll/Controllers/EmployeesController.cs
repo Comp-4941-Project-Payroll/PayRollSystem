@@ -45,7 +45,8 @@ namespace PayRoll.Controllers
             Employee currentEmployee = db.Employees.Include(e => e.Position).Where(e => e.EmployeeId == sessionEmployee).FirstOrDefault();
             ViewData["positions"] = db.Positions.Where(p => p.Rank < currentEmployee.Position.Rank).ToArray();
             ViewData["departmentTypes"] = new string[] { "Production", "Research and Development", "Purchasing", "Marketing", "Human Resources", "Accounting and Finance", "Executive" };
-            return View();
+			ViewData["schedule"] = db.Schedules.ToArray();
+			return View();
         }
 
         // POST: Employees/Create
@@ -62,6 +63,7 @@ namespace PayRoll.Controllers
                 db.Employees.Add(employee);
                 db.SaveChanges();
 				db.Positions.Find(Request.Form.Get("Position")).Employees.Add(employee);
+				db.Schedules.Find(Request.Form.Get("Schedule")).Employees.Add(employee);
 				db.SaveChanges();
                 SmtpClient client = new SmtpClient("smtp.live.com", 25);
                 client.Credentials = new System.Net.NetworkCredential("vpnprez@hotmail.com", "dudethatko1");
