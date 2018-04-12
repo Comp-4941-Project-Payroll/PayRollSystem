@@ -63,7 +63,7 @@ namespace PayRoll.Controllers
                 db.Employees.Add(employee);
                 db.SaveChanges();
 				db.Positions.Find(Request.Form.Get("Position")).Employees.Add(employee);
-				db.Schedules.Find(Request.Form.Get("Schedule")).Employees.Add(employee);
+				//db.Schedules.Find(Request.Form.Get("Schedule")).Employees.Add(employee);
 				db.SaveChanges();
                 SmtpClient client = new SmtpClient("smtp.live.com", 25);
                 client.Credentials = new System.Net.NetworkCredential("vpnprez@hotmail.com", "dudethatko1");
