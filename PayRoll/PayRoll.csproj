@@ -339,8 +339,9 @@
     <Content Include="Views\Shared\Credentials\LoggedIn.cshtml" />
     <Content Include="Views\Employees\Login.cshtml" />
     <Content Include="Views\Employees\Email.cshtml" />
-    <Content Include="Views\Attendance\AttendanceList.cshtml" />
     <Content Include="Views\Attendance\ManageAttendance.cshtml" />
+    <Content Include="Views\Attendance\Index.cshtml" />
+    <Content Include="Views\Attendance\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

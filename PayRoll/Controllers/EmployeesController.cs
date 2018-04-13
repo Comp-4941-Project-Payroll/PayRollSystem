@@ -90,9 +90,10 @@ namespace PayRoll.Controllers
             {
                 return HttpNotFound();
             }
-            Employee currentEmployee = db.Employees.Include(e => e.Position).Where(e => e.EmployeeId == sessionEmployee).FirstOrDefault();
+            Employee currentEmployee = db.Employees.Include(e => e.Position).Include(e=>e.Shift).Where(e => e.EmployeeId == sessionEmployee).FirstOrDefault();
             ViewData["positions"] = db.Positions.Where(p => p.Rank < currentEmployee.Position.Rank).ToArray();
             ViewData["departmentTypes"] = new string[] { "Production", "Research and Development", "Purchasing", "Marketing", "Human Resources", "Accounting and Finance", "Executive" };
+            ViewData["schedules"] = db.Schedules.ToArray();
             return View(employee);
         }
 
@@ -101,7 +102,7 @@ namespace PayRoll.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EmployeeId,FName,LName,Address,Email,FullOrPartTime,Seniority,DepartmentType")] Employee employee)
+        public ActionResult Edit([Bind(Include = "EmployeeId,FName,LName,Address,Email,FullOrPartTime,Seniority,DepartmentType,Shift")] Employee employee)
         {
             if (ModelState.IsValid)
             {
