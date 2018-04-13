@@ -1,27 +1,15 @@
 ﻿@model IEnumerable<PayRoll.Models.Payroll>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Payrolls";
 }
 
-<h2>Index</h2>
+<h2>Payrolls</h2>
 
 <table>
     @{
 
         DateTime currentDate = DateTime.Today;
-        //int currentYear = currentDate.Year;
-        //DateTime monthStart = new DateTime(currentDate.Year, currentDate.Month, 1);
-        //DateTime monthMiddle = monthStart.AddDays(14);
-        //DateTime monthEnd = monthStart.AddMonths(1).AddDays(-1);
-        //if (currentDate.Day > monthMiddle.Day)
-        //{
-
-        //}
-        //else
-        //{
-
-        //}
 
         string id = "";
         if (ViewBag.Id != null)
@@ -45,90 +33,3 @@
 
     }
 </table>
-
-
-
-
-
-@*<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.year)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RegularHours)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.OverTimeHours)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HourlyRate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Earnings)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BeginningVacation)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.VacationHrsTaken)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CPP)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EI)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IncomeTaxes)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.year)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RegularHours)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OverTimeHours)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HourlyRate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Earnings)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BeginningVacation)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VacationHrsTaken)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CPP)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EI)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IncomeTaxes)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.PayrollId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.PayrollId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.PayrollId })
-            </td>
-        </tr>
-    }
-
-</table>*@
