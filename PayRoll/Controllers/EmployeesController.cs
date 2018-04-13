@@ -83,8 +83,8 @@ namespace PayRoll.Controllers
         }
 
 		// GET: Employees/Edit/5
-		[VerifyLogin]
-		public ActionResult Edit(string id)
+		    [VerifyLogin]
+        public ActionResult Edit(string id)
         {
             if (id == null)
             {
@@ -241,7 +241,8 @@ namespace PayRoll.Controllers
             else
             {
                 ModelState.AddModelError("", "Invalid login credentials.");
-                return RedirectToAction("Login","Employees");
+                //return RedirectToAction("Login","Employees");
+                return View("Login");
             }
 
         }
