@@ -1,0 +1,46 @@
+﻿@model IEnumerable<PayRoll.Models.Attendance>
+
+@{
+    ViewBag.Title = "Punch Log";
+}
+
+<h2>Punch Log</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.AttendanceId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SignInTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SignOutTime)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AttendanceId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SignInTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SignOutTime)
+
+            </td>
+            @if ((Session["Position"].ToString() == "Manager") || (Session["Position"].ToString() == "Master"))
+            {
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.AttendanceId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.AttendanceId })
+                </td>
+            }
+        </tr>
+    }
+
+</table>

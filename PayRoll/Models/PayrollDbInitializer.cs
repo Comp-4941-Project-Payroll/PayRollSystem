@@ -6,9 +6,9 @@ using System.Web;
 
 namespace PayRoll.Models
 {
-	public class PayrollDbInitializer : DropCreateDatabaseAlways<PayrollDbContext>
-	{
-		protected override void Seed(PayrollDbContext context)
+    public class PayrollDbInitializer : DropCreateDatabaseAlways<PayrollDbContext>
+    {
+        protected override void Seed(PayrollDbContext context)
         {
             context.Positions.Add(new Position()
             {
@@ -20,35 +20,41 @@ namespace PayRoll.Models
             {
                 PositionId = "Manager",
                 Rank = 4
-			});
+            });
 
             context.Positions.Add(new Position()
-			{
-				PositionId = "Human Resources",
+            {
+                PositionId = "Human Resources",
                 Rank = 7
-			});
+            });
 
             context.Positions.Add(new Position()
             {
                 PositionId = "Master",
                 Rank = 100
             });
+            context.Schedules.Add(new Schedule()
+            {
+                ShiftId = 1,
+                StartTime = DateTime.Parse("2018-1-1 8:00:00 AM"),
+                EndTime = DateTime.Parse("2018-1-1 4:00:00 PM"),
+            });
 
             context.SaveChanges();
 
-			context.Employees.Add(new Employee()
-			{
-				EmployeeId = "a00828729",
+            context.Employees.Add(new Employee()
+            {
+                EmployeeId = "a00828729",
                 Password = "1234567890",
-				FName = "Davin",
-				LName = "Deol",
-				Address = "4652 Redex Blvd",
-				Email = "davindeol@gmail.com",
-				FullOrPartTime = "Part-Time",
-				Seniority = 4,
-				DepartmentType = "Executive",
+                FName = "Davin",
+                LName = "Deol",
+                Address = "4652 Redex Blvd",
+                Email = "davindeol@gmail.com",
+                FullOrPartTime = "Part-Time",
+                Seniority = 4,
+                DepartmentType = "Executive",
                 HourlyRate = 35.00m
-			});
+            });
 
             context.Employees.Add(new Employee()
             {
@@ -64,8 +70,10 @@ namespace PayRoll.Models
                 HourlyRate = 75.00m
             });
             context.SaveChanges();
-			context.Positions.Find("Manager").Employees.Add(context.Employees.Find("a00828729"));
+            context.Positions.Find("Manager").Employees.Add(context.Employees.Find("a00828729"));
             context.Positions.Find("Master").Employees.Add(context.Employees.Find("a00000000"));
+            context.Schedules.Find(1).Employees.Add(context.Employees.Find("a00000000"));
+            context.Schedules.Find(1).Employees.Add(context.Employees.Find("a00828729"));
             context.SaveChanges();
 
             //TypeOfTimeOff toto = context.TypesOfTimeOff.Where(s => s.Type == "Personal Reasons").FirstOrDefault();
@@ -83,29 +91,30 @@ namespace PayRoll.Models
                 DepartmentType = "Executive",
                 HourlyRate = 35.00m,
                 AwardedVacation = 15
-			};
+            };
 
 
             e.Attendances.Add(new Attendance()
             {
-                AttendanceId = "1",
+                AttendanceId = 1,
                 SignInTime = DateTime.Parse("2018-1-1 8:00:00 AM"),
                 SignOutTime = DateTime.Parse("2018-1-1 8:00:00 PM"),
-                
+
             });
 
             e.Attendances.Add(new Attendance()
             {
-                AttendanceId = "2",
+                AttendanceId = 2,
                 SignInTime = DateTime.Parse("2018-2-1 8:00:00 AM"),
                 SignOutTime = DateTime.Parse("2018-2-1 6:00:00 PM"),
 
             });
-            
+
             context.Employees.Add(e);
             context.SaveChanges();
             context.Positions.Find("Human Resources").Employees.Add(context.Employees.Find("a00828730"));
+            context.Schedules.Find(1).Employees.Add(context.Employees.Find("a00828730"));
             base.Seed(context);
-		}
-	}
+        }
+    }
 }
