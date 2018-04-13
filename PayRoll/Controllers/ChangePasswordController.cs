@@ -14,14 +14,16 @@ namespace PayRoll.Controllers
     {
         private PayrollDbContext db = new PayrollDbContext();
 
-        // GET: ChangePassword
-        public ActionResult Index()
+		// GET: ChangePassword
+		[VerifyLogin]
+		public ActionResult Index()
 		{
 			return View();
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[VerifyLogin]
 		public ActionResult Index(FormCollection forms)
 		{
 			string newPassword = forms["newPassword"];
@@ -47,6 +49,7 @@ namespace PayRoll.Controllers
 			}
 			return RedirectToAction("Success");
 		}
+		[VerifyLogin]
 		public ActionResult Success()
 		{
 			return View();
