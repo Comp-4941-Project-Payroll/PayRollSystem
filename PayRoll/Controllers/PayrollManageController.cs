@@ -159,7 +159,7 @@ namespace PayRoll.Controllers
                 if (emp.EmployeeId == sessionEmployee)
                 {
                     timeOff = emp.TimeOffRequests.Where(t => t.StartDate.Year == firstDayOfPeriod.Year
-                        && t.EndDate <= lastDayOfPeriod).ToList();
+                        && t.EndDate <= lastDayOfPeriod && t.Status == "Yes").ToList();
                     break;
                 }
             }
@@ -183,23 +183,23 @@ namespace PayRoll.Controllers
             netPayYTD = earningsYTD - eiAmountYTD - cppAmountYTD - taxAmountYTD;
             //Console.WriteLine(hours);
 
-            ViewBag.Hours = hours;
-            ViewBag.HoursYTD = hoursYTD;
-            ViewBag.Earnings = earnings;
-            ViewBag.EarningsYTD = earningsYTD;
-            ViewBag.VacationHrs = vacationDays;
-            ViewBag.AwardedVacation = awardedVacation;
-            ViewBag.RemainingVacation = remainingVacation;
-            ViewBag.OvertimeHrs = overtimeHrs;
-            ViewBag.OvertimeHrsYTD = overtimeHrsYTD;
-            ViewBag.EI = eiAmount;
-            ViewBag.CPP = cppAmount;
-            ViewBag.Tax = taxAmount;
-            ViewBag.NetPay = netPay;
-            ViewBag.EIYTD = eiAmountYTD;
-            ViewBag.CPPYTD = cppAmountYTD;
-            ViewBag.TaxYTD = taxAmountYTD;
-            ViewBag.NetPayYTD = netPayYTD;
+            ViewBag.Hours = string.Format("{0:0.00}", hours);
+            ViewBag.HoursYTD = string.Format("{0:0.00}", hoursYTD);
+            ViewBag.Earnings = string.Format("{0:C}", earnings);
+            ViewBag.EarningsYTD = string.Format("{0:C}", earningsYTD);
+            ViewBag.VacationHrs = string.Format("{0:0.00}", vacationDays);
+            ViewBag.AwardedVacation = string.Format("{0:0.00}", awardedVacation);
+            ViewBag.RemainingVacation = string.Format("{0:0.00}", remainingVacation);
+            ViewBag.OvertimeHrs = string.Format("{0:0.00}", overtimeHrs);
+            ViewBag.OvertimeHrsYTD = string.Format("{0:0.00}", overtimeHrsYTD);
+            ViewBag.EI = string.Format("{0:C}", eiAmount);
+            ViewBag.CPP = string.Format("{0:C}", cppAmount); 
+            ViewBag.Tax = string.Format("{0:C}", taxAmount); 
+            ViewBag.NetPay = string.Format("{0:C}", netPay); 
+            ViewBag.EIYTD = string.Format("{0:C}", eiAmountYTD);
+            ViewBag.CPPYTD = string.Format("{0:C}", cppAmountYTD);
+            ViewBag.TaxYTD = string.Format("{0:C}", taxAmountYTD); 
+            ViewBag.NetPayYTD = string.Format("{0:C}", netPayYTD);
             ViewBag.Fname = fname;
             ViewBag.Lname = lname;
             ViewBag.Address = address;
