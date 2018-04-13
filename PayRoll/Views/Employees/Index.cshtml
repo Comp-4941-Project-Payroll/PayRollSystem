@@ -53,6 +53,7 @@
             @Html.DisplayFor(modelItem => item.DepartmentType)
         </td>
         <td>
+            @Html.ActionLink("Add Shift", "AddShift", new { id = item.EmployeeId }) |
             @Html.ActionLink("Edit", "Edit", new { id = item.EmployeeId }) |
             @Html.ActionLink("Payrolls", "Index/" + item.EmployeeId, "PayrollManage") |
             @Html.ActionLink("Delete", "Delete", new { id = item.EmployeeId }) |

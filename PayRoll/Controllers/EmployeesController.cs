@@ -22,7 +22,7 @@ namespace PayRoll.Controllers
 		public ActionResult Index()
         {
             Employee currentEmployee = db.Employees.Include(e => e.Position).Where(e => e.EmployeeId == sessionEmployee).FirstOrDefault();
-            return View(db.Employees.Include(e => e.Position).Where(e => e.Position.Rank < currentEmployee.Position.Rank));
+            return View(db.Employees.Include(e => e.Position).Include(s => s.Shift).Where(e => e.Position.Rank < currentEmployee.Position.Rank));
         }
 
 		// GET: Employees/Details/5
@@ -251,6 +251,52 @@ namespace PayRoll.Controllers
         {
             Session.Abandon();
             return RedirectToAction("Login");
+        }
+
+        public ActionResult AddShift(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            //Employee employee = db.Employees.Find(id);
+            ViewBag.id = id;
+            //if (employee == null)
+            //{
+            //	return HttpNotFound();
+            //}
+            return View();
+        }
+
+        // POST: Employees/Delete/5
+        [HttpPost, ActionName("AddShift")]
+        public ActionResult ShiftConfirm([Bind(Include = "Shift")] Employee employee, string id)
+        //public ActionResult ShiftConfirm(string id)
+        {
+            Employee emp = db.Employees.Find(id);
+            if (emp == null)
+            {
+                return RedirectToAction("AddShift");
+            }
+            string shiftid = Request.Form.Get("shiftid");
+            Schedule sched = new Schedule();
+            if ((employee.Shift.StartTime < DateTime.Now)
+                || (employee.Shift.EndTime < DateTime.Now)
+                || (employee.Shift.EndTime < employee.Shift.StartTime))
+            {
+                return RedirectToAction("AddShift");
+            }
+            else
+            {
+                sched.StartTime = employee.Shift.StartTime;
+                sched.EndTime = employee.Shift.EndTime;
+                sched.Employees.Add(emp);
+                db.Schedules.Add(sched);
+                db.SaveChanges();
+                employee.Shift = sched;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
         }
     }
 }
