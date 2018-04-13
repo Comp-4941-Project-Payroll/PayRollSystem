@@ -59,3 +59,9 @@ textarea {
     border-top: 1px solid #aaaaaa;
     border-bottom: 1px solid #ffffff;
 }
+
+@media print {
+    .printhide {
+        display: none;
+    }
+}
