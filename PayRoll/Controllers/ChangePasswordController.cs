@@ -13,6 +13,7 @@ namespace PayRoll.Controllers
     public class ChangePasswordController : Controller
     {
         private PayrollDbContext db = new PayrollDbContext();
+		private string sessionEmployee = System.Web.HttpContext.Current.Session["EmployeeId"] as String;
 
 		// GET: ChangePassword
 		[VerifyLogin]
@@ -28,7 +29,7 @@ namespace PayRoll.Controllers
 		{
 			string newPassword = forms["newPassword"];
 			string confirmPassword = forms["confirmPassword"];
-			Employee employee = db.Employees.Find("a00828729");
+			Employee employee = db.Employees.Find(sessionEmployee);
 			string originalPassword = employee.Password;
 			if (newPassword != confirmPassword)
 			{
