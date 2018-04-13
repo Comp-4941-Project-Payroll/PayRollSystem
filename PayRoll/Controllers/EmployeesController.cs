@@ -22,6 +22,7 @@ namespace PayRoll.Controllers
 		public ActionResult Index()
         {
             Employee currentEmployee = db.Employees.Include(e => e.Position).Where(e => e.EmployeeId == sessionEmployee).FirstOrDefault();
+
             return View(db.Employees.Include(e => e.Position).Include(s => s.Shift).Where(e => e.Position.Rank < currentEmployee.Position.Rank));
         }
 
@@ -57,9 +58,10 @@ namespace PayRoll.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+
 		[VerifyLogin]
 		public ActionResult Create([Bind(Include = "FName,LName,Address,Email,FullOrPartTime,Seniority,DepartmentType,HourlyRate")] Employee employee)
-        {
+   {
 			employee.EmployeeId = GenerateEmployeeId();
             employee.Password = GeneratePassword();
             if (ModelState.IsValid)
@@ -67,7 +69,6 @@ namespace PayRoll.Controllers
                 db.Employees.Add(employee);
                 db.SaveChanges();
 				db.Positions.Find(Request.Form.Get("Position")).Employees.Add(employee);
-				//db.Schedules.Find(Request.Form.Get("Schedule")).Employees.Add(employee);
 				db.SaveChanges();
                 SmtpClient client = new SmtpClient("smtp.live.com", 25);
                 client.Credentials = new System.Net.NetworkCredential("vpnprez@hotmail.com", "dudethatko1");

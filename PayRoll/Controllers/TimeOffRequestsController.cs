@@ -27,8 +27,12 @@ namespace PayRoll.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+<<<<<<< HEAD
+        public ActionResult Index([Bind(Include = "StartDate,EndDate,Reason,Type")] TimeOffRequest timeOffRequest)
+=======
 		[VerifyLogin]
 		public ActionResult Index([Bind(Include = "StartDate,EndDate,Reason,Type")] TimeOffRequest timeOffRequest)
+>>>>>>> 05a58a47ea21009b6645c7f1a461045f2bfef14b
         {
             if ((timeOffRequest.StartDate < DateTime.Now)
                 || (timeOffRequest.EndDate < DateTime.Now)
@@ -76,9 +80,14 @@ namespace PayRoll.Controllers
                 .Where(t => t.Status == "No")
                 .Where(t => t.Employee.Position.Rank < currentEmployee.Position.Rank)
                 .ToList());
+<<<<<<< HEAD
+        }
+        public ActionResult Accept(int id)
+=======
 		}
 		[VerifyLogin]
 		public ActionResult Accept(int id)
+>>>>>>> 05a58a47ea21009b6645c7f1a461045f2bfef14b
         {
             TimeOffRequest req = db.TimeOffRequests.Include(e => e.Employee).Where(e => e.TimeOffRequestId == id).FirstOrDefault();
             SmtpClient client = new SmtpClient("smtp.live.com", 25);

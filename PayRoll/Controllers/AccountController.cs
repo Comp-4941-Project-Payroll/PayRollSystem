@@ -112,10 +112,17 @@ namespace PayRoll.Controllers
                 }
                 else
                 {
+<<<<<<< HEAD
+                    ModelState.AddModelError("", "Invalid login credentials.");
+                }
+            }
+            ModelState.AddModelError("", "Invalid login credentials.");
+=======
                     ModelState.AddModelError("", "Invalid login credentials. hi");
                 }
             }
             ModelState.AddModelError("", "Invalid login credentials. yo");
+>>>>>>> 05a58a47ea21009b6645c7f1a461045f2bfef14b
             return View(employee);
         }
 
