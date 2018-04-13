@@ -20,25 +20,6 @@
         //}
         //else
         //{
-<<<<<<< HEAD
-
-        //}
-
-
-        DateTime yearStart = new DateTime(currentDate.Year, 1, 1);
-        for (int i = 0; i < currentDate.Month - 1; i++)
-        {
-            DateTime firstPeriodStart = yearStart.AddMonths(i);
-            DateTime firstPeriodEnd = firstPeriodStart.AddDays(13);
-
-            DateTime secondPeriodStart = firstPeriodStart.AddDays(14);
-            DateTime secondPeriodEnd = firstPeriodStart.AddMonths(1).AddDays(-1);
-            
-            <tr><td>@Html.ActionLink(firstPeriodEnd.ToShortDateString(), "Details/" + firstPeriodStart.Month + " " + 1)</td></tr>
-            <tr><td>@Html.ActionLink(secondPeriodEnd.ToShortDateString(), "Details/" + secondPeriodStart.Month + " " + 2)</td></tr>
-        }
-
-=======
 
         //}
 
@@ -61,7 +42,6 @@
             <tr><td>@Html.ActionLink(secondPeriodEnd.ToShortDateString(), "Details/" + secondPeriodStart.Month + " " + 2 + id)</td></tr>
         }
 
->>>>>>> develop
 
     }
 </table>
