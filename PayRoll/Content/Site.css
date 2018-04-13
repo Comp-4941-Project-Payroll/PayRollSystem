@@ -9,6 +9,23 @@
     padding-right: 15px;
 }
 
+.spanningtable  {
+    width: 100%; 
+}
+
+.headingtable td {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+}
+
+.datatable td {
+    padding-right: 1em;
+}
+
+.floatup {
+    vertical-align: top;
+}
+
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */

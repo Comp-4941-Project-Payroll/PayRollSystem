@@ -1,15 +1,20 @@
 ﻿@model IEnumerable<PayRoll.Models.Payroll>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Payrolls";
 }
 
+<<<<<<< HEAD
 <h2>Index</h2>
+=======
+<h2>Payrolls</h2>
+>>>>>>> 05a58a47ea21009b6645c7f1a461045f2bfef14b
 
 <table>
     @{
 
         DateTime currentDate = DateTime.Today;
+<<<<<<< HEAD
         //int currentYear = currentDate.Year;
         //DateTime monthStart = new DateTime(currentDate.Year, currentDate.Month, 1);
         //DateTime monthMiddle = monthStart.AddDays(14);
@@ -22,6 +27,8 @@
         //{
 
         //}
+=======
+>>>>>>> 05a58a47ea21009b6645c7f1a461045f2bfef14b
 
         string id = "";
         if (ViewBag.Id != null)
@@ -43,6 +50,7 @@
         }
 
 
+<<<<<<< HEAD
     }
 </table>
 
@@ -129,6 +137,7 @@
                 @Html.ActionLink("Delete", "Delete", new { id = item.PayrollId })
             </td>
         </tr>
+=======
+>>>>>>> 05a58a47ea21009b6645c7f1a461045f2bfef14b
     }
-
-</table>*@
+</table>

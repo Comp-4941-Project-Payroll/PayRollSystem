@@ -13,7 +13,11 @@
 
 <div class="form-horizontal">
     <hr />
+<<<<<<< HEAD
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+=======
+    
+>>>>>>> 05a58a47ea21009b6645c7f1a461045f2bfef14b
     <div class="form-group">
         @Html.Label("Employee ID", new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
@@ -26,7 +30,15 @@
         <div class="col-md-10">
             @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
             @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+<<<<<<< HEAD
         </div>
+=======
+            
+        </div>
+        <div align="left">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        </div>    
+>>>>>>> 05a58a47ea21009b6645c7f1a461045f2bfef14b
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">

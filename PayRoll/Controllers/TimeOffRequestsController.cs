@@ -18,6 +18,7 @@ namespace PayRoll.Controllers
         private string sessionEmployee = System.Web.HttpContext.Current.Session["EmployeeId"] as String;
 
         // GET: TimeOffRequests
+		[VerifyLogin]
         public ActionResult Index()
         {
 			ViewData["typesOfTimeOff"] = new string[] { "Vacation", "Personal Emergency", "Appointment" };
@@ -26,7 +27,12 @@ namespace PayRoll.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+<<<<<<< HEAD
         public ActionResult Index([Bind(Include = "StartDate,EndDate,Reason,Type")] TimeOffRequest timeOffRequest)
+=======
+		[VerifyLogin]
+		public ActionResult Index([Bind(Include = "StartDate,EndDate,Reason,Type")] TimeOffRequest timeOffRequest)
+>>>>>>> 05a58a47ea21009b6645c7f1a461045f2bfef14b
         {
             if ((timeOffRequest.StartDate < DateTime.Now)
                 || (timeOffRequest.EndDate < DateTime.Now)
@@ -53,16 +59,19 @@ namespace PayRoll.Controllers
 
 			ViewData["typesOfTimeOff"] = new string[] { "Vacation", "Personal Emergency", "Appointment" };
 			return View(timeOffRequest);
-        }
-        public ActionResult Success()
+		}
+		[VerifyLogin]
+		public ActionResult Success()
         {
             return View();
-        }
-        public ActionResult Failure()
+		}
+		[VerifyLogin]
+		public ActionResult Failure()
         {
             return View();
-        }
-        public ActionResult AdminApproval()
+		}
+		[VerifyLogin]
+		public ActionResult AdminApproval()
         {
             Employee currentEmployee = db.Employees.Include(e => e.Position).Where(e => e.EmployeeId == sessionEmployee).FirstOrDefault();
             return View(db.TimeOffRequests
@@ -71,8 +80,14 @@ namespace PayRoll.Controllers
                 .Where(t => t.Status == "No")
                 .Where(t => t.Employee.Position.Rank < currentEmployee.Position.Rank)
                 .ToList());
+<<<<<<< HEAD
         }
         public ActionResult Accept(int id)
+=======
+		}
+		[VerifyLogin]
+		public ActionResult Accept(int id)
+>>>>>>> 05a58a47ea21009b6645c7f1a461045f2bfef14b
         {
             TimeOffRequest req = db.TimeOffRequests.Include(e => e.Employee).Where(e => e.TimeOffRequestId == id).FirstOrDefault();
             SmtpClient client = new SmtpClient("smtp.live.com", 25);
@@ -88,14 +103,16 @@ namespace PayRoll.Controllers
         }
         [HttpPost, ActionName("Accept")]
         [ValidateAntiForgeryToken]
-        public ActionResult AcceptDelete(int id)
+		[VerifyLogin]
+		public ActionResult AcceptDelete(int id)
         {
             TimeOffRequest req = db.TimeOffRequests.Find(id);
             //db.TimeOffRequests.Remove(req);
             db.SaveChanges();
             return RedirectToAction("AdminApproval");
-        }
-        public ActionResult Decline(int id)
+		}
+		[VerifyLogin]
+		public ActionResult Decline(int id)
         {
             Employee emp = null;
             TimeOffRequest req = db.TimeOffRequests.Find(id);
@@ -122,7 +139,8 @@ namespace PayRoll.Controllers
         }
         [HttpPost, ActionName("Decline")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeclineDelete(int id)
+		[VerifyLogin]
+		public ActionResult DeclineDelete(int id)
         {
             TimeOffRequest req = db.TimeOffRequests.Find(id);
             db.TimeOffRequests.Remove(req);

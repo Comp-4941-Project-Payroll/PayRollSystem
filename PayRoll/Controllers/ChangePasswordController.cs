@@ -13,20 +13,36 @@ namespace PayRoll.Controllers
     public class ChangePasswordController : Controller
     {
         private PayrollDbContext db = new PayrollDbContext();
+<<<<<<< HEAD
 
         // GET: ChangePassword
         public ActionResult Index()
+=======
+		private string sessionEmployee = System.Web.HttpContext.Current.Session["EmployeeId"] as String;
+
+		// GET: ChangePassword
+		[VerifyLogin]
+		public ActionResult Index()
+>>>>>>> 05a58a47ea21009b6645c7f1a461045f2bfef14b
 		{
 			return View();
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+<<<<<<< HEAD
+=======
+		[VerifyLogin]
+>>>>>>> 05a58a47ea21009b6645c7f1a461045f2bfef14b
 		public ActionResult Index(FormCollection forms)
 		{
 			string newPassword = forms["newPassword"];
 			string confirmPassword = forms["confirmPassword"];
+<<<<<<< HEAD
 			Employee employee = db.Employees.Find("a00828729");
+=======
+			Employee employee = db.Employees.Find(sessionEmployee);
+>>>>>>> 05a58a47ea21009b6645c7f1a461045f2bfef14b
 			string originalPassword = employee.Password;
 			if (newPassword != confirmPassword)
 			{
@@ -47,6 +63,10 @@ namespace PayRoll.Controllers
 			}
 			return RedirectToAction("Success");
 		}
+<<<<<<< HEAD
+=======
+		[VerifyLogin]
+>>>>>>> 05a58a47ea21009b6645c7f1a461045f2bfef14b
 		public ActionResult Success()
 		{
 			return View();

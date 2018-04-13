@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
@@ -22,3 +23,10 @@ else
         <li>@Html.ActionLink("Log out", "Logout", "Employees", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
 }
+=======
+﻿<ul class="nav navbar-nav navbar-right">
+    <li>@Html.ActionLink("Punch", "ManageAttendance", "Attendance")</li>
+    <li>@Html.ActionLink("Change Password", "Index", "ChangePassword")</li>
+    <li>@Html.ActionLink("Log out", "Logout", "Employees", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+</ul>
+>>>>>>> 05a58a47ea21009b6645c7f1a461045f2bfef14b
