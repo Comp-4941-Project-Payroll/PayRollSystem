@@ -33,6 +33,12 @@ namespace PayRoll.Models
                 PositionId = "Master",
                 Rank = 100
             });
+            context.Schedules.Add(new Schedule()
+            {
+                ShiftId = 1,
+                StartTime = DateTime.Parse("2018-1-1 8:00:00 AM"),
+                EndTime = DateTime.Parse("2018-1-1 4:00:00 PM"),
+            });
 
             context.SaveChanges();
 
@@ -66,6 +72,8 @@ namespace PayRoll.Models
             context.SaveChanges();
 			context.Positions.Find("Manager").Employees.Add(context.Employees.Find("a00828729"));
             context.Positions.Find("Master").Employees.Add(context.Employees.Find("a00000000"));
+            context.Schedules.Find(1).Employees.Add(context.Employees.Find("a00000000"));
+            context.Schedules.Find(1).Employees.Add(context.Employees.Find("a00828729"));
             context.SaveChanges();
 
             //TypeOfTimeOff toto = context.TypesOfTimeOff.Where(s => s.Type == "Personal Reasons").FirstOrDefault();
@@ -88,7 +96,7 @@ namespace PayRoll.Models
 
             e.Attendances.Add(new Attendance()
             {
-                AttendanceId = "1",
+                AttendanceId = 1,
                 SignInTime = DateTime.Parse("2018-1-1 8:00:00 AM"),
                 SignOutTime = DateTime.Parse("2018-1-1 8:00:00 PM"),
                 
@@ -96,7 +104,7 @@ namespace PayRoll.Models
 
             e.Attendances.Add(new Attendance()
             {
-                AttendanceId = "2",
+                AttendanceId = 2,
                 SignInTime = DateTime.Parse("2018-2-1 8:00:00 AM"),
                 SignOutTime = DateTime.Parse("2018-2-1 6:00:00 PM"),
 
@@ -105,6 +113,7 @@ namespace PayRoll.Models
             context.Employees.Add(e);
             context.SaveChanges();
             context.Positions.Find("Human Resources").Employees.Add(context.Employees.Find("a00828730"));
+            context.Schedules.Find(1).Employees.Add(context.Employees.Find("a00828730"));
             base.Seed(context);
 		}
 	}

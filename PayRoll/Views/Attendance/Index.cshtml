@@ -1,16 +1,16 @@
 ﻿@model IEnumerable<PayRoll.Models.Attendance>
 
 @{
-    ViewBag.Title = "View";
+    ViewBag.Title = "Punch Log";
 }
 
-<h2>View</h2>
+<h2>Punch Log</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.AttendanceId)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.SignInTime)
         </th>
@@ -19,24 +19,26 @@
         </th>
         <th></th>
     </tr>
-    @if (Model != null)
-    {
-        foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SignInTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SignOutTime)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.AttendanceId }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.AttendanceId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.AttendanceId })
-                </td>
-            </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.AttendanceId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SignInTime)
+        </td>
+        <td>
+                @Html.DisplayFor(modelItem => item.SignOutTime)
+            
+        </td>
+        @if ((Session["Position"].ToString() == "Manager") || (Session["Position"].ToString() == "Master")) { 
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.AttendanceId }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.AttendanceId })
+            </td>
         }
-    }
+    </tr>
+}
 
 </table>

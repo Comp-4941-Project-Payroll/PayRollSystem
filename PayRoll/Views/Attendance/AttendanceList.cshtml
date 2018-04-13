@@ -1,45 +1,42 @@
-﻿@model PayRoll.Models.Attendance
- 
- @{
-	 ViewBag.Title = "AttendanceList";
-	 }
- 
- <h2>AttendanceList</h2>
- 
- <div>
-	    <h4>Attendance</h4>
-	    <hr />
-	    <dl class="dl-horizontal">
-		
-		<dt>
-			            @Html.DisplayNameFor(model => model.SignInTime)
-			
-		</dt>
-		
-		
-		<dd>
-			            @Html.DisplayFor(model => model.SignInTime)
-			
-		</dd>
-		
-		
-		<dt>
-			            @Html.DisplayNameFor(model => model.SignOutTime)
-			
-		</dt>
-		
-		
-		<dd>
-			            @Html.DisplayFor(model => model.SignOutTime)
-			
-		</dd>
-		
-		
-	</dl>
-	
-</div>
- <p>
-	    @Html.ActionLink("Edit", "Edit", new { id = Model.AttendanceId }) |
-	    @Html.ActionLink("Back to List", "Index")
-	
+﻿@model IEnumerable<PayRoll.Models.Attendance>
+
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>View</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
 </p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SignInTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SignOutTime)
+        </th>
+        <th></th>
+    </tr>
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SignInTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SignOutTime)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.AttendanceId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.AttendanceId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.AttendanceId })
+                </td>
+            </tr>
+        }
+    }
+
+</table>
