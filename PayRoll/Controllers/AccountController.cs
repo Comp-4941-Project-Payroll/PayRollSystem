@@ -112,10 +112,10 @@ namespace PayRoll.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Invalid login credentials.");
+                    ModelState.AddModelError("", "Invalid login credentials. hi");
                 }
             }
-            ModelState.AddModelError("", "Invalid login credentials.");
+            ModelState.AddModelError("", "Invalid login credentials. yo");
             return View(employee);
         }
 
@@ -311,6 +311,34 @@ namespace PayRoll.Controllers
             return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            // This doesn't count login failures towards account lockout
+            // To enable password failures to trigger account lockout, change to shouldLockout: true
+            var result = await SignInManager.PasswordSignInAsync(model.EmployeeId, model.Password, model.RememberMe, shouldLockout: false);
+            switch (result)
+            {
+                case SignInStatus.Success:
+                    return RedirectToLocal(returnUrl);
+                case SignInStatus.LockedOut:
+                    return View("Lockout");
+                case SignInStatus.RequiresVerification:
+                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                case SignInStatus.Failure:
+                default:
+                    ModelState.AddModelError("", "Invalid login attempt.");
+                    return View(model);
+            }
+        }
+
         //
         // GET: /Account/SendCode
         [AllowAnonymous]
@@ -413,6 +441,8 @@ namespace PayRoll.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View(model);
         }
+
+
 
         //
         // POST: /Account/LogOff

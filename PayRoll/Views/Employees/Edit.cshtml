@@ -4,7 +4,6 @@
     ViewBag.Title = "Edit";
     PayRoll.Models.Position[] positions = (PayRoll.Models.Position[])ViewData["positions"];
     string[] departmentTypes = (string[])ViewData["departmentTypes"];
-    PayRoll.Models.Schedule[] schedule = (PayRoll.Models.Schedule[])ViewData["schedule"];
 }
 
 <h2>Edit</h2>
@@ -95,18 +94,6 @@
                 }
             </select>
             @Html.ValidationMessageFor(model => model.FullOrPartTime, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Shift, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <select name="Shift" id="Shift" class="form-control single-line">
-                @for (var i = 0; i < schedule.Length; i++)
-                {
-                    <option>@schedule[i].ShiftId</option>
-                }
-            </select>
         </div>
     </div>
 

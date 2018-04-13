@@ -13,15 +13,17 @@ namespace PayRoll.Controllers
     {
         private PayrollDbContext db = new PayrollDbContext();
 
-        // GET: PayrollManage
-        public ActionResult Index(string id)
+		// GET: PayrollManage
+		[VerifyLogin]
+		public ActionResult Index(string id)
         {
             ViewBag.Id = id;
             return View(db.Payrolls.ToList());
         }
 
-        // GET: PayrollManage/Details/5
-        public ActionResult Details(string id)
+		// GET: PayrollManage/Details/5
+		[VerifyLogin]
+		public ActionResult Details(string id)
         {
             if (id == null)
             {
@@ -157,7 +159,7 @@ namespace PayRoll.Controllers
                 if (emp.EmployeeId == sessionEmployee)
                 {
                     timeOff = emp.TimeOffRequests.Where(t => t.StartDate.Year == firstDayOfPeriod.Year
-                        && t.EndDate <= lastDayOfPeriod).ToList();
+                        && t.EndDate <= lastDayOfPeriod && t.Status == "Yes").ToList();
                     break;
                 }
             }
@@ -181,23 +183,23 @@ namespace PayRoll.Controllers
             netPayYTD = earningsYTD - eiAmountYTD - cppAmountYTD - taxAmountYTD;
             //Console.WriteLine(hours);
 
-            ViewBag.Hours = hours;
-            ViewBag.HoursYTD = hoursYTD;
-            ViewBag.Earnings = earnings;
-            ViewBag.EarningsYTD = earningsYTD;
-            ViewBag.VacationHrs = vacationDays;
-            ViewBag.AwardedVacation = awardedVacation;
-            ViewBag.RemainingVacation = remainingVacation;
-            ViewBag.OvertimeHrs = overtimeHrs;
-            ViewBag.OvertimeHrsYTD = overtimeHrsYTD;
-            ViewBag.EI = eiAmount;
-            ViewBag.CPP = cppAmount;
-            ViewBag.Tax = taxAmount;
-            ViewBag.NetPay = netPay;
-            ViewBag.EIYTD = eiAmountYTD;
-            ViewBag.CPPYTD = cppAmountYTD;
-            ViewBag.TaxYTD = taxAmountYTD;
-            ViewBag.NetPayYTD = netPayYTD;
+            ViewBag.Hours = string.Format("{0:0.00}", hours);
+            ViewBag.HoursYTD = string.Format("{0:0.00}", hoursYTD);
+            ViewBag.Earnings = string.Format("{0:C}", earnings);
+            ViewBag.EarningsYTD = string.Format("{0:C}", earningsYTD);
+            ViewBag.VacationHrs = string.Format("{0:0.00}", vacationDays);
+            ViewBag.AwardedVacation = string.Format("{0:0.00}", awardedVacation);
+            ViewBag.RemainingVacation = string.Format("{0:0.00}", remainingVacation);
+            ViewBag.OvertimeHrs = string.Format("{0:0.00}", overtimeHrs);
+            ViewBag.OvertimeHrsYTD = string.Format("{0:0.00}", overtimeHrsYTD);
+            ViewBag.EI = string.Format("{0:C}", eiAmount);
+            ViewBag.CPP = string.Format("{0:C}", cppAmount); 
+            ViewBag.Tax = string.Format("{0:C}", taxAmount); 
+            ViewBag.NetPay = string.Format("{0:C}", netPay); 
+            ViewBag.EIYTD = string.Format("{0:C}", eiAmountYTD);
+            ViewBag.CPPYTD = string.Format("{0:C}", cppAmountYTD);
+            ViewBag.TaxYTD = string.Format("{0:C}", taxAmountYTD); 
+            ViewBag.NetPayYTD = string.Format("{0:C}", netPayYTD);
             ViewBag.Fname = fname;
             ViewBag.Lname = lname;
             ViewBag.Address = address;
@@ -207,8 +209,9 @@ namespace PayRoll.Controllers
             return View();
         }
 
-        // GET: PayrollManage/Create
-        public ActionResult Create()
+		// GET: PayrollManage/Create
+		[VerifyLogin]
+		public ActionResult Create()
         {
             return View();
         }
@@ -218,7 +221,8 @@ namespace PayRoll.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PayrollId,year,RegularHours,OverTimeHours,HourlyRate,Earnings,BeginningVacation,VacationHrsTaken,CPP,EI,IncomeTaxes")] Payroll payroll)
+		[VerifyLogin]
+		public ActionResult Create([Bind(Include = "PayrollId,year,RegularHours,OverTimeHours,HourlyRate,Earnings,BeginningVacation,VacationHrsTaken,CPP,EI,IncomeTaxes")] Payroll payroll)
         {
             if (ModelState.IsValid)
             {
@@ -230,8 +234,9 @@ namespace PayRoll.Controllers
             return View(payroll);
         }
 
-        // GET: PayrollManage/Edit/5
-        public ActionResult Edit(string id)
+		// GET: PayrollManage/Edit/5
+		[VerifyLogin]
+		public ActionResult Edit(string id)
         {
             if (id == null)
             {
@@ -250,7 +255,8 @@ namespace PayRoll.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PayrollId,year,RegularHours,OverTimeHours,HourlyRate,Earnings,BeginningVacation,VacationHrsTaken,CPP,EI,IncomeTaxes")] Payroll payroll)
+		[VerifyLogin]
+		public ActionResult Edit([Bind(Include = "PayrollId,year,RegularHours,OverTimeHours,HourlyRate,Earnings,BeginningVacation,VacationHrsTaken,CPP,EI,IncomeTaxes")] Payroll payroll)
         {
             if (ModelState.IsValid)
             {
@@ -261,8 +267,9 @@ namespace PayRoll.Controllers
             return View(payroll);
         }
 
-        // GET: PayrollManage/Delete/5
-        public ActionResult Delete(string id)
+		// GET: PayrollManage/Delete/5
+		[VerifyLogin]
+		public ActionResult Delete(string id)
         {
             if (id == null)
             {
@@ -279,7 +286,8 @@ namespace PayRoll.Controllers
         // POST: PayrollManage/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+		[VerifyLogin]
+		public ActionResult DeleteConfirmed(string id)
         {
             Payroll payroll = db.Payrolls.Find(id);
             db.Payrolls.Remove(payroll);
@@ -287,7 +295,8 @@ namespace PayRoll.Controllers
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
+		[VerifyLogin]
+		protected override void Dispose(bool disposing)
         {
             if (disposing)
             {

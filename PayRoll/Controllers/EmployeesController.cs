@@ -17,15 +17,17 @@ namespace PayRoll.Controllers
         private PayrollDbContext db = new PayrollDbContext();
         private string sessionEmployee = System.Web.HttpContext.Current.Session["EmployeeId"] as String;
 
-        // GET: Employees
-        public ActionResult Index()
+		// GET: Employees
+		[VerifyLogin]
+		public ActionResult Index()
         {
             Employee currentEmployee = db.Employees.Include(e => e.Position).Where(e => e.EmployeeId == sessionEmployee).FirstOrDefault();
-            return View(db.Employees.Include(e => e.Position).Where(e => e.Position.Rank < currentEmployee.Position.Rank));
+            return View(db.Employees.Include(e => e.Position).Include(s => s.Shift).Where(e => e.Position.Rank < currentEmployee.Position.Rank));
         }
 
-        // GET: Employees/Details/5
-        public ActionResult Details(string id)
+		// GET: Employees/Details/5
+		[VerifyLogin]
+		public ActionResult Details(string id)
         {
             if (id == null)
             {
@@ -39,8 +41,9 @@ namespace PayRoll.Controllers
             return View(employee);
         }
 
-        // GET: Employees/Create
-        public ActionResult Create()
+		// GET: Employees/Create
+		[VerifyLogin]
+		public ActionResult Create()
         {
             Employee currentEmployee = db.Employees.Include(e => e.Position).Where(e => e.EmployeeId == sessionEmployee).FirstOrDefault();
             ViewData["positions"] = db.Positions.Where(p => p.Rank < currentEmployee.Position.Rank).ToArray();
@@ -54,7 +57,8 @@ namespace PayRoll.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "FName,LName,Address,Email,FullOrPartTime,Seniority,DepartmentType,HourlyRate")] Employee employee)
+		[VerifyLogin]
+		public ActionResult Create([Bind(Include = "FName,LName,Address,Email,FullOrPartTime,Seniority,DepartmentType,HourlyRate")] Employee employee)
         {
 			employee.EmployeeId = GenerateEmployeeId();
             employee.Password = GeneratePassword();
@@ -63,7 +67,7 @@ namespace PayRoll.Controllers
                 db.Employees.Add(employee);
                 db.SaveChanges();
 				db.Positions.Find(Request.Form.Get("Position")).Employees.Add(employee);
-				db.Schedules.Find(Request.Form.Get("Schedule")).Employees.Add(employee);
+				//db.Schedules.Find(Request.Form.Get("Schedule")).Employees.Add(employee);
 				db.SaveChanges();
                 SmtpClient client = new SmtpClient("smtp.live.com", 25);
                 client.Credentials = new System.Net.NetworkCredential("vpnprez@hotmail.com", "dudethatko1");
@@ -78,7 +82,8 @@ namespace PayRoll.Controllers
             return View(employee);
         }
 
-        // GET: Employees/Edit/5
+		// GET: Employees/Edit/5
+		    [VerifyLogin]
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -90,10 +95,9 @@ namespace PayRoll.Controllers
             {
                 return HttpNotFound();
             }
-            Employee currentEmployee = db.Employees.Include(e => e.Position).Include(e=>e.Shift).Where(e => e.EmployeeId == sessionEmployee).FirstOrDefault();
+            Employee currentEmployee = db.Employees.Include(e => e.Position).Where(e => e.EmployeeId == sessionEmployee).FirstOrDefault();
             ViewData["positions"] = db.Positions.Where(p => p.Rank < currentEmployee.Position.Rank).ToArray();
             ViewData["departmentTypes"] = new string[] { "Production", "Research and Development", "Purchasing", "Marketing", "Human Resources", "Accounting and Finance", "Executive" };
-            ViewData["schedules"] = db.Schedules.ToArray();
             return View(employee);
         }
 
@@ -102,7 +106,8 @@ namespace PayRoll.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EmployeeId,FName,LName,Address,Email,FullOrPartTime,Seniority,DepartmentType,Shift")] Employee employee)
+		[VerifyLogin]
+		public ActionResult Edit([Bind(Include = "EmployeeId,FName,LName,Address,Email,FullOrPartTime,Seniority,DepartmentType")] Employee employee)
         {
             if (ModelState.IsValid)
             {
@@ -114,8 +119,9 @@ namespace PayRoll.Controllers
             return View(employee);
         }
 
-        // GET: Employees/Delete/5
-        public ActionResult Delete(string id)
+		// GET: Employees/Delete/5
+		[VerifyLogin]
+		public ActionResult Delete(string id)
         {
             if (id == null)
             {
@@ -132,7 +138,8 @@ namespace PayRoll.Controllers
         // POST: Employees/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+		[VerifyLogin]
+		public ActionResult DeleteConfirmed(string id)
         {
 			Employee employee = db.Employees.Find(id);
 			db.Attendances.RemoveRange(db.Attendances.Where(e => e.Employee.EmployeeId == id));
@@ -145,7 +152,8 @@ namespace PayRoll.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Email(string id)
+		[VerifyLogin]
+		public ActionResult Email(string id)
         {
             if (id == null)
             {
@@ -161,7 +169,8 @@ namespace PayRoll.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SendEmail()
+		[VerifyLogin]
+		public ActionResult SendEmail()
         {
             Employee currentEmployee = db.Employees.Find(sessionEmployee);
             string EmployeeId = Request["EmployeeId"];
@@ -232,7 +241,8 @@ namespace PayRoll.Controllers
             else
             {
                 ModelState.AddModelError("", "Invalid login credentials.");
-                return RedirectToAction("Login","Employees");
+                //return RedirectToAction("Login","Employees");
+                return View("Login");
             }
 
         }
@@ -241,6 +251,52 @@ namespace PayRoll.Controllers
         {
             Session.Abandon();
             return RedirectToAction("Login");
+        }
+
+        public ActionResult AddShift(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            //Employee employee = db.Employees.Find(id);
+            ViewBag.id = id;
+            //if (employee == null)
+            //{
+            //	return HttpNotFound();
+            //}
+            return View();
+        }
+
+        // POST: Employees/Delete/5
+        [HttpPost, ActionName("AddShift")]
+        public ActionResult ShiftConfirm([Bind(Include = "Shift")] Employee employee, string id)
+        //public ActionResult ShiftConfirm(string id)
+        {
+            Employee emp = db.Employees.Find(id);
+            if (emp == null)
+            {
+                return RedirectToAction("AddShift");
+            }
+            string shiftid = Request.Form.Get("shiftid");
+            Schedule sched = new Schedule();
+            if ((employee.Shift.StartTime < DateTime.Now)
+                || (employee.Shift.EndTime < DateTime.Now)
+                || (employee.Shift.EndTime < employee.Shift.StartTime))
+            {
+                return RedirectToAction("AddShift");
+            }
+            else
+            {
+                sched.StartTime = employee.Shift.StartTime;
+                sched.EndTime = employee.Shift.EndTime;
+                sched.Employees.Add(emp);
+                db.Schedules.Add(sched);
+                db.SaveChanges();
+                employee.Shift = sched;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
         }
     }
 }
