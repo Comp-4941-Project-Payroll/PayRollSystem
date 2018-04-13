@@ -343,6 +343,7 @@
     <Content Include="Views\Attendance\AttendanceList.cshtml" />
     <Content Include="Views\Attendance\ManageAttendance.cshtml" />
     <Content Include="Views\Employees\AddShift.cshtml" />
+    <Content Include="Views\Attendance\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
